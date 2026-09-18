@@ -597,7 +597,7 @@
             "background_color": "#ffffff",
             "card_color": "#e95d20",
             "card_background_image": "shopify://shop_images/ChatGPT_Image_Sep_16_2026_03_20_53_AM_3f9e5d4f-6d3d-4481-8420-a278009e4091.png",
-            "text_color": "{{ settings.color_palette.color1 }}",
+            "text_color": "{{ settings.color_palette.foreground }}",
             "muted_text_color": "#ffffff",
             "border_color": "rgba(0,0,0,0)",
             "accent_color": "{{ settings.color_palette.background }}",
