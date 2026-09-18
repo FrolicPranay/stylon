@@ -271,11 +271,10 @@
             "placement": "below_image",
             "horizontal_alignment": "center",
             "vertical_alignment": "flex-start",
-            "collection_card_gap": 10,
+            "collection_card_gap": 18,
             "title_font_size_desktop": 16,
             "title_font_size_mobile": 14,
-            "background_color": "#6D0F0F",
-            "background_image": "shopify://shop_images/ChatGPT_Image_Sep_5_2026_03_27_03_AM.png",
+            "background_color": "",
             "border": "none",
             "border_width": 1,
             "border_opacity": 12,
@@ -295,7 +294,7 @@
                 "font_size": "0.875rem",
                 "line_height": "normal",
                 "letter_spacing": "loose",
-                "case": "uppercase",
+                "case": "none",
                 "wrap": "pretty",
                 "background": false,
                 "background_color": "#ffffff",
@@ -322,7 +321,7 @@
                 "border_width": 1,
                 "border_opacity": 100,
                 "border_color": "",
-                "border_radius": 0
+                "border_radius": 4
               },
               "blocks": {}
             }
@@ -1410,6 +1409,76 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "tsapb_763913e5_ijzUcE": {
+      "type": "tsapb-763913e5",
+      "blocks": {
+        "collection_NVzTmr": {
+          "type": "collection",
+          "settings": {
+            "collection": "anarkali-suits",
+            "heading": ""
+          }
+        },
+        "collection_pa97bB": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "heading": ""
+          }
+        },
+        "collection_ztc9ye": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "heading": ""
+          }
+        },
+        "collection_n4VWTY": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "heading": ""
+          }
+        },
+        "collection_ffbXTL": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "heading": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_NVzTmr",
+        "collection_pa97bB",
+        "collection_ztc9ye",
+        "collection_n4VWTY",
+        "collection_ffbXTL"
+      ],
+      "name": "❤️ Square: Collection Rectangles",
+      "settings": {
+        "heading": "Collections",
+        "heading_size": "32",
+        "heading_style": "regular",
+        "heading_alignment": "center",
+        "collection_heading_size": "14",
+        "images_aspect_ratio": "portrait",
+        "layout_desktop": "grid",
+        "collections_per_row_desktop": 5,
+        "layout_mobile": "carousel",
+        "collections_per_row_mobile": "2",
+        "section_width": 95,
+        "section_max_width": "",
+        "vertical_padding": 40,
+        "vertical_margin": 0,
+        "vertical_padding_mobile": 20,
+        "vertical_margin_mobile": 0,
+        "section_background": "",
+        "heading_color": "#222222",
+        "collection_heading_color": "#222222",
+        "images_border_color": ""
+      }
     }
   },
   "order": [
@@ -1424,6 +1493,7 @@
     "product_list_Q3JJ6r",
     "product_list_iyyJeN",
     "17897717360ea9fb56",
-    "17897738200c2ba9d0"
+    "17897738200c2ba9d0",
+    "tsapb_763913e5_ijzUcE"
   ]
 }
