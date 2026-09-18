@@ -1444,6 +1444,70 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "1789772149edd45524": {
+      "type": "_blocks",
+      "blocks": {
+        "shop_story_reels_ipfA6G": {
+          "type": "shopify://apps/shop-story/blocks/reels/9533840c-375a-4863-96fe-c58cb5da53c0",
+          "settings": {
+            "heading": "",
+            "subheading": "",
+            "layout_type": "default",
+            "product_card_template": "default",
+            "border_radius": 5,
+            "popup_template": "default",
+            "height": 470,
+            "height_mobile": 430,
+            "blocks_per_row": 4,
+            "horizontalalignment": "default",
+            "section_spacing": "default",
+            "sectionbgcolour": "#ffffff",
+            "auto_play": "default",
+            "show_views": "default",
+            "show_title": "default",
+            "show_compare_price": "default",
+            "show_buy_button": "default",
+            "button_label": "Add to cart",
+            "button_action": "add_to_cart",
+            "button_color": "",
+            "product_specific": false,
+            "show_on_desktop": true,
+            "show_on_mobile": true
+          }
+        }
+      },
+      "block_order": [
+        "shop_story_reels_ipfA6G"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
     }
   },
   "order": [
@@ -1458,6 +1522,7 @@
     "product_list_Q3JJ6r",
     "product_list_iyyJeN",
     "1788250978afb61d99",
-    "17897717360ea9fb56"
+    "17897717360ea9fb56",
+    "1789772149edd45524"
   ]
 }
