@@ -274,7 +274,7 @@
             "collection_card_gap": 10,
             "title_font_size_desktop": 16,
             "title_font_size_mobile": 14,
-            "background_color": "",
+            "background_color": "#6D0F0F",
             "background_image": "shopify://shop_images/ChatGPT_Image_Sep_5_2026_03_27_03_AM.png",
             "border": "none",
             "border_width": 1,
