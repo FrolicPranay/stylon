@@ -1444,6 +1444,50 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "17897738200c2ba9d0": {
+      "type": "_blocks",
+      "blocks": {
+        "vevy_ai_product_description_trust_badges_Pr67ak": {
+          "type": "shopify://apps/vevy-ai-product-description/blocks/trust-badges/019ef35a-a7fd-754f-8b7a-eea456aa37d6",
+          "settings": {
+            "element": "",
+            "heading": "Why Shop With Us",
+            "empty_message": "No trust badges available for this product."
+          }
+        }
+      },
+      "block_order": [
+        "vevy_ai_product_description_trust_badges_Pr67ak"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
     }
   },
   "order": [
@@ -1458,6 +1502,7 @@
     "product_list_Q3JJ6r",
     "product_list_iyyJeN",
     "1788250978afb61d99",
-    "17897717360ea9fb56"
+    "17897717360ea9fb56",
+    "17897738200c2ba9d0"
   ]
 }
