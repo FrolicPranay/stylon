@@ -1418,7 +1418,7 @@
         "shop_story_reels_qANhVa": {
           "type": "shopify://apps/shop-story/blocks/reels/9533840c-375a-4863-96fe-c58cb5da53c0",
           "settings": {
-            "heading": "",
+            "heading": "Our Latest Videos",
             "subheading": "",
             "layout_type": "default",
             "product_card_template": "default",
@@ -1426,7 +1426,7 @@
             "popup_template": "default",
             "height": 470,
             "height_mobile": 430,
-            "blocks_per_row": 4,
+            "blocks_per_row": 5,
             "horizontalalignment": "default",
             "section_spacing": "default",
             "sectionbgcolour": "#ffffff",
