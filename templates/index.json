@@ -1303,91 +1303,13 @@
         "padding-block-end": 48
       }
     },
-    "1788250978afb61d99": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_603a8ba_XXfz64": {
-          "type": "ai_gen_block_603a8ba",
-          "settings": {
-            "desktop_width_percent": 100,
-            "desktop_padding": 28,
-            "mobile_padding": 20,
-            "item_horizontal_padding": 24,
-            "mobile_item_padding": 16,
-            "background_color": "#fafafa",
-            "icon_color": "#ff5a1f",
-            "title_color": "#1f2937",
-            "text_color": "#6b7280",
-            "divider_color": "#e5e7eb",
-            "icon_size": 36,
-            "mobile_icon_size": 28,
-            "icon_spacing": 12,
-            "mobile_icon_spacing": 10,
-            "title_size": 18,
-            "mobile_title_size": 12,
-            "title_weight": 600,
-            "title_letter_spacing": 1,
-            "title_spacing": 6,
-            "mobile_title_spacing": 4,
-            "text_size": 15,
-            "mobile_text_size": 13,
-            "divider_height": 60,
-            "item_1_enabled": true,
-            "item_1_icon": "chat",
-            "item_1_title": "Customer Support",
-            "item_1_text": "Always here to assist",
-            "item_2_enabled": true,
-            "item_2_icon": "craft",
-            "item_2_title": "Handcrafted Quality",
-            "item_2_text": "Artisan tradition",
-            "item_3_enabled": true,
-            "item_3_icon": "lock",
-            "item_3_title": "Secure Checkout",
-            "item_3_text": "Safe and protected"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_603a8ba_XXfz64"
-      ],
-      "name": "Trust Reassurance",
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
     "17897717360ea9fb56": {
       "type": "_blocks",
       "blocks": {
         "shop_story_reels_qANhVa": {
           "type": "shopify://apps/shop-story/blocks/reels/9533840c-375a-4863-96fe-c58cb5da53c0",
           "settings": {
-            "heading": "Our Latest Videos",
+            "heading": "The Latest Edit",
             "subheading": "",
             "layout_type": "default",
             "product_card_template": "default",
@@ -1402,8 +1324,8 @@
             "auto_play": "default",
             "show_views": "default",
             "show_title": "default",
-            "show_compare_price": "default",
-            "show_buy_button": "default",
+            "show_compare_price": "true",
+            "show_buy_button": "true",
             "button_label": "Add to cart",
             "button_action": "add_to_cart",
             "button_color": "",
@@ -1501,7 +1423,6 @@
     "1789677761c70e790a",
     "product_list_Q3JJ6r",
     "product_list_iyyJeN",
-    "1788250978afb61d99",
     "17897717360ea9fb56",
     "17897738200c2ba9d0"
   ]
