@@ -1508,6 +1508,112 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "ss_feature_1_ss_feature_1_ai_JqcnKi": {
+      "type": "ss-feature-1--ss-feature-1-ai",
+      "blocks": {
+        "image_bbGMR9": {
+          "type": "image",
+          "settings": {
+            "feature_title": "Pan-India Shipping",
+            "feature_text": "<p>Blouses packed with care and dispatched quickly across India.</p>",
+            "icon_type": "default",
+            "icon": "box",
+            "feature_url": ""
+          }
+        },
+        "image_rwb6pw": {
+          "type": "image",
+          "settings": {
+            "feature_title": "Easy Exchanges",
+            "feature_text": "<p>Simple size swaps so your Ajrak blouse sits just right.</p>",
+            "icon_type": "default",
+            "icon": "arrow_dotted_rotate_anticlockwise",
+            "feature_url": ""
+          }
+        },
+        "image_dMxJDW": {
+          "type": "image",
+          "settings": {
+            "feature_title": "Secure Checkout",
+            "feature_text": "<p>Pay safely in INR with encrypted, trusted payments.</p>",
+            "icon_type": "default",
+            "icon": "lock",
+            "feature_url": ""
+          }
+        },
+        "image_pykhhL": {
+          "type": "image",
+          "settings": {
+            "feature_title": "Hand Block Prints",
+            "feature_text": "<p>Pure Ajrak cotton with padded, side-elastic comfort.</p>",
+            "icon_type": "default",
+            "icon": "leaf",
+            "feature_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_bbGMR9",
+        "image_rwb6pw",
+        "image_dMxJDW",
+        "image_pykhhL"
+      ],
+      "name": "SS - Feature #1 AI",
+      "settings": {
+        "feature_title_custom": false,
+        "feature_title_font": "josefin_sans_n4",
+        "feature_title_size": 14,
+        "feature_title_size_mobile": 12,
+        "feature_title_advanced": false,
+        "feature_title_height": 130,
+        "feature_title_mt": 8,
+        "feature_title_mt_mobile": 8,
+        "feature_text_custom": false,
+        "feature_text_font": "josefin_sans_n4",
+        "feature_text_size": 12,
+        "feature_text_size_mobile": 12,
+        "feature_text_advanced": false,
+        "feature_text_height": 150,
+        "feature_text_mt": 4,
+        "feature_text_mt_mobile": 4,
+        "feature_icon_size": 42,
+        "feature_icon_size_mobile": 42,
+        "feature_row": 4,
+        "feature_row_mobile": 1,
+        "feature_gap": 20,
+        "feature_gap_mobile": 20,
+        "feature_background": false,
+        "feature_bg": "#f5f5f5",
+        "feature_padding_horizontal": 24,
+        "feature_padding_horizontal_mobile": 16,
+        "feature_padding_vertical": 32,
+        "feature_padding_vertical_mobile": 24,
+        "feature_radius": 16,
+        "feature_border_thickness": 0,
+        "feature_border_color": "#dfdfdf",
+        "feature_shadow": false,
+        "feature_shadow_color": "#000000",
+        "feature_title_color": "#121212",
+        "feature_text_color": "#121212",
+        "feature_icon_color": "#ff5a1f",
+        "background_style": "solid",
+        "background_color": "#ffffff",
+        "background_gradient": "linear-gradient(180deg, #FFFFFF 0%, #F2F2F2 100%)",
+        "border_color": "#dfdfdf",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_horizontal": 0,
+        "margin_horizontal_mobile": 0,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "padding_horizontal": 5,
+        "padding_horizontal_mobile": 1.5,
+        "width": "page",
+        "content_width": 1200,
+        "border_thickness": 0,
+        "section_radius": 0
+      }
     }
   },
   "order": [
@@ -1523,6 +1629,7 @@
     "product_list_iyyJeN",
     "1788250978afb61d99",
     "17897717360ea9fb56",
-    "1789772149edd45524"
+    "1789772149edd45524",
+    "ss_feature_1_ss_feature_1_ai_JqcnKi"
   ]
 }
