@@ -1,0 +1,86 @@
+{% doc %}
+  @prompt
+    Create a responsive promotional banner block for the currently selected product-list area using this uploaded image: https://sidekick.shopify.ai/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MzgwMDQ1MDIxMiwicHVyIjoiYmxvYl9pZCJ9fQ==--0d04044cfc264071036ff702dc7da47eaf57d06e/ChatGPT_Image_Sep_18_2026_01_50_43_AM.png. Use the exact same banner image on desktop and mobile, with responsive full-width sizing that preserves the image proportions and does not crop or replace it on mobile. Keep the banner clean and premium, add accessible alt text describing the 20% off first-order offer, and do not add extra text, buttons, countdowns, or unrelated content.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-promo-banner-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    line-height: 0;
+    overflow: hidden;
+  }
+
+  .ai-promo-banner-{{ ai_gen_id }}__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-promo-banner-{{ ai_gen_id }} {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<promo-banner-{{ ai_gen_id }} class="ai-promo-banner-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.image != blank %}
+    <img
+      class="ai-promo-banner-{{ ai_gen_id }}__image"
+      src="{{ block.settings.image | image_url: width: 2400 }}"
+      alt="20% off your first order"
+      width="{{ block.settings.image.width }}"
+      height="{{ block.settings.image.height }}"
+      loading="lazy"
+    >
+  {% else %}
+    <img
+      class="ai-promo-banner-{{ ai_gen_id }}__image"
+      src="https://sidekick.shopify.ai/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MzgwMDQ1MDIxMiwicHVyIjoiYmxvYl9pZCJ9fQ==--0d04044cfc264071036ff702dc7da47eaf57d06e/ChatGPT_Image_Sep_18_2026_01_50_43_AM.png"
+      alt="20% off your first order"
+      loading="lazy"
+    >
+  {% endif %}
+</promo-banner-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    if (!customElements.get('promo-banner-{{ ai_gen_id }}')) {
+      customElements.define('promo-banner-{{ ai_gen_id }}', class extends HTMLElement {});
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Promotional banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Banner image"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promotional banner"
+    }
+  ],
+  "tag": null,
+  "class": "promotional-banner-block"
+}
+{% endschema %}

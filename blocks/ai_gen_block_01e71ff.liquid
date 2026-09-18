@@ -1,0 +1,193 @@
+{% doc %}
+  @prompt
+    Create a new modern, responsive theme section that displays this customer-facing quantity discount tier list exactly: heading “Items in Cart Discount”; “🛍️ Buy 2 Items” paired with “10% OFF”; “🛍️ Buy 3+ Items” paired with “15% OFF”; “🛍️ Buy 5+ Items” paired with “20% OFF”; and “🛍️ Buy 10+ Items” paired with “30% OFF”. Match STYLON’s premium women’s Indian ethnic fashion storefront using the orange accent #FF5A1F, warm neutral background, clean typography, subtle borders, restrained shadow, and clear spacing. Make the discount amounts prominent and the tiers easy to scan on desktop and mobile. Include editable heading and tier text settings if supported. Do not add cart logic, automatic discounts, countdowns, buttons, product data, or unrelated content., dont use any background color
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-quantity-discount-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 28px;
+    color: #1f1b18;
+    border: 1px solid #dfd8d0;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(31, 27, 24, 0.07);
+    font-family: {{ settings.type_body_font.family }};
+  }
+
+  .ai-quantity-discount-{{ ai_gen_id }}__heading {
+    margin: 0 0 22px;
+    color: #1f1b18;
+    font-family: {{ settings.type_heading_font.family }};
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .ai-quantity-discount-{{ ai_gen_id }}__tiers {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .ai-quantity-discount-{{ ai_gen_id }}__tier {
+    display: flex;
+    min-height: 86px;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid #dfd8d0;
+    border-radius: 8px;
+  }
+
+  .ai-quantity-discount-{{ ai_gen_id }}__label {
+    color: #33302d;
+    font-size: 15px;
+    line-height: 1.35;
+    font-weight: 600;
+  }
+
+  .ai-quantity-discount-{{ ai_gen_id }}__amount {
+    color: #c43f0b;
+    font-family: {{ settings.type_accent_font.family }};
+    font-size: 22px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-quantity-discount-{{ ai_gen_id }} {
+      padding: 22px 16px;
+    }
+
+    .ai-quantity-discount-{{ ai_gen_id }}__heading {
+      margin-bottom: 18px;
+      font-size: 22px;
+    }
+
+    .ai-quantity-discount-{{ ai_gen_id }}__tiers {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .ai-quantity-discount-{{ ai_gen_id }}__tier {
+      min-height: 78px;
+      padding: 14px 12px;
+    }
+
+    .ai-quantity-discount-{{ ai_gen_id }}__label {
+      font-size: 14px;
+    }
+
+    .ai-quantity-discount-{{ ai_gen_id }}__amount {
+      font-size: 20px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-quantity-discount-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <h2 class="ai-quantity-discount-{{ ai_gen_id }}__heading">{{ block.settings.heading | escape }}</h2>
+  <div class="ai-quantity-discount-{{ ai_gen_id }}__tiers">
+    <div class="ai-quantity-discount-{{ ai_gen_id }}__tier">
+      <div class="ai-quantity-discount-{{ ai_gen_id }}__label">{{ block.settings.tier_1_label | escape }}</div>
+      <div class="ai-quantity-discount-{{ ai_gen_id }}__amount">{{ block.settings.tier_1_amount | escape }}</div>
+    </div>
+    <div class="ai-quantity-discount-{{ ai_gen_id }}__tier">
+      <div class="ai-quantity-discount-{{ ai_gen_id }}__label">{{ block.settings.tier_2_label | escape }}</div>
+      <div class="ai-quantity-discount-{{ ai_gen_id }}__amount">{{ block.settings.tier_2_amount | escape }}</div>
+    </div>
+    <div class="ai-quantity-discount-{{ ai_gen_id }}__tier">
+      <div class="ai-quantity-discount-{{ ai_gen_id }}__label">{{ block.settings.tier_3_label | escape }}</div>
+      <div class="ai-quantity-discount-{{ ai_gen_id }}__amount">{{ block.settings.tier_3_amount | escape }}</div>
+    </div>
+    <div class="ai-quantity-discount-{{ ai_gen_id }}__tier">
+      <div class="ai-quantity-discount-{{ ai_gen_id }}__label">{{ block.settings.tier_4_label | escape }}</div>
+      <div class="ai-quantity-discount-{{ ai_gen_id }}__amount">{{ block.settings.tier_4_amount | escape }}</div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Quantity discount tiers",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Items in Cart Discount"
+    },
+    {
+      "type": "text",
+      "id": "tier_1_label",
+      "label": "Tier 1 label",
+      "default": "🛍️ Buy 2 Items"
+    },
+    {
+      "type": "text",
+      "id": "tier_1_amount",
+      "label": "Tier 1 amount",
+      "default": "10% OFF"
+    },
+    {
+      "type": "text",
+      "id": "tier_2_label",
+      "label": "Tier 2 label",
+      "default": "🛍️ Buy 3+ Items"
+    },
+    {
+      "type": "text",
+      "id": "tier_2_amount",
+      "label": "Tier 2 amount",
+      "default": "15% OFF"
+    },
+    {
+      "type": "text",
+      "id": "tier_3_label",
+      "label": "Tier 3 label",
+      "default": "🛍️ Buy 5+ Items"
+    },
+    {
+      "type": "text",
+      "id": "tier_3_amount",
+      "label": "Tier 3 amount",
+      "default": "20% OFF"
+    },
+    {
+      "type": "text",
+      "id": "tier_4_label",
+      "label": "Tier 4 label",
+      "default": "🛍️ Buy 10+ Items"
+    },
+    {
+      "type": "text",
+      "id": "tier_4_amount",
+      "label": "Tier 4 amount",
+      "default": "30% OFF"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quantity discount tiers"
+    }
+  ],
+  "tag": null,
+  "class": "quantity-discount-tiers"
+}
+{% endschema %}

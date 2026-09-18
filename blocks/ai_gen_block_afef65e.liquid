@@ -1,0 +1,513 @@
+{% doc %}
+  @prompt
+    Create a manual sales-style notification popup system for a premium Indian fashion store called STYLON. The popup shows simulated social proof notifications using manually entered data (no real orders needed). DESIGN: Premium cream/ivory background #F8F4EC, deep black text #171717, rani-red accent #B5123E, dark antique-gold accent #8C6A2F. Small product thumbnail placeholder, elegant typography, subtle border, soft shadow, slightly rounded corners, compact size. Bottom-left on desktop, bottom-center on mobile. Never cover Add to Cart, Buy Now, or navigation. ANIMATION: Subtle slide-in from left, short display duration (4-5 seconds), fade-out. No bouncing, flashing, or sounds. POPUP FORMAT: "Recently purchased / A customer from [City] purchased / [Product Name] / [X minutes ago]" MANUAL DATA: Easy-to-edit JavaScript array at the top of the file with entries containing: city, product, time, and optional productHandle. Example entries: Pune/Ajrak Print Blouse/8 minutes ago, Mumbai/Paithani Silk Blouse/15 minutes ago, Bengaluru/Cotton Embroidered Blouse/23 minutes ago, Delhi/Khadi Cotton Blouse/5 minutes ago, Hyderabad/Golden Paithani Blouse/31 minutes ago. ROTATION: Cycle through all entries automatically with 8-10 second gaps between popups. No immediate repeats. If on a product page, prioritize notifications matching that product handle. ISOLATION: All CSS scoped to .stylon-sales-popup wrapper only. Zero impact on homepage, product pages, collection pages, header, footer, cart, checkout, navigation, buttons, typography, or global CSS. FUTURE-READY: Structure the data array so it can later be replaced with real Shopify order data without rebuilding the popup system., instead of customer use names. make design nice. dont show any profile picture or logo
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .stylon-sales-popup-{{ ai_gen_id }} {
+    display: block;
+    position: fixed;
+    bottom: {{ block.settings.bottom_spacing }}px;
+    left: {{ block.settings.left_spacing }}px;
+    z-index: 9999;
+    max-width: {{ block.settings.popup_width }}px;
+    background: linear-gradient(135deg, {{ block.settings.background_color }} 0%, {{ block.settings.background_gradient_color }} 100%);
+    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    box-shadow: {{ block.settings.shadow_horizontal }}px {{ block.settings.shadow_vertical }}px {{ block.settings.shadow_blur }}px {{ block.settings.shadow_color }};
+    padding: {{ block.settings.padding }}px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-100%);
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+    backdrop-filter: blur(10px);
+  }
+
+  .stylon-sales-popup-{{ ai_gen_id }}.stylon-sales-popup-visible-{{ ai_gen_id }} {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+  }
+
+  .stylon-sales-popup-{{ ai_gen_id }}.stylon-sales-popup-hiding-{{ ai_gen_id }} {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  .stylon-sales-popup-content-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.content_gap }}px;
+  }
+
+  .stylon-sales-popup-text-{{ ai_gen_id }} {
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  .stylon-sales-popup-label-{{ ai_gen_id }} {
+    font-size: {{ block.settings.label_font_size }}px;
+    color: {{ block.settings.accent_color }};
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .stylon-sales-popup-name-{{ ai_gen_id }} {
+    font-size: {{ block.settings.name_font_size }}px;
+    color: {{ block.settings.text_color }};
+    font-weight: 600;
+    margin: 0 0 6px 0;
+    line-height: 1.3;
+  }
+
+  .stylon-sales-popup-product-{{ ai_gen_id }} {
+    font-size: {{ block.settings.product_font_size }}px;
+    color: {{ block.settings.text_color }};
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+    opacity: 0.9;
+  }
+
+  .stylon-sales-popup-time-{{ ai_gen_id }} {
+    font-size: {{ block.settings.time_font_size }}px;
+    color: {{ block.settings.time_color }};
+    margin: 0;
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .stylon-sales-popup-close-{{ ai_gen_id }} {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    color: {{ block.settings.text_color }};
+    opacity: 0.5;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    border-radius: 50%;
+  }
+
+  .stylon-sales-popup-close-{{ ai_gen_id }}:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .stylon-sales-popup-close-{{ ai_gen_id }} svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .stylon-sales-popup-divider-{{ ai_gen_id }} {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, {{ block.settings.accent_color }} 50%, transparent 100%);
+    opacity: 0.2;
+    margin: 4px 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .stylon-sales-popup-{{ ai_gen_id }} {
+      bottom: {{ block.settings.mobile_bottom_spacing }}px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100%);
+      max-width: calc(100% - 32px);
+    }
+
+    .stylon-sales-popup-{{ ai_gen_id }}.stylon-sales-popup-visible-{{ ai_gen_id }} {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .stylon-sales-popup-{{ ai_gen_id }}.stylon-sales-popup-hiding-{{ ai_gen_id }} {
+      transform: translateX(-50%) translateY(20px);
+    }
+  }
+{% endstyle %}
+
+<stylon-sales-popup-{{ ai_gen_id }}
+  class="stylon-sales-popup-{{ ai_gen_id }}"
+  data-display-duration="{{ block.settings.display_duration }}"
+  data-interval-duration="{{ block.settings.interval_duration }}"
+  {{ block.shopify_attributes }}
+>
+  <button
+    class="stylon-sales-popup-close-{{ ai_gen_id }}"
+    aria-label="Close notification"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+  <div class="stylon-sales-popup-content-{{ ai_gen_id }}">
+    <div class="stylon-sales-popup-text-{{ ai_gen_id }}">
+      <p class="stylon-sales-popup-label-{{ ai_gen_id }}">Just Purchased</p>
+      <div class="stylon-sales-popup-divider-{{ ai_gen_id }}"></div>
+      <p class="stylon-sales-popup-name-{{ ai_gen_id }}"></p>
+      <p class="stylon-sales-popup-product-{{ ai_gen_id }}"></p>
+      <p class="stylon-sales-popup-time-{{ ai_gen_id }}"></p>
+    </div>
+  </div>
+</stylon-sales-popup-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class StylonSalesPopup{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.notifications = [
+          { name: 'Priya S.', city: 'Pune', product: 'Ajrak Print Blouse', time: '8 minutes ago', productHandle: 'ajrak-print-blouse' },
+          { name: 'Ananya M.', city: 'Mumbai', product: 'Paithani Silk Blouse', time: '15 minutes ago', productHandle: 'paithani-silk-blouse' },
+          { name: 'Kavya R.', city: 'Bengaluru', product: 'Cotton Embroidered Blouse', time: '23 minutes ago', productHandle: 'cotton-embroidered-blouse' },
+          { name: 'Neha K.', city: 'Delhi', product: 'Khadi Cotton Blouse', time: '5 minutes ago', productHandle: 'khadi-cotton-blouse' },
+          { name: 'Divya P.', city: 'Hyderabad', product: 'Golden Paithani Blouse', time: '31 minutes ago', productHandle: 'golden-paithani-blouse' },
+          { name: 'Meera V.', city: 'Chennai', product: 'Kanjivaram Silk Blouse', time: '12 minutes ago', productHandle: 'kanjivaram-silk-blouse' },
+          { name: 'Riya B.', city: 'Kolkata', product: 'Tant Cotton Blouse', time: '19 minutes ago', productHandle: 'tant-cotton-blouse' },
+          { name: 'Isha S.', city: 'Jaipur', product: 'Block Print Blouse', time: '27 minutes ago', productHandle: 'block-print-blouse' },
+          { name: 'Aisha P.', city: 'Ahmedabad', product: 'Bandhani Silk Blouse', time: '9 minutes ago', productHandle: 'bandhani-silk-blouse' },
+          { name: 'Simran D.', city: 'Surat', product: 'Zari Work Blouse', time: '14 minutes ago', productHandle: 'zari-work-blouse' }
+        ];
+        this.currentIndex = 0;
+        this.isVisible = false;
+        this.isDismissed = false;
+        this.displayTimer = null;
+        this.intervalTimer = null;
+      }
+
+      connectedCallback() {
+        this.closeButton = this.querySelector('.stylon-sales-popup-close-{{ ai_gen_id }}');
+        this.nameEl = this.querySelector('.stylon-sales-popup-name-{{ ai_gen_id }}');
+        this.productEl = this.querySelector('.stylon-sales-popup-product-{{ ai_gen_id }}');
+        this.timeEl = this.querySelector('.stylon-sales-popup-time-{{ ai_gen_id }}');
+
+        this.displayDuration = parseInt(this.dataset.displayDuration) * 1000;
+        this.intervalDuration = parseInt(this.dataset.intervalDuration) * 1000;
+
+        this.setupEventListeners();
+        this.prioritizeNotifications();
+        this.startRotation();
+      }
+
+      setupEventListeners() {
+        this.closeButton.addEventListener('click', () => {
+          this.isDismissed = true;
+          this.hidePopup();
+          this.stopRotation();
+        });
+      }
+
+      prioritizeNotifications() {
+        const currentProductHandle = window.location.pathname.split('/').pop();
+        const matchingNotifications = this.notifications.filter(n => n.productHandle === currentProductHandle);
+        const otherNotifications = this.notifications.filter(n => n.productHandle !== currentProductHandle);
+        
+        if (matchingNotifications.length > 0) {
+          this.notifications = [...matchingNotifications, ...otherNotifications];
+        }
+      }
+
+      startRotation() {
+        this.showNextNotification();
+      }
+
+      showNextNotification() {
+        if (this.isDismissed) return;
+
+        const notification = this.notifications[this.currentIndex];
+        this.updateContent(notification);
+        this.showPopup();
+
+        this.displayTimer = setTimeout(() => {
+          this.hidePopup();
+          this.currentIndex = (this.currentIndex + 1) % this.notifications.length;
+          
+          this.intervalTimer = setTimeout(() => {
+            this.showNextNotification();
+          }, this.intervalDuration);
+        }, this.displayDuration);
+      }
+
+      updateContent(notification) {
+        this.nameEl.textContent = `${notification.name} from ${notification.city}`;
+        this.productEl.textContent = notification.product;
+        this.timeEl.textContent = notification.time;
+      }
+
+      showPopup() {
+        this.classList.remove('stylon-sales-popup-hiding-{{ ai_gen_id }}');
+        this.classList.add('stylon-sales-popup-visible-{{ ai_gen_id }}');
+        this.isVisible = true;
+      }
+
+      hidePopup() {
+        this.classList.add('stylon-sales-popup-hiding-{{ ai_gen_id }}');
+        setTimeout(() => {
+          this.classList.remove('stylon-sales-popup-visible-{{ ai_gen_id }}');
+          this.classList.remove('stylon-sales-popup-hiding-{{ ai_gen_id }}');
+          this.isVisible = false;
+        }, 400);
+      }
+
+      stopRotation() {
+        if (this.displayTimer) clearTimeout(this.displayTimer);
+        if (this.intervalTimer) clearTimeout(this.intervalTimer);
+      }
+
+      disconnectedCallback() {
+        this.stopRotation();
+      }
+    }
+
+    customElements.define('stylon-sales-popup-{{ ai_gen_id }}', StylonSalesPopup{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Sales notification popup",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Timing"
+    },
+    {
+      "type": "range",
+      "id": "display_duration",
+      "label": "Display duration",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "interval_duration",
+      "label": "Interval between popups",
+      "min": 5,
+      "max": 20,
+      "step": 1,
+      "unit": "s",
+      "default": 9
+    },
+    {
+      "type": "header",
+      "content": "Position"
+    },
+    {
+      "type": "range",
+      "id": "bottom_spacing",
+      "label": "Bottom spacing (desktop)",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "left_spacing",
+      "label": "Left spacing (desktop)",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_bottom_spacing",
+      "label": "Bottom spacing (mobile)",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Popup style"
+    },
+    {
+      "type": "range",
+      "id": "popup_width",
+      "label": "Width",
+      "min": 250,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 300
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background start",
+      "default": "#F8F4EC"
+    },
+    {
+      "type": "color",
+      "id": "background_gradient_color",
+      "label": "Background end",
+      "default": "#FFF9F0"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#171717"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#B5123E"
+    },
+    {
+      "type": "color",
+      "id": "time_color",
+      "label": "Time text",
+      "default": "#8C6A2F"
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Padding",
+      "min": 10,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "label": "Content gap",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Border and shadow"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#E5DCC8"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "shadow_horizontal",
+      "label": "Shadow horizontal",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "shadow_vertical",
+      "label": "Shadow vertical",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "shadow_blur",
+      "label": "Shadow blur",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "shadow_color",
+      "label": "Shadow color",
+      "default": "rgba(0, 0, 0, 0.15)"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "label_font_size",
+      "label": "Label size",
+      "min": 8,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "name_font_size",
+      "label": "Name size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "product_font_size",
+      "label": "Product size",
+      "min": 11,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "time_font_size",
+      "label": "Time size",
+      "min": 9,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sales notification popup"
+    }
+  ]
+}
+{% endschema %}

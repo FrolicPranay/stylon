@@ -1,0 +1,612 @@
+{% doc %}
+  @prompt
+    Create a beautiful, modern Collections showcase section for a premium Indian ethnic fashion brand called Stylon. Requirements: Display collection cards in a responsive grid — 3 columns on desktop, 2 columns on tablet, 1 column on mobile. Each collection card should have: a full-bleed collection image with an elegant dark gradient overlay at the bottom, collection title in uppercase with letter-spacing overlaid on the image, a subtle hover zoom effect on the image, and an optional short description below the title. Cards should have slight border-radius (8px) and a soft box-shadow. Overall feel: dark luxury editorial — minimal, elegant, high-end fashion. Colors: dark overlays, gold accent (#c9922a) for hover state or title underline effect, white title text. Section settings should include: heading text, heading alignment, number of columns (2 or 3), gap between cards, section padding, background color, overlay opacity, card border radius. Each card should be linkable to a Shopify collection. Include up to 6 collection blocks, each with: collection picker, optional custom title override, optional custom image override. Subtle fade-in animation on scroll for the grid. Mobile: 1 column, full width cards, compact padding., dont show title inside image. keep it below image. keep 2 columns for mobile. make it look modern, change the hover effect and remove line under text. keep it clean hover effect . keep title look modern and good, keep heading color and size editable and keep view all button at top right. , columns of desktop will be 5 on ipad it will be 4 and on mobile 2. give left and right side padding option of the block and keep it 0. i will be showing 10 collection only at a time. if user want to see all collections then user will click on view all button. give options to how many collections to show. also give collection select option instead of hardcoding., keep iamge zoom and title color change hover effect only. give me collection select option only., where is view all button. make collection card good and distinct, dont add moving effect to both card and view all button . also remove arrwo from view all button, keep different heading size for desktop and mobile. keep shadow less if hover. , keep collection seelct option only 1 instead of seperate select. also keep option for how  many cards to show., no. keep single option where i select collections to show ., if any product have offer in particular collection then collection card will have sale tag at top right of card. also give option to enable and disable this feature. 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-collections-showcase-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.section_background_color }};
+    padding: {{ block.settings.section_padding_top }}px {{ block.settings.section_padding_horizontal }}px {{ block.settings.section_padding_bottom }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-collections-showcase-{{ ai_gen_id }} {
+      padding: {{ block.settings.section_padding_top_mobile }}px {{ block.settings.section_padding_horizontal_mobile }}px {{ block.settings.section_padding_bottom_mobile }}px;
+    }
+  }
+
+  .ai-collections-showcase__container-{{ ai_gen_id }} {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .ai-collections-showcase__header-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    gap: 20px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-collections-showcase__header-{{ ai_gen_id }} {
+      margin-bottom: 24px;
+    }
+  }
+
+  .ai-collections-showcase__heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size_desktop }}px;
+    font-weight: 700;
+    text-align: {{ block.settings.heading_alignment }};
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: {{ block.settings.heading_color }};
+    flex: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-collections-showcase__heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size_mobile }}px;
+    }
+  }
+
+  .ai-collections-showcase__view-all-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: {{ block.settings.button_text_color }};
+    background-color: {{ block.settings.button_background_color }};
+    padding: 12px 24px;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .ai-collections-showcase__view-all-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background_color }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-collections-showcase__view-all-{{ ai_gen_id }} {
+      font-size: 11px;
+      padding: 8px 16px;
+    }
+  }
+
+  .ai-collections-showcase__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: {{ block.settings.card_gap }}px;
+  }
+
+
+  @media screen and (max-width: 1199px) {
+    .ai-collections-showcase__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat(4, 1fr);
+      gap: {{ block.settings.card_gap | times: 0.85 }}px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-collections-showcase__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat(2, 1fr);
+      gap: {{ block.settings.card_gap | times: 0.5 }}px;
+    }
+  }
+
+  .ai-collections-showcase__card-{{ ai_gen_id }} {
+    display: block;
+    text-decoration: none;
+    background-color: {{ block.settings.card_background_color }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .ai-collections-showcase__card-{{ ai_gen_id }}:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-collections-showcase__card-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    background-color: #f4f4f4;
+  }
+
+  .ai-collections-showcase__card-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .ai-collections-showcase__card-{{ ai_gen_id }}:hover .ai-collections-showcase__card-image-{{ ai_gen_id }} {
+    transform: scale(1.08);
+  }
+
+  .ai-collections-showcase__card-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-collections-showcase__card-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-collections-showcase__sale-badge-{{ ai_gen_id }} {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: {{ block.settings.sale_badge_background }};
+    color: {{ block.settings.sale_badge_text_color }};
+    padding: 6px 14px;
+    border-radius: {{ block.settings.sale_badge_radius }}px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-collections-showcase__sale-badge-{{ ai_gen_id }} {
+      padding: 4px 10px;
+      font-size: 9px;
+      top: 8px;
+      right: 8px;
+    }
+  }
+
+  .ai-collections-showcase__card-content-{{ ai_gen_id }} {
+    padding: 20px 16px;
+    text-align: center;
+    background-color: {{ block.settings.card_background_color }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-collections-showcase__card-content-{{ ai_gen_id }} {
+      padding: 14px 12px;
+    }
+  }
+
+  .ai-collections-showcase__card-title-{{ ai_gen_id }} {
+    font-size: 16px;
+    font-weight: 700;
+    color: {{ block.settings.title_color }};
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
+    transition: color 0.3s ease;
+    line-height: 1.4;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-collections-showcase__card-title-{{ ai_gen_id }} {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+  }
+
+  .ai-collections-showcase__card-{{ ai_gen_id }}:hover .ai-collections-showcase__card-title-{{ ai_gen_id }} {
+    color: {{ block.settings.accent_color }};
+  }
+
+  .ai-collections-showcase__empty-state-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+  }
+
+  .ai-collections-showcase__empty-state-text-{{ ai_gen_id }} {
+    font-size: 16px;
+    margin: 0;
+  }
+{% endstyle %}
+
+<ai-collections-showcase-{{ ai_gen_id }} class="ai-collections-showcase-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-collections-showcase__container-{{ ai_gen_id }}">
+    <div class="ai-collections-showcase__header-{{ ai_gen_id }}">
+      {% if block.settings.heading != blank %}
+        <h2 class="ai-collections-showcase__heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+      {% endif %}
+
+      {% if block.settings.show_view_all and block.settings.view_all_link != blank %}
+        <a href="{{ block.settings.view_all_link }}" class="ai-collections-showcase__view-all-{{ ai_gen_id }}">
+          {{ block.settings.view_all_text }}
+        </a>
+      {% endif %}
+    </div>
+
+    {% assign selected_collections = block.settings.collections %}
+    {% assign cards_to_show = block.settings.cards_to_show %}
+
+    {% if selected_collections != blank %}
+      <div class="ai-collections-showcase__grid-{{ ai_gen_id }}">
+        {% for collection in selected_collections limit: cards_to_show %}
+          {% if collection.featured_image != blank %}
+            {% assign display_image = collection.featured_image %}
+          {% else %}
+            {% assign display_image = blank %}
+          {% endif %}
+
+          {% assign has_sale = false %}
+          {% if block.settings.show_sale_badge %}
+            {% for product in collection.products limit: 50 %}
+              {% if product.compare_at_price > product.price %}
+                {% assign has_sale = true %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          <a 
+            href="{{ collection.url }}" 
+            class="ai-collections-showcase__card-{{ ai_gen_id }}"
+            aria-label="{{ collection.title }}"
+          >
+            <div class="ai-collections-showcase__card-image-wrapper-{{ ai_gen_id }}">
+              {% if display_image != blank %}
+                <img
+                  src="{{ display_image | image_url: width: 800 }}"
+                  alt="{{ display_image.alt | escape }}"
+                  width="800"
+                  height="1067"
+                  loading="lazy"
+                  class="ai-collections-showcase__card-image-{{ ai_gen_id }}"
+                >
+              {% else %}
+                <div class="ai-collections-showcase__card-placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+
+              {% if has_sale %}
+                <div class="ai-collections-showcase__sale-badge-{{ ai_gen_id }}">
+                  {{ block.settings.sale_badge_label }}
+                </div>
+              {% endif %}
+            </div>
+            
+            <div class="ai-collections-showcase__card-content-{{ ai_gen_id }}">
+              <h3 class="ai-collections-showcase__card-title-{{ ai_gen_id }}">{{ collection.title }}</h3>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="ai-collections-showcase__empty-state-{{ ai_gen_id }}">
+        <p class="ai-collections-showcase__empty-state-text-{{ ai_gen_id }}">Select collections to showcase</p>
+      </div>
+    {% endif %}
+  </div>
+</ai-collections-showcase-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class AiCollectionsShowcase{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.grid = this.querySelector('.ai-collections-showcase__grid-{{ ai_gen_id }}');
+      }
+
+      connectedCallback() {
+        if (this.grid) {
+          
+        }
+      }
+
+
+
+    customElements.define('ai-collections-showcase-{{ ai_gen_id }}', AiCollectionsShowcase{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Collections showcase",
+  "class": "ai-collections-showcase",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop by Collection"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size (desktop)",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size (mobile)",
+      "min": 16,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "View all button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show view all button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "Button text",
+      "default": "View All"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background_color",
+      "label": "Button hover background",
+      "default": "#c9922a"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Collections"
+    },
+    {
+      "type": "collection_list",
+      "id": "collections",
+      "label": "Collections",
+      "limit": 20
+    },
+    {
+      "type": "range",
+      "id": "cards_to_show",
+      "label": "Cards to show",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Sale badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale_badge",
+      "label": "Show sale badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sale_badge_label",
+      "label": "Badge text",
+      "default": "SALE"
+    },
+    {
+      "type": "color",
+      "id": "sale_badge_background",
+      "label": "Badge background",
+      "default": "#ff0000"
+    },
+    {
+      "type": "color",
+      "id": "sale_badge_text_color",
+      "label": "Badge text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "sale_badge_radius",
+      "label": "Badge border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Gap between cards",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Top padding (desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Bottom padding (desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "section_padding_horizontal",
+      "label": "Left/Right padding (desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top_mobile",
+      "label": "Top padding (mobile)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom_mobile",
+      "label": "Bottom padding (mobile)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "section_padding_horizontal_mobile",
+      "label": "Left/Right padding (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#c9922a"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_background_color",
+      "label": "Section background",
+      "default": "#f9f9f9"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collections showcase"
+    }
+  ]
+}
+{% endschema %}

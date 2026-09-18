@@ -1,0 +1,75 @@
+
+<!-- BEGIN USF -->
+<!--begin usf settings-->
+<script>
+if (window._usfGetSettings) {
+  const _currentBlockId = {{ block.id | json }};
+  const customSettings = {
+    custom_liquid: {{ block.settings.custom_liquid | json }},
+  };
+  _usfGridBlocks.some(parent => {
+    if (parent.id === _currentBlockId) {
+      parent.name = "custom-liquid";
+      parent.settings = customSettings;
+      return true;
+    }
+    return parent.blocks?.some(child => {
+
+      if (child.id === _currentBlockId) {
+        child.name = "custom-liquid";
+        child.settings = customSettings;
+        return true;
+      }
+      return child.blocks?.some(grand => {
+        if (grand.id === _currentBlockId) {
+          grand.name = "custom-liquid";
+          grand.settings = customSettings;
+          return true;
+        }
+      });
+    });
+  });
+}
+</script>
+<!--end usf settings-->
+
+<div>
+  {{ block.settings.custom_liquid }}
+</div>
+<!-- END USF -->
+
+{% comment %}USF
+
+
+
+
+
+
+<div>
+  {{ block.settings.custom_liquid }}
+</div>
+
+
+
+
+USF{% endcomment %}
+{% schema %}
+{
+  "name": "t:names.custom_liquid",
+  "tag": null,
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "custom_liquid",
+      "label": "t:settings.custom_liquid",
+      "info": "t:info.custom_liquid"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.custom_liquid",
+      "category": "t:categories.custom"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,391 @@
+{% doc %}
+  @prompt
+    Create a "Shop by Collection" section with the following specs:
+    
+    - Customizable left and right padding settings (padding-inline-start and padding-inline-end), both defaulting to 0px so collection cards align flush with section edges
+    - Customizable top and bottom padding settings as well
+    - A grid of collection cards with customizable number of columns (default 3) and number of collections to show
+    - Each collection card shows the collection image as background, fully covering the card
+    - Collection title is placed inside the image at the bottom-left corner
+    - A subtle black gradient overlay at the bottom of each image ensures the title is readable (dark gradient from transparent to semi-black)
+    - Cards are fully clickable and link to the collection page
+    - Optional section heading text setting
+    - Clean hover effect: slight zoom on the image
+    - Design must be clean, modern, premium, and fully responsive (stack to 1 column on mobile, 2 on tablet)
+    - Card aspect ratio should be consistent (e.g., 4:5 or square)
+    - Title text should be white, bold, elegant typography
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-shop-collections-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding-top: {{ block.settings.padding_top }}px;
+    padding-bottom: {{ block.settings.padding_bottom }}px;
+    padding-inline-start: {{ block.settings.padding_left }}px;
+    padding-inline-end: {{ block.settings.padding_right }}px;
+  }
+
+  .ai-shop-collections__heading-{{ ai_gen_id }} {
+    margin: 0 0 40px;
+    text-align: center;
+    font-size: {{ block.settings.heading_size }}px;
+    color: {{ block.settings.heading_color }};
+  }
+
+  .ai-shop-collections__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, 1fr);
+    gap: {{ block.settings.grid_gap }}px;
+  }
+
+  .ai-shop-collections__card-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ block.settings.card_border_radius }}px;
+    aspect-ratio: {{ block.settings.card_aspect_ratio }};
+    display: block;
+    text-decoration: none;
+  }
+
+  .ai-shop-collections__image-wrapper-{{ ai_gen_id }} {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .ai-shop-collections__image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .ai-shop-collections__card-{{ ai_gen_id }}:hover .ai-shop-collections__image-{{ ai_gen_id }} {
+    transform: scale(1.05);
+  }
+
+  .ai-shop-collections__placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-shop-collections__placeholder-{{ ai_gen_id }} svg {
+    width: 40%;
+    height: 40%;
+    opacity: 0.3;
+  }
+
+  .ai-shop-collections__gradient-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.3) 50%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+    pointer-events: none;
+  }
+
+  .ai-shop-collections__title-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: {{ block.settings.title_padding }}px;
+    margin: 0;
+    color: #ffffff;
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    z-index: 1;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  @media screen and (max-width: 989px) and (min-width: 750px) {
+    .ai-shop-collections__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_tablet }}, 1fr);
+    }
+
+    .ai-shop-collections__title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.title_size }}px * 0.9);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-shop-collections__grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+    }
+
+    .ai-shop-collections__heading-{{ ai_gen_id }} {
+      margin-bottom: 24px;
+      font-size: calc({{ block.settings.heading_size }}px * 0.8);
+    }
+
+    .ai-shop-collections__title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.title_size }}px * 0.85);
+      padding: {{ block.settings.title_padding | times: 0.75 }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-shop-collections-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.heading != blank %}
+    <h2 class="ai-shop-collections__heading-{{ ai_gen_id }}">
+      {{ block.settings.heading }}
+    </h2>
+  {% endif %}
+
+  <div class="ai-shop-collections__grid-{{ ai_gen_id }}">
+    {% if block.settings.collections != blank %}
+      {% for collection in block.settings.collections limit: block.settings.collection_count %}
+        <a
+          href="{{ collection.url }}"
+          class="ai-shop-collections__card-{{ ai_gen_id }}"
+          aria-label="{{ collection.title | escape }}"
+        >
+          <div class="ai-shop-collections__image-wrapper-{{ ai_gen_id }}">
+            {% if collection.image %}
+              <img
+                src="{{ collection.image | image_url: width: 800 }}"
+                srcset="
+                  {{ collection.image | image_url: width: 400 }} 400w,
+                  {{ collection.image | image_url: width: 600 }} 600w,
+                  {{ collection.image | image_url: width: 800 }} 800w,
+                  {{ collection.image | image_url: width: 1000 }} 1000w
+                "
+                sizes="(max-width: 749px) 100vw, (max-width: 989px) calc(100vw / {{ block.settings.columns_tablet }}), calc(100vw / {{ block.settings.columns_desktop }})"
+                alt="{{ collection.image.alt | escape }}"
+                width="{{ collection.image.width }}"
+                height="{{ collection.image.height }}"
+                loading="lazy"
+                class="ai-shop-collections__image-{{ ai_gen_id }}"
+              >
+            {% else %}
+              <div class="ai-shop-collections__placeholder-{{ ai_gen_id }}">
+                {{ 'collection-1' | placeholder_svg_tag }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="ai-shop-collections__gradient-{{ ai_gen_id }}"></div>
+
+          <h3 class="ai-shop-collections__title-{{ ai_gen_id }}">
+            {{ collection.title }}
+          </h3>
+        </a>
+      {% endfor %}
+    {% else %}
+      {% for i in (1..block.settings.collection_count) %}
+        <div class="ai-shop-collections__card-{{ ai_gen_id }}">
+          <div class="ai-shop-collections__image-wrapper-{{ ai_gen_id }}">
+            <div class="ai-shop-collections__placeholder-{{ ai_gen_id }}">
+              {{ 'collection-1' | placeholder_svg_tag }}
+            </div>
+          </div>
+
+          <div class="ai-shop-collections__gradient-{{ ai_gen_id }}"></div>
+
+          <h3 class="ai-shop-collections__title-{{ ai_gen_id }}">
+            Collection {{ i }}
+          </h3>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Shop by collection",
+  "tag": null,
+  "class": "ai-shop-by-collection-block",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading text",
+      "default": "Shop by Collection"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 16,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 48
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Collections"
+    },
+    {
+      "type": "collection_list",
+      "id": "collections",
+      "label": "Collections",
+      "limit": 12
+    },
+    {
+      "type": "range",
+      "id": "collection_count",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Collections to show",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Columns on desktop",
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "columns_tablet",
+      "label": "Columns on tablet",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap between cards",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "select",
+      "id": "card_aspect_ratio",
+      "label": "Card aspect ratio",
+      "options": [
+        { "value": "1/1", "label": "Square (1:1)" },
+        { "value": "4/5", "label": "Portrait (4:5)" },
+        { "value": "3/4", "label": "Portrait (3:4)" },
+        { "value": "16/9", "label": "Landscape (16:9)" }
+      ],
+      "default": "4/5"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Card border radius",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 14,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Title size",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "title_padding",
+      "min": 12,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Title padding",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Left padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Right padding",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop by collection"
+    }
+  ]
+}
+{% endschema %}

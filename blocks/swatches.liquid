@@ -1,0 +1,253 @@
+
+<!-- BEGIN USF -->
+{%- liquid
+  assign block_settings = block.settings
+  for product_option in closest.product.options_with_values
+    assign swatch_count = product_option.values | map: 'swatch' | compact | size
+
+    if swatch_count > 0
+      assign product_has_swatches = true
+    endif
+  endfor
+-%}
+<!--begin usf settings-->
+{% capture blockStyle %}
+  --overflow-list-alignment: {{ block_settings.product_swatches_alignment }};
+      --overflow-list-alignment-mobile: {{ block_settings.product_swatches_alignment_mobile }};
+      --product-swatches-alignment: {% if block_settings.product_swatches_alignment == 'flex-start' %}start{% elsif block_settings.product_swatches_alignment == 'flex-end' %}end{% else %}center{% endif %};
+      --product-swatches-alignment-mobile: {% if block_settings.product_swatches_alignment_mobile == 'flex-start' %}start{% elsif block_settings.product_swatches_alignment_mobile == 'flex-end' %}end{% else %}center{% endif %};
+      --product-swatches-padding-block-start: {{ block_settings.product_swatches_padding_top }}px;
+      --product-swatches-padding-block-end: {{ block_settings.product_swatches_padding_bottom }}px;
+      --product-swatches-padding-inline-start: {{ block_settings.product_swatches_padding_left }}px;
+      --product-swatches-padding-inline-end: {{ block_settings.product_swatches_padding_right }}px;
+{% endcapture %}
+<script>
+if (window._usfGetSettings) {
+  const _currentBlockId = {{ block.id | json }};
+  const swatchSettings = {
+    blockStyle: {{ blockStyle | strip_newlines | json }},
+    attributes: {{ block.shopify_attributes | json }},
+  };
+  _usfGridBlocks.some(parent => {
+    if (parent.id === _currentBlockId) {
+      parent.name = "swatch";
+      parent.settings = swatchSettings;
+      return true;
+    }
+    return parent.blocks?.some(child => {
+
+      if (child.id === _currentBlockId) {
+        child.name = "swatch";
+        child.settings = swatchSettings;
+        return true;
+      }
+      return child.blocks?.some(grand => {
+        if (grand.id === _currentBlockId) {
+          grand.name = "swatch";
+          grand.settings = swatchSettings;
+          return true;
+        }
+      });
+    });
+  });
+}
+</script>
+<!--end usf settings-->
+{% stylesheet %}
+  product-swatches {
+    width: 100%;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    gap: 0;
+    flex-shrink: 0;
+  }
+{% endstylesheet %}
+{% if product_has_swatches %}
+  <product-swatches
+    data-product-id="{{ closest.product.id }}"
+    data-product-url="{{ closest.product.url }}"
+    style="
+      --overflow-list-alignment: {{ block_settings.product_swatches_alignment }};
+      --overflow-list-alignment-mobile: {{ block_settings.product_swatches_alignment_mobile }};
+      --product-swatches-alignment: {% if block_settings.product_swatches_alignment == 'flex-start' %}start{% elsif block_settings.product_swatches_alignment == 'flex-end' %}end{% else %}center{% endif %};
+      --product-swatches-alignment-mobile: {% if block_settings.product_swatches_alignment_mobile == 'flex-start' %}start{% elsif block_settings.product_swatches_alignment_mobile == 'flex-end' %}end{% else %}center{% endif %};
+      --product-swatches-padding-block-start: {{ block_settings.product_swatches_padding_top }}px;
+      --product-swatches-padding-block-end: {{ block_settings.product_swatches_padding_bottom }}px;
+      --product-swatches-padding-inline-start: {{ block_settings.product_swatches_padding_left }}px;
+      --product-swatches-padding-inline-end: {{ block_settings.product_swatches_padding_right }}px;
+    "
+    {{ block.shopify_attributes }}
+  >
+    {% render 'variant-swatches', product_resource: closest.product %}
+  </product-swatches>
+{% endif %}
+<!-- END USF -->
+
+{% comment %}USF
+
+
+
+
+
+
+{%- liquid
+  assign block_settings = block.settings
+  for product_option in closest.product.options_with_values
+    assign swatch_count = product_option.values | map: 'swatch' | compact | size
+
+    if swatch_count > 0
+      assign product_has_swatches = true
+    endif
+  endfor
+-%}
+
+{% stylesheet %}
+  product-swatches {
+    width: 100%;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    gap: 0;
+    flex-shrink: 0;
+  }
+{% endstylesheet %}
+
+{% if product_has_swatches %}
+  <product-swatches
+    data-product-id="{{ closest.product.id }}"
+    data-product-url="{{ closest.product.url }}"
+    style="
+      --overflow-list-alignment: {{ block_settings.product_swatches_alignment }};
+      --overflow-list-alignment-mobile: {{ block_settings.product_swatches_alignment_mobile }};
+      --product-swatches-alignment: {% if block_settings.product_swatches_alignment == 'flex-start' %}start{% elsif block_settings.product_swatches_alignment == 'flex-end' %}end{% else %}center{% endif %};
+      --product-swatches-alignment-mobile: {% if block_settings.product_swatches_alignment_mobile == 'flex-start' %}start{% elsif block_settings.product_swatches_alignment_mobile == 'flex-end' %}end{% else %}center{% endif %};
+      --product-swatches-padding-block-start: {{ block_settings.product_swatches_padding_top }}px;
+      --product-swatches-padding-block-end: {{ block_settings.product_swatches_padding_bottom }}px;
+      --product-swatches-padding-inline-start: {{ block_settings.product_swatches_padding_left }}px;
+      --product-swatches-padding-inline-end: {{ block_settings.product_swatches_padding_right }}px;
+    "
+    {{ block.shopify_attributes }}
+  >
+    {% render 'variant-swatches', product_resource: closest.product %}
+  </product-swatches>
+{% endif %}
+
+
+
+
+USF{% endcomment %}
+{% schema %}
+{
+  "name": "t:names.swatches",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:content.resource_reference_product_swatches"
+    },
+    {
+      "type": "select",
+      "id": "product_swatches_alignment",
+      "label": "t:settings.alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "select",
+      "id": "product_swatches_alignment_mobile",
+      "label": "t:settings.alignment_mobile",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding",
+      "visible_if": "{{ block.settings.hide_padding == false }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_padding",
+      "label": "t:settings.hide_padding",
+      "default": false,
+      "visible_if": "{{ false }}"
+    },
+    {
+      "type": "range",
+      "id": "product_swatches_padding_top",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 4,
+      "visible_if": "{{ block.settings.hide_padding == false }}"
+    },
+    {
+      "type": "range",
+      "id": "product_swatches_padding_bottom",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.hide_padding == false }}"
+    },
+    {
+      "type": "range",
+      "id": "product_swatches_padding_left",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.hide_padding == false }}"
+    },
+    {
+      "type": "range",
+      "id": "product_swatches_padding_right",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.hide_padding == false }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.swatches",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

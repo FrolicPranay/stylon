@@ -1,0 +1,356 @@
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}  
+
+{% liquid  
+  assign dynamic_title = shop.name  
+  if collection  
+    assign dynamic_title = collection.title  
+  elsif product  
+    assign dynamic_title = product.title  
+  elsif page  
+    assign dynamic_title = page.title  
+  elsif blog  
+    assign dynamic_title = blog.title  
+  elsif article  
+    assign dynamic_title = article.title  
+  elsif search  
+    assign dynamic_title = search.terms  
+  endif  
+
+  if block.settings.custom_text != blank 
+    assign heading_text = block.settings.custom_text 
+  else 
+    assign heading_text = dynamic_title 
+  endif 
+%}  
+
+{% style %}  
+
+  .ai-dynamic-heading-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+
+    color: {{ block.settings.text_color }};
+    text-align: {{ block.settings.alignment }};
+
+    font-family: var(--font-heading-family, var(--font-body-family, sans-serif));
+    font-size: {{ block.settings.font_size }}px;
+    font-weight: {{ block.settings.font_weight }};
+    line-height: {{ block.settings.line_height }};
+    letter-spacing: {{ block.settings.letter_spacing }}px;
+
+    text-transform: {{ block.settings.text_case }};
+    font-style: normal;
+    font-kerning: normal;
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+
+  .ai-dynamic-heading-{{ ai_gen_id }}__text {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    text-align: inherit;
+    text-transform: inherit;
+    font-style: inherit;
+
+    font-feature-settings: "kern" 1, "liga" 1;
+    text-wrap: balance;
+    word-spacing: 0.02em;
+  }
+
+  @media screen and (max-width: 749px) {
+
+    .ai-dynamic-heading-{{ ai_gen_id }} {
+      width: {{ block.settings.mobile_width_percent }}% !important;
+      max-width: 100%;
+
+      text-align: {{ block.settings.mobile_alignment }};
+      font-size: {{ block.settings.mobile_font_size }}px;
+      line-height: {{ block.settings.mobile_line_height }};
+      letter-spacing: {{ block.settings.mobile_letter_spacing }}px;
+      font-weight: {{ block.settings.mobile_font_weight }};
+    }
+
+    .ai-dynamic-heading-{{ ai_gen_id }}__text {
+      text-wrap: balance;
+    }
+  }
+
+{% endstyle %}  
+
+<div  
+  class="ai-dynamic-heading-{{ ai_gen_id }}"  
+  style="width: {{ block.settings.desktop_width_percent }}%;"  
+  {{ block.shopify_attributes }}  
+>  
+  {% if heading_text != blank %}  
+    <h2 class="ai-dynamic-heading-{{ ai_gen_id }}__text">
+      {{ heading_text | escape }}
+    </h2>  
+  {% endif %}  
+</div>  
+
+{% schema %}  
+{  
+  "name": "Dynamic page heading",  
+  "settings": [  
+
+    {  
+      "type": "text",  
+      "id": "custom_text",  
+      "label": "Custom text"  
+    }, 
+
+    { 
+      "type": "header", 
+      "content": "Desktop typography" 
+    }, 
+
+    {  
+      "type": "range",  
+      "id": "font_size",  
+      "label": "Font size",  
+      "min": 10,  
+      "max": 60,  
+      "step": 1,  
+      "unit": "px",  
+      "default": 22 
+    }, 
+
+    { 
+      "type": "select", 
+      "id": "font_weight", 
+      "label": "Font weight", 
+      "options": [ 
+        { 
+          "value": "500", 
+          "label": "Medium" 
+        }, 
+        { 
+          "value": "600", 
+          "label": "Semi bold" 
+        }, 
+        { 
+          "value": "700", 
+          "label": "Bold" 
+        },
+        { 
+          "value": "800", 
+          "label": "Extra bold" 
+        },
+        { 
+          "value": "900", 
+          "label": "Black" 
+        }
+      ], 
+      "default": "800" 
+    }, 
+
+    { 
+      "type": "range", 
+      "id": "line_height", 
+      "label": "Line height", 
+      "min": 0.8, 
+      "max": 1.5, 
+      "step": 0.1, 
+      "default": 1.0 
+    }, 
+
+    {  
+      "type": "select",  
+      "id": "alignment",  
+      "label": "Alignment",  
+      "options": [  
+        {  
+          "value": "left",  
+          "label": "Left"  
+        },  
+        {  
+          "value": "center",  
+          "label": "Center"  
+        },  
+        {  
+          "value": "right",  
+          "label": "Right"  
+        }  
+      ],  
+      "default": "center"  
+    },  
+
+    {  
+      "type": "range",  
+      "id": "letter_spacing",  
+      "label": "Letter spacing",  
+      "min": -2,  
+      "max": 15,  
+      "step": 1,  
+      "unit": "px",  
+      "default": 3 
+    }, 
+
+    { 
+      "type": "range",  
+      "id": "desktop_width_percent",  
+      "label": "Desktop width",  
+      "min": 50,  
+      "max": 100,  
+      "step": 5,  
+      "unit": "%",  
+      "default": 100  
+    }, 
+
+    { 
+      "type": "header", 
+      "content": "Mobile typography" 
+    }, 
+
+    {  
+      "type": "range",  
+      "id": "mobile_font_size",  
+      "label": "Mobile font size",  
+      "min": 10,  
+      "max": 44,  
+      "step": 1,  
+      "unit": "px",  
+      "default": 19 
+    }, 
+
+    { 
+      "type": "select", 
+      "id": "mobile_font_weight", 
+      "label": "Mobile font weight", 
+      "options": [ 
+        { 
+          "value": "500", 
+          "label": "Medium" 
+        }, 
+        { 
+          "value": "600", 
+          "label": "Semi bold" 
+        }, 
+        { 
+          "value": "700", 
+          "label": "Bold" 
+        },
+        { 
+          "value": "800", 
+          "label": "Extra bold" 
+        },
+        { 
+          "value": "900", 
+          "label": "Black" 
+        }
+      ], 
+      "default": "800" 
+    }, 
+
+    { 
+      "type": "range", 
+      "id": "mobile_line_height", 
+      "label": "Mobile line height", 
+      "min": 0.8, 
+      "max": 1.5, 
+      "step": 0.1, 
+      "default": 1.0 
+    }, 
+
+    { 
+      "type": "range", 
+      "id": "mobile_letter_spacing", 
+      "label": "Mobile letter spacing", 
+      "min": -2, 
+      "max": 10, 
+      "step": 1, 
+      "unit": "px", 
+      "default": 2 
+    }, 
+
+    { 
+      "type": "select", 
+      "id": "mobile_alignment", 
+      "label": "Mobile alignment", 
+      "options": [ 
+        { 
+          "value": "left", 
+          "label": "Left" 
+        }, 
+        { 
+          "value": "center", 
+          "label": "Center" 
+        }, 
+        { 
+          "value": "right", 
+          "label": "Right" 
+        } 
+      ], 
+      "default": "center" 
+    }, 
+
+    { 
+      "type": "range", 
+      "id": "mobile_width_percent", 
+      "label": "Mobile width", 
+      "min": 50, 
+      "max": 100, 
+      "step": 5, 
+      "unit": "%", 
+      "default": 95 
+    }, 
+
+    { 
+      "type": "header", 
+      "content": "Style" 
+    }, 
+
+    {  
+      "type": "color",  
+      "id": "text_color",  
+      "label": "Text color",  
+      "default": "#111111"  
+    },  
+
+    {  
+      "type": "select",  
+      "id": "text_case",  
+      "label": "Text case",  
+      "options": [  
+        {  
+          "value": "uppercase",  
+          "label": "Uppercase"  
+        },  
+        {  
+          "value": "none",  
+          "label": "None"  
+        }  
+      ],  
+      "default": "uppercase"  
+    } 
+  ],  
+
+  "presets": [  
+    {  
+      "name": "Dynamic page heading"  
+    }  
+  ],  
+
+  "tag": null,  
+  "class": "dynamic-page-heading-block"  
+}  
+{% endschema %}

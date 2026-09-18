@@ -1,0 +1,1167 @@
+<!-- --VERSION-20-- -->
+
+{% style %}
+:root {
+--vtl-neutral-70: #5e5e5e;
+--vtl-neutral-01: #fff;
+--vtl-blue-100: #0071e9;
+--vtl-size-1: 1px;
+--vtl-size-2: 2px;
+--vtl-size-14: 14px;
+--vtl-size-16: 16px;
+--vtl-size-20: 20px;
+--vtl-size-24: 24px;
+--vtl-size-32: 32px;
+--vtl-size-40: 40px;
+--vtl-size-48: 48px;
+--vtl-font-weight-400: 400;
+--vtl-font-weight-600: 600;
+--vtl-line-height-140: 1.4;
+--vtl-text-decoration-none: none;
+--vtl-border-width-1: var(--vtl-size-1);
+--vtl-color-bg-fill-inverse-on-light: var(--vtl-neutral-01);
+--vtl-color-text-disable-on-light: var(--vtl-neutral-70);
+--vtl-color-border-focus-on-light: var(--vtl-blue-100);
+--vtl-space-2: var(--vtl-size-2);
+--vtl-space-16: var(--vtl-size-16);
+--vtl-space-20: var(--vtl-size-20);
+--vtl-space-24: var(--vtl-size-24);
+--vtl-space-32: var(--vtl-size-32);
+--vtl-space-40: var(--vtl-size-40);
+--vtl-space-48: var(--vtl-size-48);
+--vtl-font-size-14: var(--vtl-size-14);
+}
+
+
+{% endstyle %}
+
+<!-- --UUID-763913e5-- -->
+
+<script>
+	if (typeof window.vtlsBreakpoints === 'undefined') {
+		window.vtlsBreakpoints = {
+			mobile: {
+				minWidth: 0,
+				maxWidth: 479,
+			},
+			tablet: {
+				minWidth: 480,
+				maxWidth: 991,
+			},
+			desktop: {
+				minWidth: 992,
+				maxWidth: 10000,
+			},
+		};
+	}
+</script>
+
+{% style %}
+	
+
+@media(max-width: 479px){.VtlsResponsiveness--TabletAndDesktop{display:none}}@media(min-width: 992px){.VtlsResponsiveness--MobileAndTablet{display:none}}@media(min-width: 480px){.VtlsResponsiveness--Mobile{display:none}}@media not ((min-width: 480px) and (max-width: 991px)){.VtlsResponsiveness--Tablet{display:none}}@media(max-width: 991px){.VtlsResponsiveness--Desktop{display:none}}
+
+{% endstyle %}
+
+
+{%- liquid
+	assign loading = "lazy"
+	assign fetchpriority = "auto"
+	assign preload = false
+
+	if section.index == 1
+		assign loading = "eager"
+		assign fetchpriority = "high"
+		assign preload = true
+	endif
+-%}
+
+<section class="Vtls-{{ section.id | handle }} VtlsCollListRectangles"{% if section.settings.heading != blank %} aria-labelledby="section-heading-{{ section.id | handle }}"{% else %} aria-label="Collections section"{% endif %}>
+	<div
+		class="
+			VtlsCollListRectanglesContainer
+			VtlsCarouselContainer VtlsCarouselContainer--style-{{ section.settings.heading_style }}
+			{% if section.settings.section_width == 100 %}VtlsCollListRectanglesContainer--fullWidth{% endif %}
+		"
+	>
+		{%- if section.settings.heading != blank -%}
+			<h2
+				id="section-heading-{{ section.id | handle }}"
+				class="
+					VtlsCollListHeading
+					{% if section.settings.layout_desktop == "grid" %}VtlsCollListHeading--desktopHidden{% endif %}
+					{% if section.settings.layout_mobile == "grid" %}VtlsCollListHeading--mobileHidden{% endif %}
+					 VtlsCollListHeading--alignment-{{ section.settings.heading_alignment }}
+					 VtlsCollListHeading--style-{{ section.settings.heading_style }}
+				"
+			>
+				{{ section.settings.heading }}
+			</h2>
+		{%- endif -%}
+
+		<div
+			class="
+				VtlsCarousel
+				{% if section.settings.layout_desktop == "grid" %}VtlsCarouselListGrid--desktop{% endif %}
+				{% if section.settings.layout_mobile == "grid" %}VtlsCarouselListGrid--mobile{% endif %}
+			"
+			data-section-width="{{ section.settings.section_width }}"
+			aria-label="Collections carousel"
+			aria-live="polite"
+		>
+			<div class="VtlsCarousel__Content">
+				<ul class="VtlsCarouselList">
+					{%- for block in section.blocks -%}
+						{%- liquid
+							assign collection = block.settings.collection
+							assign collection_image = block.settings.collection.featured_image
+							assign collection_url = block.settings.collection.url
+							assign desktop_image = block.settings.image_desktop
+							assign mobile_image = block.settings.image_mobile
+							assign heading = block.settings.collection.title
+
+							if mobile_image == blank and desktop_image != blank
+								assign mobile_image = block.settings.image_desktop
+							endif
+							if mobile_image == blank
+								assign mobile_image = block.settings.collection.featured_image
+							endif
+							if desktop_image != blank
+								assign collection_image = desktop_image
+							endif
+							if block.settings.heading != blank
+								assign heading = block.settings.heading
+							endif
+
+							assign desktop_width = 100 | divided_by: section.settings.collections_per_row_desktop
+							assign mobile_width = 100 | divided_by: section.settings.collections_per_row_mobile
+
+							assign desktop_sizes = "(min-width: 992px) " | append: desktop_width | append: "vw, 0"
+							assign mobile_sizes = "(min-width: 992px) 0, " | append: mobile_width | append: "vw"
+						-%}
+						<li
+							class="VtlsCollListBlock"
+							{{ block.shopify_attributes }}
+							{% if forloop.first and section.settings.heading_alignment == "left" %}
+								data-title-left="{{ section.settings.heading | escape }}"
+							{% endif %}
+							{%- if forloop.index == section.settings.collections_per_row_desktop
+								and section.settings.heading_alignment == "right"
+							-%}
+								data-title-right="{{ section.settings.heading | escape }}"
+							{%- endif -%}
+						>
+							{%- if forloop.first and section.settings.heading_alignment == "left" %}
+								<h2 class="VtlsHeadingLeft">{{ section.settings.heading | escape }}</h2>
+							{%- endif -%}
+
+							{%- assign collections_per_row_mobile = section.settings.collections_per_row_mobile
+								| plus: 0
+							-%}
+
+							{%- if forloop.index == collections_per_row_mobile
+								and section.settings.heading_alignment == "right"
+							-%}
+								<h2 class="VtlsHeadingRight VtlsHeadingRight--mobile">
+									{{ section.settings.heading | escape }}
+								</h2>
+							{%- endif -%}
+
+							{%- if forloop.index == section.settings.collections_per_row_desktop
+								and section.settings.heading_alignment == "right"
+							-%}
+								<h2 class="VtlsHeadingRight VtlsHeadingRight--desktop">
+									{{ section.settings.heading | escape }}
+								</h2>
+							{%- endif -%}
+
+						<article class="VtlsCollListBlock__Wrapper">
+							<a
+								href="{{- collection_url -}}"
+								class="
+									VtlsCollListBlock__Media
+									VtlsCollListBlock__Media--aspectRatio-{{ section.settings.images_aspect_ratio }}
+									{% if collection == blank %}
+												VtlsCollListBlock__Media--inactiveLink
+									{% endif %}
+									{% if section.settings.images_border_color != blank %}VtlsCollListBlock__Media--hasBorder{% endif %}
+								"
+								aria-label="View {{ heading | default: 'collection' }} products"
+							>
+									{%- if collection_image -%}
+										{{-
+											collection_image
+											| image_url: width: collection_image.width
+											| image_tag:
+												sizes: desktop_sizes,
+												widths: "1, 400, 600, 800, 1200, 1600, 1800, 2400, 2800, 3200",
+												fetchpriority: fetchpriority,
+												loading: loading,
+												preload: preload,
+												class: "VtlsCollListBlock__Image VtlsCollListBlock__Image--desktop",
+												alt: heading | default: "Collection image"
+										-}}
+									{%- else -%}
+										<img
+											src="data:image/webp;base64,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"
+											alt="{{ heading | default: 'Collection image' | escape }}"
+											width="520"
+											height="520"
+											sizes="100vw"
+											class="VtlsCollListBlock__Image VtlsCollListBlock__Image--desktop"
+										>
+									{%- endif -%}
+									{%- if mobile_image -%}
+										{{-
+											mobile_image
+											| image_url: width: mobile_image.width
+											| image_tag:
+												sizes: mobile_sizes,
+												widths: "1, 400, 600, 800, 1200, 1600, 1800",
+												fetchpriority: fetchpriority,
+												loading: loading,
+												preload: preload,
+												class: "VtlsCollListBlock__Image VtlsCollListBlock__Image--mobile",
+											alt: heading | default: "Collection image"
+										-}}
+									{%- else -%}
+										<img
+											src="data:image/webp;base64,UklGRlATAABXRUJQVlA4WAoAAAAoAAAABwIABwIASUNDUKgBAAAAAAGobGNtcwIQAABtbnRyUkdCIFhZWiAH3AABABkAAwApADlhY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAAF9jcHJ0AAABTAAAAAx3dHB0AAABWAAAABRyWFlaAAABbAAAABRnWFlaAAABgAAAABRiWFlaAAABlAAAABRyVFJDAAABDAAAAEBnVFJDAAABDAAAAEBiVFJDAAABDAAAAEBkZXNjAAAAAAAAAAVjMmNpAAAAAAAAAAAAAAAAY3VydgAAAAAAAAAaAAAAywHJA2MFkghrC/YQPxVRGzQh8SmQMhg7kkYFUXdd7WtwegWJsZp8rGm/fdPD6TD//3RleHQAAAAAQ0MwAFhZWiAAAAAAAAD21gABAAAAANMtWFlaIAAAAAAAAG+iAAA49QAAA5BYWVogAAAAAAAAYpkAALeFAAAY2lhZWiAAAAAAAAAkoAAAD4QAALbPVlA4IMYQAABwmwCdASoIAggCPpFIn0wlpDCqojJo2hASCWdu/CmWtBZ+iZb3Rxhh/lb43ed+nfcNc99Y1WTO0OHzrrnSVP4+32ZxFsYrVHazS//wJ1Aqc6GmfDSyu6GwpqTk7oaZ8M67al6aARgB7IG+FTnQ3EFScndLnQB6+AiFTniqy7obfBgdPMF+Ej80/Xlxh5NRHqAoqFv6jczWLhyepUMfJ4NNieNnfXgAhlEfBjPZ1tsTYv9CDETraxDzipxMJyHJCtDSvTCTyUjYe+owPEzJ0Aj7W5VdVwbDemMO5I23lxOoHgcB33MbCp53yNfRbf0/QHIqmuC2YnHaUB8PeD6ZhErwbuDBMqBfyTUZnRDkTGpxMQDkek+/0D/yhPM7pVcKqFgEXa6Th5q6xY3QSev5Lwd05uarAUM3JyvMVnQUFK2YVhAUIgBaGHYEUfCDVFR/c4y1SQnn+iue6W/A2Hf9lQ+2QTzi/dv6toDcFuA1JD6hBwuB/AtkNc9LrLKiW3LpjuLYYHqlB4tMW6SgCb+jCzwXJ9NZwdY0H+HdwiJbI1TpxViYtUc5yBLqcw1h7CxsvQrVny7LZE26RCmJ9bNmenHTQMn6lsvEVBoWRz6e2pfGTvxaMn/RZBfXIh/n7dJ8D+lTFasOMhkcL5AqKScguUUaYisBZ0BpQEnfTo8nWTFjpscVCYRsIiCOeVBGcVErJM34t77/VjhaKjbGpJSjvgeOnk2TY+GsD+Se9WGbsDx7YzVTDipbu0HkKsNXgIKCpLpEDgx9VVTCLdJmu56U9JLjIqgLRHIXm20q9lbcSAAOfzMTgDulAKBEYFDHWM76NHl/9eSjWjFU8Y7lLyWmOwypWgOkYobYAI/WzqgnHqRLH7Mj/qAz9389ZIPcPplvPQ9UsRCMtbLyVIXW4vH9adNaZBE9YhS+FdM5X1p0ROK4RXUcknjY8tbQn0Ugr1D5GcQCk1Jr4FhWNXQUbKzIWJwT+OehaaTCwn6L8a2UJPJI/wysXocbxIskF1xzWfEMlvhv26GmX3SlUiO69OEZo7isSJBbPnnEcy5Z0vP3cWL7RTMlcMvNCEL4A0ZYwcviPCUhY0YJBS7+kR/kwx9LKgAff4SCQw8QhF+r63Rm39yX+tFKqPz6C/yFjOSkm0ilA5fmFNqdGXSA1YnKHkhitG3b0qTdN7AdVLYN8cCiCtL+y8wwx75hPU0VcIuV5kXm0x85CjXcH3NJ99GsSZ+/t8X0Cu8OWDqbaKLUkJ8eKHM5wKgbHUBqkvSz9XAHHcB3cSqgodVIjmgoypZGq+7Qxc1PTpOshC3kM86eSCZn2UIZEzfgb6bNPzoHD3meiyl8v4riMldaXszf/2t3iVfBXbgtKmB8ys6EfnUA2P1saRqpUEIOGHmGHxRVKUANX4EdkZEBmzeKOGYxq258KNLfNXetmvCWc54WlK1PD9ve0b4oeGaGGlZlUU+5MFsqk9IQCSUxFf9lQy12tS0uMWnxNRCpzokabwx+tFuKcM8aSosZLDel/+ZvLdMg4zpiqdHtVMVTFUxrmqYgY2OGX9dA0qtVL2SacGqSpiiyW2iFBzaukW7a4V+W/xcmZipBNcWS9efX8C5/FTlCMYapXdJaU5GTFOebs5NJMrVP/N5177LC426a6hF6wmE/kYaxhjDEIRJgfEsCAP7viSf5OwwmCeRCL5vIZXUvX35A0/o0u2N2ziRl/QUrOZJIDUWo9ZeKpDLOE+CKMATJAAAAIGTAAAD2hwzDwa4079aYOZiAAACToYlgVYBsSI8gAli57TGr+gy+zKFyz0QD/fp8myaniABxF0/EmObVblL1sCNzv+T+bwYe3K0RwlplD/7uO0qSlLRFZS+klr/KQmsK2lTIHMSbsHt7XXAJNJrvABAI+4uaYQnZTKsSO9ZiI4wgszId/jO3eWT7OnRalmt8Y2McQLq5SfHcFEW85CkHseIzomdtLm9hohJi/hIfmCewf37+9Ciw4Tc4AWwIcTWMC/G0vimoEXq1ZW9h+UUsEK4Ix32ZXvafzevWW1ogyiboOO/zLoKX5A0nSrqZjkAzyf3npMdF68H3EuBeFPNx+JlIdcifaErkOtX8xmGC+cWAKJxUXJabJKeQjTGw1ZxtOYQUU/EhQBXfJ6bH4r8kxymsj10rqRPt8qIjDL3wlzAgWz54zgASFW/NRoqz6+JkzpwKEGMU3j/exolhmWk4R4qgvx/pmymQzFrc1le5LJVvOAgJyq9AHQ7Dji5N2Dwo47ASxyJNWb5/OdLTNL+fdNPpvMgMZwr3u18O7/plAKp6/gOWmz6Ki6kQF+UW4sQsjDnX/5CE2hc06ThVuYtyPTZy90/P2ppltYtODAUBgiFQnezlp/lDtHwD0R6fNcioupnSsmDDyyz4r3+WVNsS4gQDxvOSSRIKB5yxjkKGCxju9RGt207sg3OHTq6B1MJWu0/P8wVBeR8D5ZMxm83QTE9+g7sgFwihUK/v13/d0BnM0MFpBN42fYZDzoAs7vGdzGm6ElvJM55HrdZfPEceMgeoFgfSs16omzl6ikSBxsyVjJFo11mnBR4dwKCVK5Xg2ficgxwh2hxsM489UdBcPJ/57FFXTEYpISlUXCE68XWgynbIINiVNQfh4yoWX4Crh202JxxWOvcnIJtLECXFJd/wqXfxubufHtHW4SZXz9HWgdPdzOTcO+icKEPeI60l9xz1MDebj5mFPljXHpx9IMrihEwWt8WaAZVVWpsjWIsG+vCq0xVZH5mBov2bIsk7DyfdkPw3s7GEFlDCgIHlI7UQBYXCmDt6gw8SGNp2H/jJjkFPaJhNVQoLooy/2bXR8Luwi0EfxL0RPfkShhAHAHzszQqU6DfEVZYRmkVwL/c1guGEWYIGcp7Lys4F/5EV5gSzyyVjuO7q0eEMEsVF9JF0r6IXPi32zoQuP2QofQfe/YYDnUPF8JD1BwOaPccKog8emCQYhh9FoG0y1ZlYHHUUKjRXQmLfyUSK70ZyJO1ObddDsxySH54vckQWXrkHzeum4gqa4UfyVvHdZ6FO0dB94SG1YPnqIoODzhusIOs3vgkDxaEYdH5XWLl1FrPUU7ssdG+/439B2BlGtVXzafdZ7honHQTugKIsZi6Bn7zf+87qh6rycpbPxbkD6C/q+bppDzoVKu5ySXCzWyVVgAxugmTAQzvR17iCounCG11P6hq8g6kMXA37z2ZEhOKk2BLXQK3CV+xBs0PkFN3Ednef0C3lIEvHrRzTr9CHBawLRLU63fptbd3iaz1sVFBGpJ0CT3ubSPDJWub0yBeVTu4w2lpcmWGLHKCASSUvu4TWO09sUToK1YyTA9BpfOlsiWGtcvkwGAYHt5sED0YyFuDh0ov2feVTb9ozNbHONHl02DPCL0XsYIDswbcNS2IjAs99T7LdDr6qtRdayrJOEbnE/Lg7hzWJ+jcADN4gDIZatA/JqtoTZuWlMKFJ85w9dPLXeWSngV8DqqENizhY2lOsISlh4Vn4w3DmDfQZuI2gx0xznRiKoU7r1ISpiX0n2D68m3uZwe8eb0UjoGD/QBOV/mvwj9oZvNecPPhH/lz+hzHiC/BSGHweR2KnywXoAMx7dJxvm3V61cD6H0N/q+rENnkxDKBGfQD1lRPrICNPVDkl4QpZvQAhhmzRdhtClooRluQZoCmLVTt9COhXzFKSg5qFjApz0gsAtJkyaEtEs73UizQOIkdH0Daf71ho9Go0/mynF1Mi+IVlArseCa/j15XHumkQsy2bGyTZ6E+yLbUDhUuRo3V6PpJyL2VRjtb+amcWg77lBa9NcXMmQ2uFTvNF7JnPDA1ItlX0ww7p/Gc0yGBp6UTxdinCeFTi4s/Mnn44MX3msbcS9kYg2CxDp234sBdTW/8LDv4yGnnNk0IbSS6lHgBxgzeUffBPeJv+SvSzrQAbzrndT1b7oaLhGYq/kvDR2lWChCcKKqbOOZ8tXVpqiaTfvBGadRtAGOLvDvZ1UNHo/iQXIhsXxNmSiZlsBwRsMqsbUYyX5YAQwmr9m0RKhXdTSYba2F27g4ztEeEB2jI9WakgDMx8g5SqvcX1nn1OpzA9hl+fGHLQcDMQfs7CBoly0nLBfJomtx2bXr6aZwEacrwSu5WleAJplSIErvfXYCKZ5lGEHYyMfEEW+8X5CjeUTqTHX1WkT7KmPvoKOKyLE4GbU1OyEc7R5FDubLntjSolUExnoOo52oESo63FplNLTFeCIGP8EMhGIbTZkaq7Go6oZuAVVbsJzrHgPfU7cHHTigoEDZgxkD9iMvEGxG6+U0RG91dV6/tIFw+4gj4TV6H2tcMS0Q0jdJvfqbmDdZrmXWqUSQREb2NGFRK4NhwfFTaNe79hJHGJCpMgUMju1QIO1f/XrpJyr0P6w3ThsyW0oBY0878DIqDn4O5vGN+tvgUP0hLQTUn9hNJzxkeJPaOhEr5V83xern6u4bV8HRpShzY02xHHGh0POInHdgNwbZuLK3P3dPsw0g98Nc0gH1gSeTcz/CISC3GLyX5i5oYAT9tyHLO0TrYlQQ8thnwjHDdtNCXotBr9zQUCCscRyLSNntiailT4OAlGuElU4O/rVNBRwQfvlDOnBSbwIzz17PuX/L2S3OyH/2v2lcPy7nvTHR6HA08FpvnfmRD8PeBludMime+Pw4gQAmPoMc+kHUZi0eaxT6MAF20Qekpa4r+CaDWYpBSOa2eaAKohkZwtuAnM5LZOzo0tuQRDv229VzJTk4CMoLwyCSpR8YmN3gM132BPkanO5LfY6Nj10H9xWK7IjcD43I2azpDup+iGCDZSEt3m2cluFmXcz5e6SuZa3qKyElSy3FJhZwElyy25LqTaISmcvxT/YCFqb1La1dMuluVmKzubIEYbE5ncLQGo+5ztSzflyU8s+d83KUERqudQasBn5I+IePQqVK5hLo/bXGx84BcbvoUbKj2Y+vadwaCw2peX7+tWpGKPfuJ/ak1nq209TN+DaphtpZ9W93WNooZiD8jh+pNTLEAmrGBmuzegnsuFSSAYshuLRjUoh+KAok9R4nbFjkVJ5jmYfoINywZ+N/m6P2kjWtSSCYD95X5EAgdm0r/6y03D27Y9UJifs2iE2kXJy+m9PBkA9RIyIJBCxzBKH8rnluSo+LlABPCsL3Gxp9bwMGOsU6eg3r8mr/OLxUlvYvQP3nUBlBdstEQlDy48DLO+zOIA1xOQLqsyZgRHId11iQsPSYPLUUWY/pLUQQb/cl3Npw9tJs0BUlXPWCsaIl8TAlsF0nIEmIHk6JamG6wJmM4vkfLYsuSL0zQSIQT/fNvA9aRXQecbXW1J1+nOD7R1+zukhPw8cLnuwaG2a+IMdb93ygZp+q33TxTL6eEvJogz6Z4m3fs9Kxs5mcLQew48Du4Z7dxS5CW8kFD4acPCCK78MhTFRqmBzU1F1vz6Tg1ZCkI0X/c83NXGE3eh0v5Lf0lvANdWSlMBjvbHVATFzjoRqz6NzXHjIWFeT1AHNOyb1mrYSGSacAY1UHtPbLGtZ6FKtCE9GYvETHPUUx6ArMFd2DvOXt2SIr1cmsMxi9fGr3arMc/q4AAZftUnShhiv6bSJEyzqFw9TqAMa//YkLRrdSvZ4E6rZ3atuaYCWbij+nGweWAlaVXy1rzMpgPTCLKlygtyw8npvyct5K4y74IYIWUHgoJcLorKAbTfAfTWLJQvefRclLTGMozZLazOPFQY0gAARVhJRrQAAABJSSoACAAAAAYAEgEDAAEAAAABAAAAGgEFAAEAAABWAAAAGwEFAAEAAABeAAAAKAEDAAEAAAACAAAAEwIDAAEAAAABAAAAaYcEAAEAAABmAAAAAAAAAEgAAAABAAAASAAAAAEAAAAGAACQBwAEAAAAMDIxMAGRBwAEAAAAAQIDAACgBwAEAAAAMDEwMAGgAwABAAAA//8AAAKgBAABAAAACAIAAAOgBAABAAAACAIAAAAAAAA="
+											alt="{{ heading | default: 'Collection image' | escape }}"
+											width="520"
+											height="520"
+											sizes="100vw"
+											class="VtlsCollListBlock__Image VtlsCollListBlock__Image--mobile"
+										>
+									{%- endif -%}
+								</a>
+							<div class="VtlsCollListBlock__Content">
+								{%- if heading -%}
+									<h3 class="VtlsCollListBlock__Heading">
+										<a href="{{- block.settings.collection.url -}}">
+											{{- heading | escape -}}
+										</a>
+									</h3>
+								{%- else -%}
+									<h3 class="VtlsCollListBlock__Heading"> Collection title </h3>
+								{%- endif -%}
+							</div>
+						</article>
+						</li>
+					{%- endfor -%}
+				</ul>
+				<nav class="VtlsCarousel__Navigation" aria-label="Carousel navigation">
+				<div class="VtlsNavigationButtons" role="group" aria-label="Navigation controls">
+					{%- liquid
+						assign is_rtl = false
+						if request.locale.iso_code contains 'ar' or request.locale.iso_code contains 'he' or request.locale.iso_code contains 'fa'
+							assign is_rtl = true
+						endif
+					-%}
+						{%- if is_rtl -%}
+							<button 
+								class="VtlsNavigationButtons__Button right-chevron"
+								aria-label="Previous collections"
+								type="button"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									aria-hidden="true"
+								>
+									<path d="M9 6L15 12L9 18" stroke="#222" stroke-linecap="round"></path>
+								</svg>
+							</button>
+							<button 
+								class="VtlsNavigationButtons__Button VtlsNavigationButtons__Button--disabled left-chevron"
+								aria-label="Next collections"
+								type="button"
+								disabled
+								aria-disabled="true"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									aria-hidden="true"
+								>
+									<path d="M14 18L8 12L14 6" stroke="#222" stroke-linecap="round"></path>
+								</svg>
+							</button>
+						{%- else -%}
+							<button 
+								class="VtlsNavigationButtons__Button VtlsNavigationButtons__Button--disabled left-chevron"
+								aria-label="Previous collections"
+								type="button"
+								disabled
+								aria-disabled="true"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									aria-hidden="true"
+								>
+									<path d="M14 18L8 12L14 6" stroke="#222" stroke-linecap="round"></path>
+								</svg>
+							</button>
+							<button 
+								class="VtlsNavigationButtons__Button right-chevron"
+								aria-label="Next collections"
+								type="button"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									aria-hidden="true"
+								>
+									<path d="M9 6L15 12L9 18" stroke="#222" stroke-linecap="round"></path>
+								</svg>
+							</button>
+					{%- endif -%}
+				</div>
+				</nav>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% schema %}
+{
+	"name": "❤️ Collection Rectangles",
+	"settings": [
+		{
+			"type": "header",
+			"content": "General"
+		},
+		{
+			"type": "text",
+			"id": "heading",
+			"label": "Heading",
+			"default": "Collections"
+		},
+		{
+			"type": "select",
+			"id": "heading_size",
+			"label": "Heading size",
+			"options": [
+				{
+					"value": "24",
+					"label": "Small"
+				},
+				{
+					"value": "32",
+					"label": "Medium"
+				},
+				{
+					"value": "48",
+					"label": "Large"
+				}
+			],
+			"default": "32"
+		},
+		{
+			"type": "select",
+			"id": "heading_style",
+			"label": "Heading style",
+			"options": [
+				{
+					"value": "regular",
+					"label": "Regular"
+				},
+				{
+					"value": "bold",
+					"label": "Bold"
+				}
+			],
+			"default": "regular"
+		},
+		{
+			"type": "select",
+			"id": "heading_alignment",
+			"label": "Heading alignment",
+			"options": [
+				{
+					"value": "left",
+					"label": "Left"
+				},
+				{
+					"value": "center",
+					"label": "Center"
+				},
+				{
+					"value": "right",
+					"label": "Right"
+				}
+			],
+			"default": "center"
+		},
+		{
+			"type": "select",
+			"id": "collection_heading_size",
+			"label": "Collection name size",
+			"options": [
+				{
+					"value": "12",
+					"label": "Extra extra small"
+				},
+				{
+					"value": "14",
+					"label": "Extra small"
+				},
+				{
+					"value": "18",
+					"label": "Small"
+				},
+				{
+					"value": "20",
+					"label": "Medium"
+				},
+				{
+					"value": "24",
+					"label": "Large"
+				}
+			],
+			"default": "18"
+		},
+		{
+			"type": "select",
+			"id": "images_aspect_ratio",
+			"label": "Images aspect ratio",
+			"options": [
+				{
+					"value": "square",
+					"label": "Square"
+				},
+				{
+					"value": "portrait",
+					"label": "Portrait"
+				},
+				{
+					"value": "landscape",
+					"label": "Landscape"
+				}
+			],
+			"default": "square"
+		},
+		{
+			"type": "header",
+			"content": "Collections on desktop"
+		},
+		{
+			"type": "select",
+			"id": "layout_desktop",
+			"label": "Layout",
+			"options": [
+				{
+					"value": "grid",
+					"label": "Grid"
+				},
+				{
+					"value": "carousel",
+					"label": "Carousel"
+				}
+			],
+			"default": "grid"
+		},
+		{
+			"type": "range",
+			"id": "collections_per_row_desktop",
+			"min": 1,
+			"max": 8,
+			"step": 1,
+			"label": "Collections per row",
+			"default": 5
+		},
+		{
+			"type": "header",
+			"content": "Collections on mobile"
+		},
+		{
+			"type": "select",
+			"id": "layout_mobile",
+			"label": "Layout",
+			"options": [
+				{
+					"value": "grid",
+					"label": "Grid"
+				},
+				{
+					"value": "carousel",
+					"label": "Carousel"
+				}
+			],
+			"default": "carousel"
+		},
+		{
+			"type": "select",
+			"id": "collections_per_row_mobile",
+			"label": "Collections per row",
+			"options": [
+				{
+					"value": "1",
+					"label": "1"
+				},
+				{
+					"value": "2",
+					"label": "2"
+				},
+				{
+					"value": "3",
+					"label": "3"
+				},
+				{
+					"value": "4",
+					"label": "4"
+				}
+			],
+			"default": "2"
+		},
+		{
+			"type": "header",
+			"content": "Layout"
+		},
+		{
+			"type": "range",
+			"id": "section_width",
+			"min": 70,
+			"max": 100,
+			"step": 1,
+			"unit": "%",
+			"label": "Section width",
+			"default": 90
+		},
+		{
+			"type": "text",
+			"id": "section_max_width",
+			"label": "Custom max width (optional)",
+			"info": "Section max width in pixels"
+		},
+		{
+			"type": "range",
+			"id": "vertical_padding",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top - bottom padding (desktop)",
+			"default": 40
+		},
+		{
+			"type": "range",
+			"id": "vertical_margin",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top - bottom margin (desktop)",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "vertical_padding_mobile",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top - bottom padding (mobile)",
+			"default": 20
+		},
+		{
+			"type": "range",
+			"id": "vertical_margin_mobile",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top - bottom margin (mobile)",
+			"default": 0
+		},
+		{
+			"type": "header",
+			"content": "Design"
+		},
+		{
+			"type": "color",
+			"id": "section_background",
+			"label": "Section background"
+		},
+		{
+			"type": "color",
+			"id": "heading_color",
+			"label": "Heading color",
+			"default": "#222222"
+		},
+		{
+			"type": "color",
+			"id": "collection_heading_color",
+			"label": "Collection name color",
+			"default": "#222222"
+		},
+		{
+			"type": "color",
+			"id": "images_border_color",
+			"label": "Border color"
+		}
+	],
+	"blocks": [
+		{
+			"type": "collection",
+			"limit": 12,
+			"name": "Collection",
+			"settings": [
+				{
+					"type": "collection",
+					"id": "collection",
+					"label": "Collection"
+				},
+				{
+					"type": "text",
+					"id": "heading",
+					"label": "Collection name (optional)"
+				},
+				{
+					"type": "header",
+					"content": "Image (optional)",
+					"info": "Select another image for the collection banner."
+				},
+				{
+					"type": "image_picker",
+					"id": "image_desktop",
+					"label": "Image on desktop"
+				},
+				{
+					"type": "image_picker",
+					"id": "image_mobile",
+					"label": "Image on mobile"
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "❤️ Square: Collection Rectangles",
+			"category": "Square sections",
+			"blocks": [
+				{
+					"type": "collection"
+				},
+				{
+					"type": "collection"
+				},
+				{
+					"type": "collection"
+				},
+				{
+					"type": "collection"
+				},
+				{
+					"type": "collection"
+				}
+			]
+		}
+	]
+}
+{% endschema %}
+
+{% style %}
+	.Vtls-{{ section.id | handle }} {
+		--section-vertical-margin: {{- section.settings.vertical_margin -}}px;
+	       --section-heading-alignment: {{ section.settings.heading_alignment }};
+	       --section-heading-color: {{ section.settings.heading_color }};
+	       --section-collection_heading-color: {{ section.settings.collection_heading_color }};
+		--section-images-border: {{- section.settings.images_border_color -}};
+	       --section-heading-size: {{ section.settings.heading_size }}px;
+	       --section-collection-heading-size: {{ section.settings.collection_heading_size }}px;
+		--section-vertical-margin-mobile: {{- section.settings.vertical_margin_mobile -}}px;
+	       --section-collection-per-row-desktop: {{ section.settings.collections_per_row_desktop }};
+	       --section-collection-per-row-mobile: {{ section.settings.collections_per_row_mobile }};
+		--section-background-color: {{- section.settings.section_background -}};
+		--section-vertical-padding: {{- section.settings.vertical_padding -}}px;
+		--section-vertical-padding-mobile: {{- section.settings.vertical_padding_mobile -}}px;
+		--section-max-width: {{- section.settings.section_max_width -}}px;
+		--section-width: {{- section.settings.section_width -}}%;
+		--section-column-gap: var(--vtl-space-16);
+	}
+	
+	@media (min-width: 992px) {
+		.Vtls-{{ section.id | handle }} {
+			--section-column-gap: var(--vtl-space-20);
+		}
+	}
+
+	
+
+.Vtls-{{ section.id | handle }}.VtlsCollListRectangles{background-color:var(--section-background-color)}.Vtls-{{ section.id | handle }} .VtlsCollListRectanglesContainer{margin:var(--section-vertical-margin-mobile) auto;padding:var(--section-vertical-padding-mobile) 0;list-style-type:none;gap:var(--vtl-space-32);display:flex;flex-direction:column}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsCollListRectanglesContainer{margin:var(--section-vertical-margin) auto;padding:var(--section-vertical-padding) 0;gap:var(--vtl-space-48);padding-left:0;max-width:var(--section-max-width);width:var(--section-width)}}.Vtls-{{ section.id | handle }} .VtlsCollListRectanglesContainer--fullWidth .VtlsCollListHeading{padding:0 var(--vtl-space-20)}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsCollListRectanglesContainer--fullWidth .VtlsCarousel{padding-left:var(--vtl-space-20)}}@media(min-width: 992px){[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCollListRectanglesContainer--fullWidth .VtlsCarousel,html[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCollListRectanglesContainer--fullWidth .VtlsCarousel,body[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCollListRectanglesContainer--fullWidth .VtlsCarousel,html[style*="direction: rtl"] .Vtls-{{ section.id | handle }} .VtlsCollListRectanglesContainer--fullWidth .VtlsCarousel,body[style*="direction: rtl"] .Vtls-{{ section.id | handle }} .VtlsCollListRectanglesContainer--fullWidth .VtlsCarousel{padding-left:0;padding-right:var(--vtl-space-20)}}.Vtls-{{ section.id | handle }} .VtlsCollListRectanglesContainer.VtlsCarouselContainer--style-regular .VtlsHeadingLeft,.Vtls-{{ section.id | handle }} .VtlsCollListRectanglesContainer.VtlsCarouselContainer--style-regular .VtlsHeadingRight{font-weight:var(--vtl-font-weight-400)}.Vtls-{{ section.id | handle }} .VtlsCollListRectanglesContainer.VtlsCarouselContainer--style-bold .VtlsHeadingLeft,.Vtls-{{ section.id | handle }} .VtlsCollListRectanglesContainer.VtlsCarouselContainer--style-bold .VtlsHeadingRight{font-weight:var(--vtl-font-weight-600)}.Vtls-{{ section.id | handle }} .VtlsCollListHeading{margin:0;font-size:calc(var(--section-heading-size)*.75);text-decoration:none;color:var(--section-heading-color);display:block;text-align:var(--section-heading-alignment);width:100%;pointer-events:auto;padding:0 var(--vtl-space-20)}.Vtls-{{ section.id | handle }} .VtlsCollListHeading--style-regular{font-weight:var(--vtl-font-weight-400)}.Vtls-{{ section.id | handle }} .VtlsCollListHeading--style-bold{font-weight:var(--vtl-font-weight-600)}@media(max-width: 991px){.Vtls-{{ section.id | handle }} .VtlsCollListHeading--mobileHidden.VtlsCollListHeading--alignment-left,.Vtls-{{ section.id | handle }} .VtlsCollListHeading--mobileHidden.VtlsCollListHeading--alignment-right{visibility:hidden}}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsCollListHeading{font-size:var(--section-heading-size);padding:0}.Vtls-{{ section.id | handle }} .VtlsCollListHeading--desktopHidden.VtlsCollListHeading--alignment-left,.Vtls-{{ section.id | handle }} .VtlsCollListHeading--desktopHidden.VtlsCollListHeading--alignment-right{visibility:hidden}}.Vtls-{{ section.id | handle }} .VtlsCollListBlock__Wrapper{display:flex;flex-direction:column;height:100%;gap:var(--vtl-space-16)}.Vtls-{{ section.id | handle }} .VtlsCollListBlock__Wrapper:hover img{transform:scale(1.03)}.Vtls-{{ section.id | handle }} .VtlsCollListBlock__Media{overflow:hidden;display:block;aspect-ratio:1}.Vtls-{{ section.id | handle }} .VtlsCollListBlock__Media img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}.Vtls-{{ section.id | handle }} .VtlsCollListBlock__Media--aspectRatio-square{aspect-ratio:1/1}.Vtls-{{ section.id | handle }} .VtlsCollListBlock__Media--aspectRatio-portrait{aspect-ratio:2/3}.Vtls-{{ section.id | handle }} .VtlsCollListBlock__Media--aspectRatio-landscape{aspect-ratio:3/2}.Vtls-{{ section.id | handle }} .VtlsCollListBlock__Media--hasBorder{border:var(--vtl-border-width-1) solid var(--section-images-border, transparent)}.Vtls-{{ section.id | handle }} .VtlsCollListBlock__Media--inactiveLink{cursor:default;pointer-events:none}.Vtls-{{ section.id | handle }} .VtlsCollListBlock__Image--desktop{display:none}.Vtls-{{ section.id | handle }} .VtlsCollListBlock__Image--mobile{display:block}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsCollListBlock__Image--desktop{display:block}.Vtls-{{ section.id | handle }} .VtlsCollListBlock__Image--mobile{display:none}}.Vtls-{{ section.id | handle }} .VtlsCollListBlock__Content{display:flex;justify-content:center}.Vtls-{{ section.id | handle }} .VtlsCollListBlock__Heading{margin:0;font-size:var(--section-collection-heading-size);font-family:inherit;letter-spacing:normal;text-align:center;color:var(--section-collection_heading-color);line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;line-clamp:3;overflow:hidden}.Vtls-{{ section.id | handle }} .VtlsCollListBlock__Heading a{color:inherit;text-decoration:var(--vtl-text-decoration-none);cursor:pointer;-webkit-appearance:none;appearance:none;transition:opacity .3s ease;display:block}.Vtls-{{ section.id | handle }} .VtlsCollListBlock__Heading a:hover{opacity:.8}.Vtls-{{ section.id | handle }} .VtlsCollListBlock span{cursor:default;pointer-events:none}.Vtls-{{ section.id | handle }} .VtlsCarousel{width:100%;outline:none}.Vtls-{{ section.id | handle }} .VtlsCarousel:focus-visible{outline:var(--vtl-space-2) solid var(--vtl-color-border-focus-on-light);outline-offset:var(--vtl-space-2)}@media(max-width: 992px){.Vtls-{{ section.id | handle }} .VtlsCarousel.VtlsCarouselListGrid--mobile .VtlsCarousel__Content{padding-left:0;overflow:visible}.Vtls-{{ section.id | handle }} .VtlsCarousel.VtlsCarouselListGrid--mobile .VtlsCarousel__Content .VtlsCarouselList{list-style-type:none;display:flex;flex-wrap:wrap;justify-content:center;column-gap:var(--section-column-gap);row-gap:var(--vtl-space-40);list-style:none;margin-left:0 !important;padding:0;overflow:visible;margin:0}.Vtls-{{ section.id | handle }} .VtlsCarousel.VtlsCarouselListGrid--mobile .VtlsCarousel__Content .VtlsCarouselList .VtlsCollListBlock{flex:1 1 calc(100%/var(--section-collection-per-row-mobile) - var(--section-column-gap));max-width:calc(100%/var(--section-collection-per-row-mobile) - var(--section-column-gap));min-width:140px;position:relative;overflow:visible}.Vtls-{{ section.id | handle }} .VtlsCarousel.VtlsCarouselListGrid--mobile .VtlsCarousel__Content .VtlsCarouselList .VtlsCollListBlock:has(.VtlsHeadingRight){display:flex;align-items:flex-end}.Vtls-{{ section.id | handle }} .VtlsCarousel.VtlsCarouselListGrid--mobile .VtlsCarousel__Content .VtlsCarouselList .VtlsHeadingLeft{position:absolute;top:0;margin:0;text-align:left;transform:translateY(calc(-100% - var(--vtl-space-32)));font-size:calc(var(--section-heading-size)*.75);text-decoration:none;color:var(--section-heading-color);letter-spacing:normal;display:block;text-align:var(--section-heading-alignment);min-width:600px;width:100%;pointer-events:auto}.Vtls-{{ section.id | handle }} .VtlsCarousel.VtlsCarouselListGrid--mobile .VtlsCarousel__Content .VtlsCarouselList .VtlsHeadingRight{position:absolute;top:0;text-align:right;transform:translateY(calc(-100% - var(--vtl-space-32)));font-size:calc(var(--section-heading-size)*.75);text-decoration:none;margin:0;color:var(--section-heading-color);letter-spacing:normal;display:block;min-width:600px;width:100%;pointer-events:auto}.Vtls-{{ section.id | handle }} .VtlsCarousel.VtlsCarouselListGrid--mobile .VtlsCarousel__Content .VtlsCarouselList .VtlsHeadingRight--desktop{display:none}.Vtls-{{ section.id | handle }} .VtlsCarousel.VtlsCarouselListGrid--mobile .VtlsCarousel__Content .VtlsCarousel__Navigation{display:none !important}}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsCarousel.VtlsCarouselListGrid--desktop .VtlsCarousel__Content{padding-left:0;overflow:visible}.Vtls-{{ section.id | handle }} .VtlsCarousel.VtlsCarouselListGrid--desktop .VtlsCarousel__Content .VtlsCarouselList{list-style-type:none;display:flex;flex-wrap:wrap;justify-content:center;column-gap:var(--section-column-gap);row-gap:var(--vtl-space-40);list-style:none;margin-left:0 !important;padding:0;margin:0}.Vtls-{{ section.id | handle }} .VtlsCarousel.VtlsCarouselListGrid--desktop .VtlsCarousel__Content .VtlsCarouselList .VtlsCollListBlock{flex:1 1 calc(100%/var(--section-collection-per-row-desktop) - var(--section-column-gap));max-width:calc(100%/var(--section-collection-per-row-desktop) - var(--section-column-gap));min-width:140px;position:relative;overflow:visible}.Vtls-{{ section.id | handle }} .VtlsCarousel.VtlsCarouselListGrid--desktop .VtlsCarousel__Content .VtlsCarouselList .VtlsCollListBlock:has(.VtlsHeadingRight){display:flex;align-items:flex-end}.Vtls-{{ section.id | handle }} .VtlsCarousel.VtlsCarouselListGrid--desktop .VtlsCarousel__Content .VtlsCarouselList .VtlsHeadingLeft{position:absolute;top:0;margin:0;text-align:left;transform:translateY(calc(-100% - var(--vtl-space-48)));font-size:var(--section-heading-size);text-decoration:none;color:var(--section-heading-color);letter-spacing:normal;display:block;text-align:var(--section-heading-alignment);min-width:600px;width:100%;pointer-events:auto}.Vtls-{{ section.id | handle }} .VtlsCarousel.VtlsCarouselListGrid--desktop .VtlsCarousel__Content .VtlsCarouselList .VtlsHeadingRight{position:absolute;top:0;text-align:right;transform:translateY(calc(-100% - var(--vtl-space-48)));font-size:var(--section-heading-size);text-decoration:none;margin:0;color:var(--section-heading-color);letter-spacing:normal;display:block;min-width:600px;width:100%;pointer-events:auto}.Vtls-{{ section.id | handle }} .VtlsCarousel.VtlsCarouselListGrid--desktop .VtlsCarousel__Content .VtlsCarouselList .VtlsHeadingRight--mobile{display:none}.Vtls-{{ section.id | handle }} .VtlsCarousel.VtlsCarouselListGrid--desktop .VtlsCarousel__Content .VtlsCarousel__Navigation{display:none !important}}.Vtls-{{ section.id | handle }} .VtlsCarousel__Content{overflow:hidden;position:relative;padding-left:var(--vtl-space-20)}@media(min-width: 992px){.Vtls-{{ section.id | handle }} .VtlsCarousel__Content{padding-left:0}}[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCarousel__Content,html[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCarousel__Content,body[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCarousel__Content,html[style*="direction: rtl"] .Vtls-{{ section.id | handle }} .VtlsCarousel__Content,body[style*="direction: rtl"] .Vtls-{{ section.id | handle }} .VtlsCarousel__Content{padding-left:0;padding-right:var(--vtl-space-20)}@media(min-width: 992px){[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCarousel__Content,html[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCarousel__Content,body[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCarousel__Content,html[style*="direction: rtl"] .Vtls-{{ section.id | handle }} .VtlsCarousel__Content,body[style*="direction: rtl"] .Vtls-{{ section.id | handle }} .VtlsCarousel__Content{padding-right:0}}.Vtls-{{ section.id | handle }} .VtlsCarousel__Content .VtlsCarouselList{display:flex;width:auto;padding-left:0;margin:0;transition:.3s;column-gap:var(--section-column-gap)}[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCarousel__Content .VtlsCarouselList,html[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCarousel__Content .VtlsCarouselList,body[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCarousel__Content .VtlsCarouselList,html[style*="direction: rtl"] .Vtls-{{ section.id | handle }} .VtlsCarousel__Content .VtlsCarouselList,body[style*="direction: rtl"] .Vtls-{{ section.id | handle }} .VtlsCarousel__Content .VtlsCarouselList{padding-left:0;padding-right:0}.Vtls-{{ section.id | handle }} .VtlsCarousel__Content .VtlsCarouselList .VtlsHeadingLeft,.Vtls-{{ section.id | handle }} .VtlsCarousel__Content .VtlsCarouselList .VtlsHeadingRight{display:none}.Vtls-{{ section.id | handle }} .VtlsCarousel__Content .VtlsCarouselList .VtlsCollListBlock{box-sizing:border-box;padding:0;flex:1;overflow:hidden;min-width:140px;max-width:140px;display:flex;flex-direction:column;justify-content:space-between}.Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation{display:flex;position:absolute;top:var(--card-offset-top, 40%);transform:translate(0, -50%);align-items:center;width:100%}.Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons{height:var(--vtl-space-40);display:flex;width:100%;justify-content:space-between}@media(max-width: 480px){.Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons{display:none !important}}.Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button{background-color:var(--vtl-color-bg-fill-inverse-on-light);border-radius:50%;border:var(--vtl-border-width-1) solid rgba(0,0,0,0);width:var(--vtl-space-40);height:var(--vtl-space-40);display:flex;align-items:center;justify-content:center;cursor:pointer;outline:none}.Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button:focus-visible{outline:var(--vtl-space-2) solid var(--vtl-color-border-focus-on-light);outline-offset:var(--vtl-space-2)}.Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button:hover:not(:disabled){opacity:.5}.Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button--disabled,.Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button:disabled{cursor:default;opacity:.3}.Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button.right-chevron{position:absolute;right:9%}.Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button.left-chevron{position:absolute;left:2%}[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button svg,html[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button svg,body[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button svg,html[style*="direction: rtl"] .Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button svg,body[style*="direction: rtl"] .Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button svg{transform:scaleX(-1)}[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button.right-chevron,html[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button.right-chevron,body[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button.right-chevron,html[style*="direction: rtl"] .Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button.right-chevron,body[style*="direction: rtl"] .Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button.right-chevron{left:9%;right:auto}[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button.left-chevron,html[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button.left-chevron,body[dir=rtl] .Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button.left-chevron,html[style*="direction: rtl"] .Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button.left-chevron,body[style*="direction: rtl"] .Vtls-{{ section.id | handle }} .VtlsCarousel__Navigation .VtlsNavigationButtons__Button.left-chevron{right:2%;left:auto}
+
+{% endstyle %}
+
+<script>
+	(function () {
+		const uninstallMessage = 'Displaying this section requires an active Square: Theme Sections & AI Pages subscription. Reinstall the <a href="https://apps.shopify.com/theme-sections-ai-page-builder" target="_blank">Square: Theme Sections & AI Pages app</a> to activate it or consider removing the section.';
+		const downgradeMessage = 'You downgraded to a free plan. You need to upgrade your <a href="https://apps.shopify.com/theme-sections-ai-page-builder" target="_blank">Square: Theme Sections & AI Pages app</a> plan to activate it or consider removing the section.';
+		const projectId = '5';
+		const sectionsSelector = '.shopify-section';
+		const apps = {
+			'1': {
+				prefix: 'vitals',
+				hostname: 'https://appsolve.io'
+			},
+			'5': {
+				prefix: 'tsapb',
+				hostname: 'https://theme-sections.sqa-api.com'
+			}
+		};
+
+		const cacheKeysMetaFields = '{{ shop.metafields.vitals.tsck }}';
+		const shopId = '{{ shop.id }}';
+
+		const getHostname = () => {
+			if (apps[projectId].hostname) {
+				return apps[projectId].hostname;
+			}
+
+			console.error(`hostname for appId ${projectId} cannot be determined.`);
+			return undefined;
+		}
+
+		const disableSection = (message, selector) => {
+			const mainContainer = document.querySelector(selector);
+			const contentContainer = document.querySelector(`${selector} > section`);
+
+			if ('{{ request.design_mode }}' === 'true') {
+				contentContainer.innerHTML = `<h2 class="VtlsUninstallBG"><div class="VtlsUninstallBG__Text">${message}</div></h2>`;
+			} else {
+				mainContainer.style.display = 'none';
+				mainContainer.remove();
+			}
+		};
+
+		const getThemeSectionIdsByUUID = (installedThemeSections, uuid, appId) => {
+			const listIds = [];
+
+			installedThemeSections.forEach((installedThemeSection) => {
+				if (installedThemeSection.id.includes(`${apps[appId].prefix}_${uuid}`)) {
+					listIds.push(installedThemeSection.id);
+				}
+			})
+
+			return listIds;
+		}
+
+		const getThemeSectionsStatusList = (url) => fetch(url, {
+			method: 'GET',
+		}).then((response) => response.json());
+
+		const evaluateThemeSections = (url) => {
+			getThemeSectionsStatusList(url).then(response => {
+				const { data, f, i } = response;
+				const installedThemeSections = document.querySelectorAll(sectionsSelector);
+
+				data.forEach((themeSection) => {
+					const { e, u, a } = themeSection;
+
+					if (!e) {
+						const themeSectionsWithUUID = getThemeSectionIdsByUUID(installedThemeSections, u, a);
+						let message = '';
+
+						if (f) {
+							message = downgradeMessage;
+						}
+
+						if (!i) {
+							message = uninstallMessage;
+						}
+
+						themeSectionsWithUUID.forEach((themeSectionSelector) => {
+							disableSection(message, `#${themeSectionSelector}`);
+						})
+					}
+				});
+			})
+		}
+
+		if (shopId) {
+			if (window.vtlsSecurityCheckStarted === undefined) {
+				window.vtlsSecurityCheckStarted = true;
+
+				let url = '';
+				const hostname = getHostname();
+
+				if (!hostname) {
+					return;
+				}
+
+				const baseUrl = `${hostname}/bundle/api/v2/sf/ts`;
+
+				if (cacheKeysMetaFields) {
+					url = `${baseUrl}/${shopId}/${cacheKeysMetaFields}.json`;
+				} else {
+					const timestamp = Math.round(new Date().getTime() / 1000 / 10000) * 10000;
+					url = `${baseUrl}/${shopId}/${timestamp}.json`;
+				}
+
+				evaluateThemeSections(url);
+			}
+		}
+	})();
+</script>
+
+{% style %}
+	
+
+.VtlsUninstallBG{background-color:var(--vtl-color-bg-fill-inverse-on-light);background-image:url("data:image/avif;base64,iVBORw0KGgoAAAANSUhEUgAABOcAAABkCAQAAABnAJxfAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAACYktHRAD/h4/MvwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB+gLFQgmAgUXFkMAAARaSURBVHja7daxbSRBEATB8ZzvKw0h1dcIlJS4jl25Azlavffn9/3v++e//+vvCwqFQqFQKBRKSklEUCgUCoVCoVAMOgqFQqFQKJSzSiKCQqFQKBQKhWLQUSgUCoVCoZxVEhEUCoVCoVAoFIOOQqFQKBQK5VOURASFQqFQKBQKZVUSERQKhUKhUCiUVUlEUCgUCoVCoVBWZbtOPoVCoVAoFArlovIKERQKhUKhUCiUVXmFCAqFQqFQKBTKqrxCBIVCoVAoFAplVV4hgkKhUCgUCoUyK4kICoVCoVAoFMqqJCIoFAqFQqFQKKuSiKBQKBQKhUKhrEoigkKhUCgUCoVi0FEoFAqFQqGcVRIRFAqFQqFQKBSDjkKhUCgUCuWskoigUCgUCoVCoRh0FAqFQqFQKGeVRASFQqFQKBQKxaCjUCgUCoVCOaskIigUCoVCoVAoBh2FQqFQKBTKWSURQaFQKBQKhUIx6CgUCoVCoVDOKokICoVCoVAoFIpBR6FQKBQKhXJWSURQKBQKhUKhUAw6CoVCoVAolLNKIoJCoVAoFAqFYtBRKBQKhUKhnFUSERQKhUKhUCgUg45CoVAoFArlrJKIoFAoFAqFQqEYdBQKhUKhUChnlUQEhUKhUCgUCsWgo1AoFAqFQvkUJRFBoVAoFAqFQlmVRASFQqFQKBQKZVUSERQKhUKhUCiUVdmuk0+hUCgUCoVCuai8QgSFQqFQKBQKZVVeIYJCoVAoFAqFsiqvEEGhUCgUCoVCWZVXiKBQKBQKhUKhzEoigkKhUCgUCoWyKokICoVCoVAoFMqqJCIoFAqFQqFQKKuSiKBQKBQKhUKhGHQUCoVCoVAoZ5VEBIVCoVAoFArFoKNQKBQKhUI5qyQiKBQKhUKhUCgGHYVCoVAoFMpZJRFBoVAoFAqFQjHoKBQKhUKhUM4qiQgKhUKhUCgUikFHoVAoFAqFclZJRFAoFAqFQqFQDDoKhUKhUCiUs0oigkKhUCgUCoVi0FEoFAqFQqGcVRIRFAqFQqFQKBSDjkKhUCgUCuWskoigUCgUCoVCoRh0FAqFQqFQKGeVRASFQqFQKBQKxaCjUCgUCoVCOaskIigUCoVCoVAoBh2FQqFQKBTKWSURQaFQKBQKhUIx6CgUCoVCoVA+RUlEUCgUCoVCoVBWJRFBoVAoFAqFQlmVRASFQqFQKBQKZVW26+RTKBQKhUKhUC4qrxBBoVAoFAqFQlmVV4igUCgUCoVCoazKK0RQKBQKhUKhUFblFSIoFAqFQqFQKLOSiKBQKBQKhUKhrEoigkKhUCgUCoWyKokICoVCoVAoFMqqJCIoFAqFQqFQKAYdhUKhUCgUylklEUGhUCgUCoVCMegoFAqFQqFQziqJCAqFQqFQKBSKQUehUCgUCoVyVklEUCgUCoVCoVAMOgqFQqFQKJSzSiKCQqFQKBQKhWLQUSgUCoVCoZxVEhEUCoVCoVAoFIOOQqFQKBQK5dOVX5nMB52iezhxAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDI0LTExLTIxVDA4OjM4OjAyKzAwOjAw30WrCwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyNC0xMS0yMVQwODozODowMiswMDowMK4YE7cAAAAodEVYdGRhdGU6dGltZXN0YW1wADIwMjQtMTEtMjFUMDg6Mzg6MDIrMDA6MDD5DTJoAAAAAElFTkSuQmCC");background-position:center;background-size:cover;text-align:center;padding:var(--vtl-space-32);margin:0}.VtlsUninstallBG__Text{color:var(--vtl-color-text-disable-on-light);font-family:Inter,sans-serif;font-size:var(--vtl-font-size-14);font-weight:var(--vtl-font-weight-400);line-height:var(--vtl-line-height-140);padding:var(--vtl-space-16) var(--vtl-space-16) var(--vtl-space-16) var(--vtl-space-40);background-color:var(--vtl-color-bg-fill-inverse-on-light);display:inline-block}.VtlsUninstallBG__Text::before{content:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%0A%09%09%09%3Cpath%20d%3D%22M9.99994%206.75C10.4142%206.75%2010.7499%207.08579%2010.7499%207.5V11C10.7499%2011.4142%2010.4142%2011.75%209.99994%2011.75C9.58573%2011.75%209.24994%2011.4142%209.24994%2011V7.5C9.24994%207.08579%209.58573%206.75%209.99994%206.75Z%22%20fill%3D%22%23B28400%22%2F%3E%0A%09%09%09%3Cpath%20d%3D%22M11%2013.5C11%2014.0523%2010.5523%2014.5%2010%2014.5C9.44772%2014.5%209%2014.0523%209%2013.5C9%2012.9477%209.44772%2012.5%2010%2012.5C10.5523%2012.5%2011%2012.9477%2011%2013.5Z%22%20fill%3D%22%23B28400%22%2F%3E%0A%09%09%09%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M10%203.5C8.95471%203.5%208.21616%204.20232%207.84762%204.94672C7.65565%205.33448%206.75984%207.0441%205.84305%208.79353L5.81531%208.84646C4.9229%2010.5493%204.01714%2012.2777%203.80716%2012.702C3.4351%2013.4537%203.32931%2014.4519%203.89953%2015.316C4.46911%2016.1791%205.44222%2016.5%206.36356%2016.5L13.6364%2016.5C14.5577%2016.5%2015.5308%2016.1791%2016.1004%2015.316C16.6707%2014.4519%2016.5649%2013.4537%2016.1928%2012.702C15.9832%2012.2784%2015.08%2010.555%2014.1889%208.85476L14.1569%208.79352C13.24%207.044%2012.3443%205.33454%2012.1524%204.94693C11.784%204.20242%2011.0454%203.5%2010%203.5ZM9.1919%205.61225C9.59605%204.79592%2010.4041%204.79592%2010.8081%205.61225C11.0102%206.02061%2011.9201%207.75686%2012.8296%209.49243C13.7383%2011.2262%2014.6466%2012.9594%2014.8485%2013.3673C15.2525%2014.1837%2014.8485%2015%2013.6364%2015L6.36356%2015C5.1515%2015%204.74746%2014.1837%205.1515%2013.3673C5.35376%2012.9587%206.26468%2011.2205%207.1748%209.4838C8.08283%207.75111%208.99005%206.01994%209.1919%205.61225Z%22%20fill%3D%22%23B28400%22%2F%3E%0A%09%09%3C%2Fsvg%3E");position:absolute;width:var(--vtl-space-20);height:var(--vtl-space-20);margin-left:calc(-1*var(--vtl-space-24))}.VtlsUninstallBG__Text a{color:var(--vtl-color-text-disable-on-light)}.VtlsUninstallBG__Text a:hover{text-decoration:none}
+
+{% endstyle %}
+
+
+<script>
+	(function (options) {
+		const PARTIAL_VISIBLE_ITEM_SIZE = 0.333;
+		const lastRenderedResolution = { width: window.innerWidth, height: window.innerHeight };
+
+		const {
+			structure: {
+				cardHasBorder,
+				columnGap,
+				containerId,
+				imageAspectRatio,
+				showPortionOfLastImage,
+				slideBySet,
+				visibleItemsDesktop,
+				visibleItemsMobile,
+			},
+		} = options;
+		const containerElement = document.querySelector(containerId);
+
+		if (!containerElement) {
+			// perhaps is not created or it exists, but does not have products associated with it
+			return;
+		}
+
+		const carouselElement = containerElement.querySelector('.VtlsCarousel');
+		const listContainerElement = carouselElement.querySelector('.VtlsCarouselList');
+		const contentElement = carouselElement.querySelector('.VtlsCarousel__Content');
+		const leftButtonElement = carouselElement.querySelector('.VtlsNavigationButtons__Button.left-chevron');
+		const rightButtonElement = carouselElement.querySelector('.VtlsNavigationButtons__Button.right-chevron');
+		const listItems = listContainerElement.querySelectorAll('.VtlsCollListBlock');
+		const navigationElement = carouselElement.querySelector('.VtlsCarousel__Navigation');
+		const sectionWidth = parseInt(carouselElement.getAttribute('data-section-width'));
+		const isMobile = window.innerWidth <= window.vtlsBreakpoints.tablet.maxWidth;
+		const itemsLength = listItems.length;
+		
+		// Function to get current columnGap from CSS custom property
+		const getCurrentColumnGap = () => {
+			const computedStyle = window.getComputedStyle(containerElement);
+			const columnGapValue = computedStyle.getPropertyValue('--section-column-gap').trim();
+			
+			return parseInt(columnGapValue) || 20;
+		};
+		
+		// Check if the page is in RTL mode (match testimonials implementation)
+		const isRTL = document.dir === 'rtl' || 
+			document.documentElement.dir === 'rtl' || 
+			document.body.dir === 'rtl' ||
+			window.getComputedStyle(document.documentElement).direction === 'rtl' ||
+			window.getComputedStyle(document.body).direction === 'rtl';
+
+		const getVisibleItems = () => {
+			if (window.innerWidth >= window.vtlsBreakpoints.desktop.minWidth) {
+				return visibleItemsDesktop;
+			}
+
+			if (
+				window.innerWidth <= window.vtlsBreakpoints.tablet.maxWidth &&
+				window.innerWidth >= window.vtlsBreakpoints.tablet.minWidth &&
+				visibleItemsDesktop > 2
+			) {
+				return 2;
+			}
+
+			if (window.innerWidth <= window.vtlsBreakpoints.mobile.maxWidth) {
+				return visibleItemsMobile;
+			}
+		};
+
+		const getElementWidth = () => {
+			const carouselWidth = getCarouselWidth();
+			const visibleItems = getVisibleItems();
+			const columnsToShow =
+				visibleItems + (showPortionOfLastImage && itemsLength > visibleItems ? PARTIAL_VISIBLE_ITEM_SIZE : 0);
+
+			return Math.floor((carouselWidth - getCurrentColumnGap() * visibleItems) / columnsToShow);
+		};
+
+		const getNavigationScreensNumber = () => {
+			const visibleItems = getVisibleItems();
+
+			return Math.ceil((itemsLength - visibleItems) / getSlideBy(slideBySet) + 1);
+		};
+
+		const debounceFn = (func, delay) => {
+			let timeoutId;
+
+			return function (...args) {
+				clearTimeout(timeoutId);
+				timeoutId = setTimeout(() => func.apply(this, args), delay);
+			};
+		};
+
+		const getCarouselWidth = () => parseInt(window.getComputedStyle(carouselElement).width);
+
+		const getSlideBy = (slideBySet) => {
+			return window.innerWidth <= window.vtlsBreakpoints.mobile.maxWidth ? 1 : slideBySet;
+		};
+
+		let position = 0;
+
+		const resizeElements = () => {
+			const elementWidth = getElementWidth();
+
+			listItems.forEach((item) => {
+				const imageContainerElement = item.querySelector('.VtlsCollListBlock__Wrapper');
+				const imageElement = item.querySelector('.VtlsCollListBlock__Media');
+
+				item.style.minWidth = `${elementWidth}px`;
+				item.style.maxWidth = `${elementWidth}px`;
+
+				const containerWidth = elementWidth - (cardHasBorder ? 2 : 0);
+				imageContainerElement.style.width = `${containerWidth}px`;
+
+				const imageHeight = imageElement.offsetHeight;
+
+				carouselElement.style.setProperty('--card-offset-top', `${imageHeight / 2}px`);
+
+				if (imageAspectRatio === 'original') {
+					// make it square
+					imageContainerElement.style.height = `${containerWidth}px`;
+					imageContainerElement.style.minHeight = `${containerWidth}px`;
+				}
+			});
+		};
+
+		resizeElements();
+
+		leftButtonElement.addEventListener('click', () => navigate('left'));
+		rightButtonElement.addEventListener('click', () => navigate('right'));
+
+		// Keyboard navigation support
+		leftButtonElement.addEventListener('keydown', (e) => {
+			if ((e.key === 'Enter' || e.key === ' ') && !leftButtonElement.disabled) {
+				e.preventDefault();
+				navigate('left');
+			}
+		});
+		rightButtonElement.addEventListener('keydown', (e) => {
+			if ((e.key === 'Enter' || e.key === ' ') && !rightButtonElement.disabled) {
+				e.preventDefault();
+				navigate('right');
+			}
+		});
+
+		// Carousel keyboard navigation with arrow keys
+		carouselElement.addEventListener('keydown', (e) => {
+			// Only handle arrow keys, ignore other keys like Tab
+			if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+				if (e.target === carouselElement || carouselElement.contains(e.target)) {
+					e.preventDefault(); // Prevent default behavior for arrow keys
+					const screensNumber = getNavigationScreensNumber();
+					
+					// RTL-aware keyboard navigation
+					const direction = (e.key === 'ArrowLeft') === isRTL ? 'right' : 
+					(e.key === 'ArrowRight') === isRTL ? 'left' : null;
+				
+				if (direction === 'left') {
+					e.preventDefault();
+					// Allow keyboard navigation even when button is disabled
+					if (position > 0) {
+						position--;
+						const elementWidth = getElementWidth();
+						const carouselList = contentElement.firstElementChild;
+						const slideBy = getSlideBy(slideBySet);
+						let shift = -(position * (elementWidth + getCurrentColumnGap()) * slideBy);
+						const isLastSlide = position === screensNumber - 1;
+						const partialShift = elementWidth * PARTIAL_VISIBLE_ITEM_SIZE;
+						if (isLastSlide) {
+							if (sectionWidth === 100) {
+								shift += partialShift - getCurrentColumnGap();
+							} else if (sectionWidth < 100) {
+								shift += isMobile ? partialShift - getCurrentColumnGap() : partialShift + getCurrentColumnGap();
+							}
+						}
+						carouselList.style.marginLeft = isRTL ? '0' : `${shift}px`;
+						carouselList.style.marginRight = isRTL ? `${shift}px` : '0';
+						updateButtonsState();
+					}
+				} else if (direction === 'right') {
+					e.preventDefault();
+					// Allow keyboard navigation even when button is disabled
+					if (position < screensNumber - 1) {
+						position++;
+						const elementWidth = getElementWidth();
+						const carouselList = contentElement.firstElementChild;
+						const slideBy = getSlideBy(slideBySet);
+						let shift = -(position * (elementWidth + getCurrentColumnGap()) * slideBy);
+						const isLastSlide = position === screensNumber - 1;
+						const partialShift = elementWidth * PARTIAL_VISIBLE_ITEM_SIZE;
+						if (isLastSlide) {
+							if (sectionWidth === 100) {
+								shift += partialShift - getCurrentColumnGap();
+							} else if (sectionWidth < 100) {
+								shift += isMobile ? partialShift - getCurrentColumnGap() : partialShift + getCurrentColumnGap();
+							}
+						}
+						carouselList.style.marginLeft = isRTL ? '0' : `${shift}px`;
+						carouselList.style.marginRight = isRTL ? `${shift}px` : '0';
+						updateButtonsState();
+					}
+				}
+			}
+		}
+		});
+
+		// Make carousel focusable for keyboard navigation
+		carouselElement.setAttribute('tabindex', '0');
+
+		const updateButtonsState = () => {
+			const screensNumber = getNavigationScreensNumber();
+
+			const isLeftDisabled = position === 0;
+			const isRightDisabled = position === screensNumber - 1;
+
+			// Update CSS classes
+			leftButtonElement.classList.toggle('VtlsNavigationButtons__Button--disabled', isLeftDisabled);
+			rightButtonElement.classList.toggle(
+				'VtlsNavigationButtons__Button--disabled',
+				isRightDisabled
+			);
+
+			// Update disabled attribute
+			leftButtonElement.disabled = isLeftDisabled;
+			rightButtonElement.disabled = isRightDisabled;
+
+			// Update ARIA attributes
+			leftButtonElement.setAttribute('aria-disabled', isLeftDisabled.toString());
+			rightButtonElement.setAttribute('aria-disabled', isRightDisabled.toString());
+		};
+
+		const navigate = (direction) => {
+			const screensNumber = getNavigationScreensNumber();
+
+			if (direction === 'left' && position > 0) {
+				position--;
+			} else if (direction === 'right' && position < screensNumber - 1) {
+				position++;
+			} else {
+				return;
+			}
+
+			const elementWidth = getElementWidth();
+			const carouselList = contentElement.firstElementChild;
+			const slideBy = getSlideBy(slideBySet);
+			let shift = -(position * (elementWidth + getCurrentColumnGap()) * slideBy);
+
+			// Check for the last slide
+			const isLastSlide = position === screensNumber - 1;
+			const partialShift = elementWidth * PARTIAL_VISIBLE_ITEM_SIZE;
+
+			if (isLastSlide) {
+				if (sectionWidth === 100) {
+					shift += partialShift - getCurrentColumnGap();
+				} else if (sectionWidth < 100) {
+					shift += isMobile ? partialShift - getCurrentColumnGap() : partialShift + getCurrentColumnGap();
+				}
+			}
+
+			// Optimized margin logic: RTL uses marginRight, LTR uses marginLeft
+			carouselList.style.marginLeft = isRTL ? '0' : `${shift}px`;
+			carouselList.style.marginRight = isRTL ? `${shift}px` : '0';
+			updateButtonsState();
+		};
+
+		const resizeCarousel = () => {
+			if (window.innerWidth !== lastRenderedResolution.width) {
+				position = 0;
+
+			resizeElements();
+			// Reset margin properties
+			listContainerElement.style.marginLeft = '0';
+			listContainerElement.style.marginRight = '0';
+				updateButtonsState();
+				updateNavigationVisibility();
+
+				lastRenderedResolution.width = window.innerWidth;
+				lastRenderedResolution.height = window.innerHeight;
+			}
+		};
+
+		const updateNavigationVisibility = () => {
+			const elementWidth = getElementWidth();
+			const contentWidth = elementWidth * itemsLength + getCurrentColumnGap() * (itemsLength - 1);
+			const needsNavigationVisible = contentWidth > carouselElement.offsetWidth;
+
+			navigationElement.style.display = needsNavigationVisible ? 'flex' : 'none';
+		};
+
+		updateButtonsState();
+		updateNavigationVisibility();
+
+		window.addEventListener('resize', debounceFn(resizeCarousel, 300));
+
+		// touch functionality {
+		let xTouchDown = null;
+		let yTouchDown = null;
+
+		const getTouches = (evt) => {
+			return evt.touches || evt.originalEvent.touches;
+		};
+
+		const handleTouchStart = (evt) => {
+			const firstTouch = getTouches(evt)[0];
+			xTouchDown = firstTouch.clientX;
+			yTouchDown = firstTouch.clientY;
+		};
+
+		const handleTouchMove = (evt) => {
+			if (!xTouchDown) {
+				return;
+			}
+
+			const xUp = evt.touches[0].clientX;
+			const yUp = evt.touches[0].clientY;
+			const xDiff = xTouchDown - xUp;
+			const yDiff = yTouchDown - yUp;
+
+			if (Math.abs(xDiff) > Math.abs(yDiff)) {
+				// Optimized swipe logic: RTL reverses direction
+				const direction = (xDiff > 0) === isRTL ? 'left' : 'right';
+				navigate(direction);
+			}
+
+			xTouchDown = null;
+			yTouchDown = null;
+		};
+
+		contentElement.addEventListener('touchstart', handleTouchStart, false);
+		contentElement.addEventListener('touchmove', handleTouchMove, false);
+		// touch functionality }
+	})({
+		structure: {
+			containerId: '.Vtls-{{ section.id | handle }} .VtlsCarouselContainer',
+			showPortionOfLastImage: true,
+			visibleItemsDesktop: parseInt('{{ section.settings.collections_per_row_desktop }}'),
+			visibleItemsMobile: parseInt('{{ section.settings.collections_per_row_mobile }}'),
+			slideBySet: 1,
+		},
+	});
+</script>

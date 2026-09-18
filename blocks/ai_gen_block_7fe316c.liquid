@@ -1,0 +1,71 @@
+{% doc %}
+  @prompt
+    Create a new responsive promotional banner section using these two uploaded images: use this first image for desktop, https://sidekick.shopify.ai/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MzgwMDYwMDcxOCwicHVyIjoiYmxvYl9pZCJ9fQ==--557719efe4b63010ab9b855b2e76cedffb243e4a/ChatGPT_Image_Sep_18_2026_02_05_04_AM.png, and this second image for mobile, https://sidekick.shopify.ai/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MzgwMDYwMTUxMSwicHVyIjoiYmxvYl9pZCJ9fQ==--38861eafb91c94b9fdcc9e91ceb9ce507fee9b37/ChatGPT_Image_Sep_18_2026_02_06_43_AM.png. The section must use the first banner on desktop and the second banner on mobile, preserve each image’s proportions without cropping, and be full width and responsive. Keep the design clean and premium, add accessible alt text for the 20% off first-order offer, and do not add extra text, buttons, countdowns, cart logic, or unrelated content.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-promo-banner-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+    line-height: 0;
+    overflow: hidden;
+    background: #ffffff;
+  }
+
+  .ai-promo-banner-{{ ai_gen_id }} picture,
+  .ai-promo-banner-{{ ai_gen_id }} img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .ai-promo-banner-{{ ai_gen_id }} img {
+    max-width: 100%;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-promo-banner-{{ ai_gen_id }} {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<picture class="ai-promo-banner-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <source
+    media="(max-width: 749px)"
+    srcset="https://sidekick.shopify.ai/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MzgwMDYwMTUxMSwicHVyIjoiYmxvYl9pZCJ9fQ==--38861eafb91c94b9fdcc9e91ceb9ce507fee9b37/ChatGPT_Image_Sep_18_2026_02_06_43_AM.png"
+  >
+  <img
+    src="https://sidekick.shopify.ai/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MzgwMDYwMDcxOCwicHVyIjoiYmxvYl9pZCJ9fQ==--557719efe4b63010ab9b855b2e76cedffb243e4a/ChatGPT_Image_Sep_18_2026_02_05_04_AM.png"
+    alt="20% off your first order"
+    loading="lazy"
+  >
+</picture>
+
+{% schema %}
+{
+  "name": "First-order banner",
+  "settings": [
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "First-order banner"
+    }
+  ],
+  "tag": null,
+  "class": "promo-banner-block"
+}
+{% endschema %}

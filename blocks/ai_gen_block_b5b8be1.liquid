@@ -1,0 +1,297 @@
+
+{% doc %} 
+  @prompt 
+    Create a premium, modern discount-tiers section for STYLON, a fashion e-commerce store. Display these offers clearly: Buy 2 Items → 10% OFF; Buy 3+ Items → 15% OFF; Buy 5+ Items → 20% OFF; Buy 10+ Items → 30% OFF. Use STYLON brand color #FF5A1F, black, white, and subtle warm neutrals. Make it minimal, elegant, premium, and fashion-forward with clean sans-serif typography and strong visual hierarchy. Present each discount tier as a compact item/card in a single horizontal row on desktop, keeping the section short with minimal padding. Make it fully responsive on mobile, stacking or horizontally scrolling neatly without feeling bulky. Highlight the discount percentage prominently and keep the quantity text smaller. Use subtle borders, spacing, and polished hover effects. Avoid gradients, excessive icons, large illustrations, and unnecessary text. Add a small heading such as “Shop More, Save More” or “Unlock More Savings” above the tiers with minimal spacing. Keep the design clean and balanced on desktop and mobile, consistent with a premium fashion storefront. 
+{% enddoc %} 
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %} 
+ 
+{% style %} 
+  .ai-discount-tiers-{{ ai_gen_id }} { 
+    display: block; 
+    width: {{ block.settings.desktop_width_percent }}%; 
+    max-width: 100%; 
+    margin: 0 auto; 
+    padding: {{ block.settings.vertical_padding }}px 0; 
+    color: {{ block.settings.text_color }}; 
+    background: {{ block.settings.background_color }}; 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; 
+  } 
+ 
+  .ai-discount-tiers__heading-{{ ai_gen_id }} { 
+    margin: 0 0 {{ block.settings.heading_gap }}px; 
+    color: {{ block.settings.text_color }}; 
+    font-size: {{ block.settings.heading_size }}px; 
+    font-weight: 600; 
+    line-height: 1.15; 
+    letter-spacing: -0.02em; 
+    text-align: {{ block.settings.alignment }}; 
+  } 
+ 
+  .ai-discount-tiers__list-{{ ai_gen_id }} { 
+    display: flex; 
+    width: 100%; 
+    gap: {{ block.settings.tier_gap }}px; 
+    overflow-x: auto; 
+    scrollbar-width: thin; 
+    scrollbar-color: {{ block.settings.accent_color }} transparent; 
+  } 
+ 
+  .ai-discount-tiers__item-{{ ai_gen_id }} { 
+    flex: 1 1 0; 
+    min-width: 150px; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 86px; 
+    padding: 14px 16px; 
+    border: 1px solid {{ block.settings.border_color }}; 
+    border-radius: {{ block.settings.border_radius }}px; 
+    background-color: {{ block.settings.card_color }}; 
+    {% if block.settings.card_background_image != blank %}
+      background-image: url('{{ block.settings.card_background_image | image_url }}'); 
+      background-size: cover; 
+      background-position: center; 
+      background-repeat: no-repeat; 
+    {% endif %}
+    text-align: center; 
+  } 
+ 
+  .ai-discount-tiers__discount-{{ ai_gen_id }} { 
+    display: block; 
+    color: {{ block.settings.accent_color }}; 
+    font-size: {{ block.settings.discount_size }}px; 
+    font-weight: 700; 
+    line-height: 1; 
+    letter-spacing: -0.04em; 
+  } 
+ 
+  .ai-discount-tiers__quantity-{{ ai_gen_id }} { 
+    display: block; 
+    margin-top: 8px; 
+    color: {{ block.settings.muted_text_color }}; 
+    font-size: {{ block.settings.quantity_size }}px; 
+    font-weight: 500; 
+    line-height: 1.2; 
+  } 
+ 
+  @media screen and (max-width: 749px) { 
+    .ai-discount-tiers-{{ ai_gen_id }} { 
+      width: 100%; 
+      padding: {{ block.settings.mobile_padding }}px 0; 
+    } 
+ 
+    .ai-discount-tiers__heading-{{ ai_gen_id }} { 
+      font-size: {{ block.settings.mobile_heading_size }}px; 
+    } 
+ 
+    .ai-discount-tiers__list-{{ ai_gen_id }} { 
+      padding-bottom: 5px; 
+      gap: 10px; 
+      scroll-snap-type: x proximity; 
+    } 
+ 
+    .ai-discount-tiers__item-{{ ai_gen_id }} { 
+      flex: 0 0 148px; 
+      scroll-snap-align: start; 
+    } 
+  } 
+{% endstyle %} 
+ 
+<div class="ai-discount-tiers-{{ ai_gen_id }}" {{ block.shopify_attributes }}> 
+  {% if block.settings.heading != blank %} 
+    <h2 class="ai-discount-tiers__heading-{{ ai_gen_id }}">{{ block.settings.heading | escape }}</h2> 
+  {% endif %} 
+ 
+  <div class="ai-discount-tiers__list-{{ ai_gen_id }}" role="list" aria-label="Discount offers"> 
+    <div class="ai-discount-tiers__item-{{ ai_gen_id }}" role="listitem"> 
+      <span class="ai-discount-tiers__discount-{{ ai_gen_id }}">10% OFF</span> 
+      <span class="ai-discount-tiers__quantity-{{ ai_gen_id }}">Buy 2 items</span> 
+    </div> 
+    <div class="ai-discount-tiers__item-{{ ai_gen_id }}" role="listitem"> 
+      <span class="ai-discount-tiers__discount-{{ ai_gen_id }}">15% OFF</span> 
+      <span class="ai-discount-tiers__quantity-{{ ai_gen_id }}">Buy 3+ items</span> 
+    </div> 
+    <div class="ai-discount-tiers__item-{{ ai_gen_id }}" role="listitem"> 
+      <span class="ai-discount-tiers__discount-{{ ai_gen_id }}">20% OFF</span> 
+      <span class="ai-discount-tiers__quantity-{{ ai_gen_id }}">Buy 5+ items</span> 
+    </div> 
+    <div class="ai-discount-tiers__item-{{ ai_gen_id }}" role="listitem"> 
+      <span class="ai-discount-tiers__discount-{{ ai_gen_id }}">30% OFF</span> 
+      <span class="ai-discount-tiers__quantity-{{ ai_gen_id }}">Buy 10+ items</span> 
+    </div> 
+  </div> 
+</div> 
+ 
+{% schema %} 
+{ 
+  "name": "Discount tiers", 
+  "settings": [ 
+    { 
+      "type": "text", 
+      "id": "heading", 
+      "label": "Heading", 
+      "default": "Shop More, Save More" 
+    }, 
+    { 
+      "type": "range", 
+      "id": "desktop_width_percent", 
+      "label": "Desktop width", 
+      "min": 50, 
+      "max": 100, 
+      "step": 5, 
+      "unit": "%", 
+      "default": 100 
+    }, 
+    { 
+      "type": "select", 
+      "id": "alignment", 
+      "label": "Heading alignment", 
+      "options": [ 
+        { "value": "left", "label": "Left" }, 
+        { "value": "center", "label": "Center" } 
+      ], 
+      "default": "left" 
+    }, 
+    { 
+      "type": "color", 
+      "id": "background_color", 
+      "label": "Background", 
+      "default": "#FFFFFF" 
+    }, 
+    { 
+      "type": "color", 
+      "id": "card_color", 
+      "label": "Card background", 
+      "default": "#FFFFFF" 
+    }, 
+    {
+      "type": "image_picker",
+      "id": "card_background_image",
+      "label": "Card background image"
+    },
+    { 
+      "type": "color", 
+      "id": "text_color", 
+      "label": "Text", 
+      "default": "#000000" 
+    }, 
+    { 
+      "type": "color", 
+      "id": "muted_text_color", 
+      "label": "Muted text", 
+      "default": "#333333" 
+    }, 
+    { 
+      "type": "color", 
+      "id": "border_color", 
+      "label": "Border", 
+      "default": "#DFDFDF" 
+    }, 
+    { 
+      "type": "color", 
+      "id": "accent_color", 
+      "label": "Accent", 
+      "default": "#FF5A1F" 
+    }, 
+    { 
+      "type": "range", 
+      "id": "heading_size", 
+      "label": "Heading size", 
+      "min": 14, 
+      "max": 32, 
+      "step": 1, 
+      "unit": "px", 
+      "default": 20 
+    }, 
+    { 
+      "type": "range", 
+      "id": "mobile_heading_size", 
+      "label": "Mobile heading size", 
+      "min": 14, 
+      "max": 28, 
+      "step": 1, 
+      "unit": "px", 
+      "default": 18 
+    }, 
+    { 
+      "type": "range", 
+      "id": "discount_size", 
+      "label": "Discount size", 
+      "min": 20, 
+      "max": 40, 
+      "step": 1, 
+      "unit": "px", 
+      "default": 28 
+    }, 
+    { 
+      "type": "range", 
+      "id": "quantity_size", 
+      "label": "Quantity size", 
+      "min": 10, 
+      "max": 18, 
+      "step": 1, 
+      "unit": "px", 
+      "default": 12 
+    }, 
+    { 
+      "type": "range", 
+      "id": "vertical_padding", 
+      "label": "Desktop padding", 
+      "min": 0, 
+      "max": 40, 
+      "step": 4, 
+      "unit": "px", 
+      "default": 12 
+    }, 
+    { 
+      "type": "range", 
+      "id": "mobile_padding", 
+      "label": "Mobile padding", 
+      "min": 0, 
+      "max": 32, 
+      "step": 4, 
+      "unit": "px", 
+      "default": 8 
+    }, 
+    { 
+      "type": "range", 
+      "id": "heading_gap", 
+      "label": "Heading spacing", 
+      "min": 4, 
+      "max": 24, 
+      "step": 2, 
+      "unit": "px", 
+      "default": 10 
+    }, 
+    { 
+      "type": "range", 
+      "id": "tier_gap", 
+      "label": "Tier spacing", 
+      "min": 4, 
+      "max": 24, 
+      "step": 2, 
+      "unit": "px", 
+      "default": 10 
+    }, 
+    { 
+      "type": "range", 
+      "id": "border_radius", 
+      "label": "Corner radius", 
+      "min": 0, 
+      "max": 20, 
+      "step": 1, 
+      "unit": "px", 
+      "default": 4 
+    } 
+  ], 
+  "presets": [ 
+    { 
+      "name": "Discount tiers" 
+    } 
+  ], 
+  "tag": null, 
+  "class": "discount-tiers-block" 
+} 
+{% endschema %}
+

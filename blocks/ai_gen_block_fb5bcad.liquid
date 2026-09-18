@@ -1,0 +1,365 @@
+{% doc %}
+  @prompt
+    Create a beautiful, premium "Shop by Collection" section with these exact specs:
+    
+    LAYOUT & GRID:
+    - 4 columns on desktop, 3 columns on tablet (768px–1024px), 2 columns on mobile (below 768px)
+    - Customizable left and right padding (padding-inline-start, padding-inline-end), both defaulting to 0px
+    - Customizable top and bottom padding
+    - Optional section heading, centered or left-aligned
+    
+    CARDS:
+    - Clean card design with subtle rounded corners (border-radius: 8px–12px)
+    - Collection image fills the card top portion (object-fit: cover, consistent 4:5 portrait aspect ratio)
+    - NO overlay, NO gradient, NO darkening on the image at all — image stays fully bright and clean
+    - Collection title displayed BELOW the image, not on top of it
+    - Title: elegant, bold, dark text, left-aligned or centered, medium font size
+    - Optional short collection description below the title in lighter/smaller text
+    - Subtle hover effect: soft box-shadow lift or slight scale on the card
+    - Entire card is clickable and links to the collection page
+    
+    HEADER ROW:
+    - Section heading on the left
+    - "View All Collections" text link on the right, linking to {{ routes.collections_url }}
+    - Header row uses flexbox: justify-content: space-between; align-items: center
+    
+    SCHEMA SETTINGS:
+    - Section heading (text)
+    - Number of collections to display
+    - Left padding (range 0–100, default 0)
+    - Right padding (range 0–100, default 0)
+    - Top padding (range 0–80, default 30)
+    - Bottom padding (range 0–80, default 30)
+    
+    Keep code semantic, clean, and production-ready. Luxury fashion brand aesthetic., add good padding inside collection cards, dont add padding for images, dont add view all collections button since this section will have all the cards. also show shop now button on hover, dont add collection descrition, make collection title look good
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-shop-collections-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding-top: {{ block.settings.padding_top }}px;
+    padding-bottom: {{ block.settings.padding_bottom }}px;
+    padding-inline-start: {{ block.settings.padding_left }}px;
+    padding-inline-end: {{ block.settings.padding_right }}px;
+  }
+
+  .ai-shop-collections-container-{{ ai_gen_id }} {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .ai-shop-collections-header-{{ ai_gen_id }} {
+    margin-bottom: 40px;
+    text-align: {% if block.settings.heading_alignment == 'center' %}center{% else %}left{% endif %};
+  }
+
+  .ai-shop-collections-heading-{{ ai_gen_id }} {
+    margin: 0;
+    font-size: 36px;
+    font-weight: 600;
+    color: #000000;
+    letter-spacing: -0.02em;
+  }
+
+  .ai-shop-collections-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .ai-shop-collections-card-{{ ai_gen_id }} {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #ffffff;
+  }
+
+  .ai-shop-collections-card-{{ ai_gen_id }}:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .ai-shop-collections-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: 125%;
+    overflow: hidden;
+  }
+
+  .ai-shop-collections-image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-shop-collections-image-placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-shop-collections-image-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-shop-collections-button-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    background-color: #C9922A;
+    color: #ffffff;
+    border: none;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .ai-shop-collections-card-{{ ai_gen_id }}:hover .ai-shop-collections-button-{{ ai_gen_id }} {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .ai-shop-collections-content-{{ ai_gen_id }} {
+    padding: 20px 16px;
+  }
+
+  .ai-shop-collections-title-{{ ai_gen_id }} {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #000000;
+    text-align: {% if block.settings.heading_alignment == 'center' %}center{% else %}left{% endif %};
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    .ai-shop-collections-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .ai-shop-collections-heading-{{ ai_gen_id }} {
+      font-size: 32px;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .ai-shop-collections-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .ai-shop-collections-content-{{ ai_gen_id }} {
+      padding: 16px 12px;
+    }
+
+    .ai-shop-collections-heading-{{ ai_gen_id }} {
+      font-size: 28px;
+    }
+
+    .ai-shop-collections-header-{{ ai_gen_id }} {
+      margin-bottom: 28px;
+    }
+
+    .ai-shop-collections-title-{{ ai_gen_id }} {
+      font-size: 14px;
+    }
+
+    .ai-shop-collections-button-{{ ai_gen_id }} {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+{% endstyle %}
+
+<shop-by-collection-{{ ai_gen_id }} class="ai-shop-collections-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-shop-collections-container-{{ ai_gen_id }}">
+    {% if block.settings.heading != blank %}
+      <div class="ai-shop-collections-header-{{ ai_gen_id }}">
+        <h2 class="ai-shop-collections-heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+      </div>
+    {% endif %}
+
+    <div class="ai-shop-collections-grid-{{ ai_gen_id }}">
+      {% if block.settings.collections != blank %}
+        {% for collection in block.settings.collections limit: block.settings.collections_count %}
+          <a href="{{ collection.url }}" class="ai-shop-collections-card-{{ ai_gen_id }}">
+            <div class="ai-shop-collections-image-wrapper-{{ ai_gen_id }}">
+              {% if collection.featured_image %}
+                <img
+                  src="{{ collection.featured_image | image_url: width: 600 }}"
+                  alt="{{ collection.featured_image.alt | escape }}"
+                  width="600"
+                  height="750"
+                  loading="lazy"
+                  class="ai-shop-collections-image-{{ ai_gen_id }}"
+                >
+              {% else %}
+                <div class="ai-shop-collections-image-placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+              <span class="ai-shop-collections-button-{{ ai_gen_id }}">Shop Now</span>
+            </div>
+
+            <div class="ai-shop-collections-content-{{ ai_gen_id }}">
+              <h3 class="ai-shop-collections-title-{{ ai_gen_id }}">{{ collection.title }}</h3>
+            </div>
+          </a>
+        {% endfor %}
+      {% else %}
+        {% for i in (1..block.settings.collections_count) %}
+          <div class="ai-shop-collections-card-{{ ai_gen_id }}">
+            <div class="ai-shop-collections-image-wrapper-{{ ai_gen_id }}">
+              <div class="ai-shop-collections-image-placeholder-{{ ai_gen_id }}">
+                {{ 'collection-1' | placeholder_svg_tag }}
+              </div>
+              <span class="ai-shop-collections-button-{{ ai_gen_id }}">Shop Now</span>
+            </div>
+            <div class="ai-shop-collections-content-{{ ai_gen_id }}">
+              <h3 class="ai-shop-collections-title-{{ ai_gen_id }}">Collection {{ i }}</h3>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</shop-by-collection-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ShopByCollection{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.style.display = 'block';
+      }
+    }
+
+    customElements.define('shop-by-collection-{{ ai_gen_id }}', ShopByCollection{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Shop by collection",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading",
+      "default": "Shop by Collection"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "collection_list",
+      "id": "collections",
+      "label": "Collections",
+      "limit": 12
+    },
+    {
+      "type": "range",
+      "id": "collections_count",
+      "label": "Number of collections to display",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "Left padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "Right padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop by collection"
+    }
+  ]
+}
+{% endschema %}

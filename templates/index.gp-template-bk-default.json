@@ -1,0 +1,1303 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero_tBeCeB": {
+      "type": "hero",
+      "blocks": {
+        "text_g3gwez": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h1>Discover Your Style</h1>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h1",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "{{ settings.color_palette.background }}",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 100,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "button_AXwBBX": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Shop all products",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "style_class": "button-custom",
+            "custom_button_background": "#ff5a1f",
+            "custom_button_text": "#ffffff",
+            "custom_button_border": "#ff5a1f",
+            "link_text_color": "",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_g3gwez",
+        "button_AXwBBX"
+      ],
+      "custom_css": [
+        "/* Hero button — medium weight + shadow */.hero button,.hero .button,.hero a[class*=\"button\"],section[id*=\"hero\"] button,section[id*=\"hero\"] .button,section[id*=\"hero\"] a[class*=\"button\"] {font-weight: 500 !important;}",
+        "@media screen and (max-width: 749px) {.hero-wrapper .hero__container {--vertical-alignment-mobile: flex-start; padding-block-end: 40px; } .hero-wrapper .hero__content-wrapper {margin-block-start: -30px; }}",
+        "@media screen and (max-width: 749px) {.hero h1, .hero h2 {font-size: 1.5rem !important; line-height: 1.2 !important; }}"
+      ],
+      "name": "t:names.hero",
+      "settings": {
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/ChatGPT_Image_Sep_9_2026_02_29_13_AM_d9fceadb-064c-4932-9176-7de3a4674e29.png",
+        "media_type_2": "image",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": true,
+        "media_type_1_mobile": "image",
+        "image_1_mobile": "shopify://shop_images/ChatGPT_Image_Sep_9_2026_04_51_45_PM.png",
+        "media_type_2_mobile": "image",
+        "link": "",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_width": "page-width",
+        "section_height": "large",
+        "section_height_custom": 50,
+        "background_color": "",
+        "toggle_overlay": true,
+        "overlay_color": "#0000001f",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
+    "1789506664328dca9a": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_534577f_CU3yEY": {
+          "type": "ai_gen_block_534577f",
+          "settings": {
+            "text_1": "SAREES",
+            "text_2": "LEHENGAS",
+            "text_3": "KURTIS",
+            "text_4": "ANARKALIS",
+            "text_5": "SALWAR SUITS",
+            "text_6": "BLOUSES",
+            "text_7": "GOWNS",
+            "text_8": "CO-ORD SETS",
+            "text_9": "PALAZZO SETS",
+            "text_10": "DUPATTAS",
+            "desktop_width_percent": 100,
+            "animation_duration": 40,
+            "text_size": 16,
+            "mobile_text_size": 12,
+            "letter_spacing": 0.1,
+            "item_gap": 36,
+            "mobile_item_gap": 24,
+            "vertical_padding": 20,
+            "mobile_vertical_padding": 16,
+            "separator_size": 6,
+            "accessibility_label": "Featured brand messages",
+            "background_color": "#11100f",
+            "text_color": "{{ settings.color_palette.background }}",
+            "separator_color": "#ff5a1f",
+            "border_color": "#ff5a1f"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_534577f_CU3yEY"
+      ],
+      "name": "Marquee",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "full-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "collection_list_pgCmDE": {
+      "type": "collection-list",
+      "blocks": {
+        "group_qWJNBc": {
+          "type": "group",
+          "name": "t:names.header",
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "space-between",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_iqVBk6": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<h4>Shop by collection</h4>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "button_h4Mi8b": {
+              "type": "button",
+              "name": "t:names.button",
+              "settings": {
+                "label": "View all",
+                "link": "shopify://collections",
+                "open_in_new_tab": false,
+                "style_class": "button-secondary",
+                "custom_button_background": "{{ settings.color_palette.foreground }}",
+                "custom_button_text": "{{ settings.color_palette.background }}",
+                "custom_button_border": "{{ settings.color_palette.background }}",
+                "link_text_color": "",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_iqVBk6",
+            "button_h4Mi8b"
+          ]
+        },
+        "static-collection-card": {
+          "type": "_collection-card",
+          "name": "t:names.collection_card",
+          "static": true,
+          "settings": {
+            "placement": "below_image",
+            "horizontal_alignment": "center",
+            "vertical_alignment": "flex-start",
+            "collection_card_gap": 10,
+            "title_font_size_desktop": 16,
+            "title_font_size_mobile": 14,
+            "background_color": "",
+            "background_image": "shopify://shop_images/ChatGPT_Image_Sep_5_2026_03_27_03_AM.png",
+            "border": "solid",
+            "border_width": 1,
+            "border_opacity": 12,
+            "border_color": "",
+            "border_radius": 8
+          },
+          "blocks": {
+            "collection_title_RiYRMz": {
+              "type": "collection-title",
+              "name": "t:names.collection_title",
+              "settings": {
+                "width": "100%",
+                "max_width": "narrow",
+                "alignment": "center",
+                "type_preset": "custom",
+                "font": "var(--font-heading--family)",
+                "font_size": "0.875rem",
+                "line_height": "normal",
+                "letter_spacing": "loose",
+                "case": "uppercase",
+                "wrap": "pretty",
+                "background": false,
+                "background_color": "#ffffff",
+                "text_color": "#7a260d",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 14,
+                "padding-inline-start": 8,
+                "padding-inline-end": 8
+              },
+              "blocks": {}
+            },
+            "collection-card-image": {
+              "type": "_collection-card-image",
+              "name": "t:names.collection_card_image",
+              "static": true,
+              "settings": {
+                "image_ratio": "portrait",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_title_RiYRMz"
+          ]
+        }
+      },
+      "block_order": [
+        "group_qWJNBc"
+      ],
+      "custom_css": [
+        ":is(.resource-card__title, .collection-card__title, .card__heading) {text-transform: uppercase; text-align: center; font-weight: 600; letter-spacing: 0.08em;}",
+        ":is(.resource-card__title, .collection-card__title, .card__heading) a:hover {color: #ff5a1f;}"
+      ],
+      "name": "t:names.collections_grid",
+      "settings": {
+        "collection_list": [
+          "the-kundan-edit",
+          "floral-collection",
+          "navratri-special",
+          "ganpati-bappa-special",
+          "ikkat-boatneck-blouse",
+          "paithani-festive-collection",
+          "anarkali-suits",
+          "banarasi-silk-blouse",
+          "western-pattern-heavy-handwork-sleeveless-blouses",
+          "khadi-cotton-blouses"
+        ],
+        "layout_type": "grid",
+        "carousel_on_mobile": true,
+        "columns": 5,
+        "mobile_columns": "2",
+        "mobile_card_size": "44cqw",
+        "columns_gap": 16,
+        "bento_gap": 8,
+        "rows_gap": 16,
+        "max_collections": 4,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "collection_title_font_size": "16px",
+        "collection_title_font_size_mobile": "14px",
+        "collection_title_font_weight": "600",
+        "collection_title_color": "",
+        "collection_title_line_height": "1.2",
+        "collection_title_letter_spacing": "1px",
+        "collection_title_case": "uppercase",
+        "collection_title_alignment": "center",
+        "gap": 16,
+        "background_color": "#faf9f7",
+        "padding-block-start": 56,
+        "padding-block-end": 56
+      }
+    },
+    "custom_liquid_QUQX8z": {
+      "type": "custom-liquid",
+      "name": "t:names.custom_liquid",
+      "settings": {
+        "custom_liquid": "<style>\n  /* =========================================================\n     STYLON — MINIMAL PREMIUM TIERED OFFER RIBBON\n     ========================================================= */\n\n  .stylon-tier-ribbon {\n    --black: #111111;\n    --white: #ffffff;\n    --orange: #FF5A1F;\n    --border: #E4E4E4;\n    --soft: #F7F7F7;\n    --muted: #666666;\n\n    width: 100%;\n    background: var(--white);\n    \n    /* Top and bottom borders removed here */\n\n    color: var(--black);\n    font-family: Arial, Helvetica, sans-serif;\n\n    -webkit-font-smoothing: antialiased;\n    overflow: hidden;\n  }\n\n  .stylon-tier-ribbon *,\n  .stylon-tier-ribbon *::before,\n  .stylon-tier-ribbon *::after {\n    box-sizing: border-box;\n  }\n\n  /* =========================================================\n     MAIN\n     ========================================================= */\n\n  .stylon-tier-ribbon__inner {\n    width: min(1480px, calc(100% - 48px));\n    margin: 0 auto;\n\n    display: flex;\n    align-items: center;\n\n    gap: 34px;\n    padding: 15px 0;\n  }\n\n  /* =========================================================\n     HEADER\n     ========================================================= */\n\n  .stylon-tier-ribbon__header {\n    flex: 0 0 auto;\n    min-width: 195px;\n  }\n\n  .stylon-tier-ribbon__title {\n    display: flex;\n    align-items: center;\n\n    gap: 9px;\n    margin: 0;\n    padding: 0;\n\n    color: var(--black);\n\n    font-size: 13px;\n    line-height: 1;\n\n    font-weight: 900;\n    letter-spacing: 0.12em;\n\n    text-transform: uppercase;\n    white-space: nowrap;\n  }\n\n  .stylon-tier-ribbon__title::before {\n    content: \"\";\n\n    width: 7px;\n    height: 7px;\n    flex: 0 0 7px;\n\n    border-radius: 50%;\n\n    background: var(--orange);\n\n    box-shadow:\n      0 0 0 4px rgba(255, 90, 31, 0.10);\n  }\n\n  .stylon-tier-ribbon__subtitle {\n    display: none;\n  }\n\n  /* =========================================================\n     OFFER LIST\n     ========================================================= */\n\n  .stylon-tier-list {\n    flex: 1 1 auto;\n    min-width: 0;\n\n    display: grid;\n    grid-template-columns: repeat(4, minmax(0, 1fr));\n\n    gap: 8px;\n  }\n\n  /* =========================================================\n     OFFER CARD\n     ========================================================= */\n\n  .stylon-tier {\n    position: relative;\n\n    min-width: 0;\n    min-height: 64px;\n\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n\n    gap: 12px;\n\n    padding: 11px 15px;\n\n    border: 1px solid var(--border);\n    border-radius: 8px;\n\n    background: var(--white);\n    color: var(--black);\n\n    transition:\n      background-color 0.2s ease,\n      border-color 0.2s ease,\n      transform 0.2s ease,\n      box-shadow 0.2s ease;\n  }\n\n  .stylon-tier:hover {\n    background: var(--soft);\n    border-color: #D8D8D8;\n\n    transform: translateY(-1px);\n\n    box-shadow:\n      0 5px 16px rgba(0, 0, 0, 0.045);\n  }\n\n  /* =========================================================\n     TEXT\n     ========================================================= */\n\n  .stylon-tier__info {\n    min-width: 0;\n\n    display: flex;\n    flex-direction: column;\n\n    gap: 5px;\n  }\n\n  .stylon-tier__qty {\n    display: block;\n\n    color: var(--muted);\n\n    font-size: 11px;\n    line-height: 1;\n\n    font-weight: 800;\n    letter-spacing: 0.08em;\n\n    text-transform: uppercase;\n    white-space: nowrap;\n  }\n\n  .stylon-tier__discount {\n    display: block;\n\n    color: var(--black);\n\n    font-size: 19px;\n    line-height: 1;\n\n    font-weight: 900;\n\n    letter-spacing: -0.025em;\n    white-space: nowrap;\n  }\n\n  /* =========================================================\n     PLUS ICON\n     ========================================================= */\n\n  .stylon-tier__arrow {\n    width: 29px;\n    height: 29px;\n\n    flex: 0 0 29px;\n\n    display: flex;\n    align-items: center;\n    justify-content: center;\n\n    border-radius: 50%;\n\n    background: var(--soft);\n    color: var(--black);\n\n    font-size: 15px;\n    line-height: 1;\n\n    font-weight: 800;\n\n    transition:\n      background-color 0.2s ease,\n      color 0.2s ease,\n      transform 0.2s ease;\n  }\n\n  .stylon-tier:hover .stylon-tier__arrow {\n    background: var(--orange);\n    color: var(--white);\n\n    transform: rotate(90deg);\n  }\n\n  /* =========================================================\n     FEATURED\n     ========================================================= */\n\n  .stylon-tier--featured {\n    overflow: hidden;\n\n    background: var(--black);\n    border-color: var(--black);\n\n    color: var(--white);\n  }\n\n  .stylon-tier--featured:hover {\n    background: #191919;\n    border-color: #191919;\n  }\n\n  .stylon-tier--featured::after {\n    content: \"\";\n\n    position: absolute;\n\n    width: 110px;\n    height: 110px;\n\n    right: -48px;\n    bottom: -58px;\n\n    border-radius: 50%;\n\n    background: var(--orange);\n\n    opacity: 0.8;\n\n    pointer-events: none;\n  }\n\n  .stylon-tier--featured .stylon-tier__qty {\n    color: rgba(255, 255, 255, 0.68);\n  }\n\n  .stylon-tier--featured .stylon-tier__discount {\n    color: var(--white);\n  }\n\n  .stylon-tier--featured .stylon-tier__arrow {\n    background: rgba(255, 255, 255, 0.12);\n    color: var(--white);\n  }\n\n  .stylon-tier--featured:hover .stylon-tier__arrow {\n    background: var(--orange);\n  }\n\n  /* =========================================================\n     POPULAR\n     ========================================================= */\n\n  .stylon-tier__tag {\n    position: absolute;\n\n    top: 6px;\n    right: 7px;\n\n    z-index: 3;\n\n    padding: 4px 7px;\n\n    border-radius: 999px;\n\n    background: var(--orange);\n    color: var(--white);\n\n    font-size: 7px;\n    line-height: 1;\n\n    font-weight: 900;\n    letter-spacing: 0.09em;\n\n    text-transform: uppercase;\n    white-space: nowrap;\n  }\n\n  /* =========================================================\n     LARGE DESKTOP\n     ========================================================= */\n\n  @media screen and (min-width: 1200px) {\n\n    .stylon-tier-ribbon__inner {\n      gap: 40px;\n      padding: 16px 0;\n    }\n\n    .stylon-tier-ribbon__header {\n      min-width: 210px;\n    }\n\n    .stylon-tier-ribbon__title {\n      font-size: 13px;\n    }\n\n    .stylon-tier {\n      min-height: 68px;\n      padding: 12px 17px;\n    }\n\n    .stylon-tier__qty {\n      font-size: 11px;\n    }\n\n    .stylon-tier__discount {\n      font-size: 20px;\n    }\n\n    .stylon-tier__arrow {\n      width: 30px;\n      height: 30px;\n      flex-basis: 30px;\n    }\n  }\n\n  /* =========================================================\n     TABLET\n     ========================================================= */\n\n  @media screen and (max-width: 1024px) {\n\n    .stylon-tier-ribbon__inner {\n      width: calc(100% - 32px);\n\n      gap: 18px;\n      padding: 13px 0;\n    }\n\n    .stylon-tier-ribbon__header {\n      min-width: 150px;\n    }\n\n    .stylon-tier-ribbon__title {\n      font-size: 11px;\n    }\n\n    .stylon-tier-list {\n      gap: 6px;\n    }\n\n    .stylon-tier {\n      min-height: 59px;\n      padding: 9px 11px;\n\n      border-radius: 7px;\n    }\n\n    .stylon-tier__qty {\n      font-size: 9px;\n    }\n\n    .stylon-tier__discount {\n      font-size: 16px;\n    }\n\n    .stylon-tier__arrow {\n      width: 26px;\n      height: 26px;\n      flex-basis: 26px;\n      font-size: 13px;\n    }\n\n    .stylon-tier__tag {\n      top: 5px;\n      right: 5px;\n      padding: 3px 5px;\n      font-size: 6px;\n    }\n  }\n\n  /* =========================================================\n     MOBILE\n     ========================================================= */\n\n  @media screen and (max-width: 749px) {\n\n    .stylon-tier-ribbon__inner {\n      width: 100%;\n      display: block;\n\n      padding: 12px 0 13px;\n    }\n\n    .stylon-tier-ribbon__header {\n      width: calc(100% - 32px);\n      min-width: 0;\n\n      margin: 0 auto 9px;\n    }\n\n    .stylon-tier-ribbon__title {\n      font-size: 10px;\n      letter-spacing: 0.11em;\n    }\n\n    .stylon-tier-ribbon__title::before {\n      width: 6px;\n      height: 6px;\n      flex-basis: 6px;\n    }\n\n    /* Horizontal mobile row */\n\n    .stylon-tier-list {\n      display: flex;\n      width: 100%;\n\n      overflow-x: auto;\n      overflow-y: hidden;\n\n      gap: 7px;\n\n      padding: 0 16px 3px;\n\n      scroll-snap-type: x proximity;\n      scroll-padding-left: 16px;\n\n      -webkit-overflow-scrolling: touch;\n      scrollbar-width: none;\n    }\n\n    .stylon-tier-list::-webkit-scrollbar {\n      display: none;\n    }\n\n    .stylon-tier {\n      flex: 0 0 150px;\n      width: 150px;\n\n      min-height: 66px;\n\n      padding: 10px 11px;\n\n      border-radius: 8px;\n\n      scroll-snap-align: start;\n    }\n\n    .stylon-tier__qty {\n      font-size: 9px;\n    }\n\n    .stylon-tier__discount {\n      font-size: 16px;\n    }\n\n    .stylon-tier__arrow {\n      width: 26px;\n      height: 26px;\n      flex-basis: 26px;\n\n      font-size: 13px;\n    }\n\n    .stylon-tier__tag {\n      top: 5px;\n      right: 5px;\n\n      padding: 3px 5px;\n\n      font-size: 5.5px;\n    }\n  }\n\n  /* =========================================================\n     SMALL MOBILE\n     ========================================================= */\n\n  @media screen and (max-width: 400px) {\n\n    .stylon-tier-ribbon__header {\n      width: calc(100% - 24px);\n      margin-bottom: 8px;\n    }\n\n    .stylon-tier-ribbon__title {\n      font-size: 9px;\n    }\n\n    .stylon-tier-list {\n      padding-left: 12px;\n      padding-right: 12px;\n\n      gap: 6px;\n    }\n\n    .stylon-tier {\n      flex-basis: 142px;\n      width: 142px;\n\n      min-height: 63px;\n\n      padding: 9px 10px;\n    }\n\n    .stylon-tier__qty {\n      font-size: 8px;\n    }\n\n    .stylon-tier__discount {\n      font-size: 15px;\n    }\n\n    .stylon-tier__arrow {\n      width: 24px;\n      height: 24px;\n      flex-basis: 24px;\n    }\n  }\n\n  /* =========================================================\n     VERY SMALL DEVICES\n     ========================================================= */\n\n  @media screen and (max-width: 340px) {\n\n    .stylon-tier-ribbon__header {\n      width: calc(100% - 20px);\n    }\n\n    .stylon-tier-list {\n      padding-left: 10px;\n      padding-right: 10px;\n    }\n\n    .stylon-tier {\n      flex-basis: 135px;\n      width: 135px;\n    }\n\n    .stylon-tier__discount {\n      font-size: 14px;\n    }\n  }\n\n  /* =========================================================\n     REDUCED MOTION\n     ========================================================= */\n\n  @media (prefers-reduced-motion: reduce) {\n\n    .stylon-tier,\n    .stylon-tier__arrow {\n      transition: none;\n    }\n  }\n</style>\n\n<aside class=\"stylon-tier-ribbon\" aria-label=\"STYLON Tiered Offers\">\n  <div class=\"stylon-tier-ribbon__inner\">\n\n    <!-- HEADER -->\n    <div class=\"stylon-tier-ribbon__header\">\n      <h3 class=\"stylon-tier-ribbon__title\">\n        Current Offers\n      </h3>\n    </div>\n\n    <!-- OFFERS -->\n    <div class=\"stylon-tier-list\">\n\n      <!-- BUY 2 -->\n      <div class=\"stylon-tier\">\n        <div class=\"stylon-tier__info\">\n          <span class=\"stylon-tier__qty\">\n            Buy 2\n          </span>\n          <span class=\"stylon-tier__discount\">\n            10% OFF\n          </span>\n        </div>\n        <span class=\"stylon-tier__arrow\" aria-hidden=\"true\">\n          +\n        </span>\n      </div>\n\n      <!-- BUY 3 -->\n      <div class=\"stylon-tier\">\n        <div class=\"stylon-tier__info\">\n          <span class=\"stylon-tier__qty\">\n            Buy 3\n          </span>\n          <span class=\"stylon-tier__discount\">\n            15% OFF\n          </span>\n        </div>\n        <span class=\"stylon-tier__arrow\" aria-hidden=\"true\">\n          +\n        </span>\n      </div>\n\n      <!-- BUY 5 -->\n      <div class=\"stylon-tier stylon-tier--featured\">\n        <span class=\"stylon-tier__tag\">\n          Popular\n        </span>\n        <div class=\"stylon-tier__info\">\n          <span class=\"stylon-tier__qty\">\n            Buy 5\n          </span>\n          <span class=\"stylon-tier__discount\">\n            20% OFF\n          </span>\n        </div>\n        <span class=\"stylon-tier__arrow\" aria-hidden=\"true\">\n          +\n        </span>\n      </div>\n\n      <!-- BUY 10 -->\n      <div class=\"stylon-tier\">\n        <div class=\"stylon-tier__info\">\n          <span class=\"stylon-tier__qty\">\n            Buy 10\n          </span>\n          <span class=\"stylon-tier__discount\">\n            30% OFF\n          </span>\n        </div>\n        <span class=\"stylon-tier__arrow\" aria-hidden=\"true\">\n          +\n        </span>\n      </div>\n\n    </div>\n  </div>\n</aside>",
+        "background_color": "",
+        "section_width": "page-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "product_list_CeJ4Bj": {
+      "type": "product-list",
+      "blocks": {
+        "static-header": {
+          "type": "_product-list-content",
+          "name": "t:names.header",
+          "static": true,
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": false,
+            "horizontal_alignment": "space-between",
+            "vertical_alignment": "center",
+            "align_baseline": true,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_list_text_KKhJiR": {
+              "type": "_product-list-text",
+              "name": "t:names.collection_title",
+              "settings": {
+                "text": "<h2>{{ closest.collection.title }}</h2>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h3",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_list_button_yQXCdP": {
+              "type": "_product-list-button",
+              "name": "t:names.product_list_button",
+              "settings": {
+                "label": "VIEW ALL",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "custom_button_background": "{{ settings.color_palette.foreground }}",
+                "custom_button_text": "{{ settings.color_palette.background }}",
+                "custom_button_border": "{{ settings.color_palette.background }}",
+                "link_text_color": "",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_list_text_KKhJiR",
+            "product_list_button_yQXCdP"
+          ]
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "t:names.product_card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "background_color": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_gallery_J49yjC": {
+              "type": "_product-card-gallery",
+              "name": "t:names.product_card_media",
+              "settings": {
+                "image_ratio": "portrait",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title_wiBELd": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_dFXkm6": {
+              "type": "price",
+              "name": "t:names.product_price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "text_color": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_card_gallery_J49yjC",
+            "product_title_wiBELd",
+            "price_dFXkm6"
+          ]
+        }
+      },
+      "name": "t:names.products_carousel",
+      "settings": {
+        "collection": "new-arrivals",
+        "layout_type": "grid",
+        "carousel_on_mobile": true,
+        "max_products": 10,
+        "columns": 5,
+        "mobile_columns": "2",
+        "mobile_card_size": "44cqw",
+        "columns_gap": 12,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "circle",
+        "section_width": "page-width",
+        "horizontal_alignment": "flex-start",
+        "gap": 28,
+        "background_color": "",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "custom_liquid_EbfkQy": {
+      "type": "custom-liquid",
+      "name": "t:names.custom_liquid",
+      "settings": {
+        "custom_liquid": "<div class=\"gta-block__root GSC-INLINE-BAR-lmEWctrcapkV\"></div>",
+        "background_color": "#ff5a1f",
+        "section_width": "full-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "product_list_cGFqiR": {
+      "type": "product-list",
+      "blocks": {
+        "static-header": {
+          "type": "_product-list-content",
+          "name": "t:names.header",
+          "static": true,
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": false,
+            "horizontal_alignment": "space-between",
+            "vertical_alignment": "flex-end",
+            "align_baseline": true,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_list_text_y4z49m": {
+              "type": "_product-list-text",
+              "name": "t:names.collection_title",
+              "settings": {
+                "text": "<h3>{{ closest.collection.title }}</h3>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_list_button_PVTGjJ": {
+              "type": "_product-list-button",
+              "name": "t:names.product_list_button",
+              "settings": {
+                "label": "View all",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "custom_button_background": "{{ settings.color_palette.foreground }}",
+                "custom_button_text": "{{ settings.color_palette.background }}",
+                "custom_button_border": "{{ settings.color_palette.background }}",
+                "link_text_color": "",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_list_text_y4z49m",
+            "product_list_button_PVTGjJ"
+          ]
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "t:names.product_card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "background_color": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_gallery_dgGPNH": {
+              "type": "_product-card-gallery",
+              "name": "t:names.product_card_media",
+              "settings": {
+                "image_ratio": "square",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title_LiU8t6": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_mbFjiQ": {
+              "type": "price",
+              "name": "t:names.product_price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "text_color": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_card_gallery_dgGPNH",
+            "product_title_LiU8t6",
+            "price_mbFjiQ"
+          ]
+        }
+      },
+      "name": "t:names.products_grid",
+      "settings": {
+        "collection": "best-sellers",
+        "layout_type": "grid",
+        "carousel_on_mobile": false,
+        "max_products": 8,
+        "columns": 5,
+        "mobile_columns": "2",
+        "mobile_card_size": "60cqw",
+        "columns_gap": 8,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "wide-width",
+        "horizontal_alignment": "flex-start",
+        "gap": 28,
+        "background_color": "",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "custom_liquid_3qpwzF": {
+      "type": "custom-liquid",
+      "name": "t:names.custom_liquid",
+      "settings": {
+        "custom_liquid": "<!DOCTYPE html><!DOCTYPE html><!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>STYLON First Order Banner - Big Model</title>\n<style>\n  /* =========================================================\n     STYLON — FIRST ORDER FASHION BANNER\n     Premium Editorial • Orange Abstract • Responsive Landscape\n     ========================================================= */\n\n  :root {\n    --stylon-orange: #FF5A1F;\n    --stylon-orange-glow: rgba(255, 90, 31, 0.4);\n    --stylon-black: #0B0B0B;\n    --stylon-white: #FFFFFF;\n  }\n\n  .stylon-first-order {\n    position: relative;\n    width: 100%;\n    min-height: 400px;\n    overflow: hidden;\n    background: var(--stylon-black);\n    color: var(--stylon-white);\n    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;\n    -webkit-font-smoothing: antialiased;\n    border-radius: 16px;\n    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);\n  }\n\n  .stylon-first-order *,\n  .stylon-first-order *::before,\n  .stylon-first-order *::after {\n    box-sizing: border-box;\n  }\n\n  /* =========================================================\n     ABSTRACT ORANGE BACKGROUND SHAPES\n     ========================================================= */\n\n  .stylon-first-order::before {\n    content: \"\";\n    position: absolute;\n    width: 600px;\n    height: 600px;\n    left: 20%;\n    top: -250px;\n    border-radius: 50%;\n    background: radial-gradient(circle, var(--stylon-orange-glow) 0%, rgba(255,90,31,0.05) 50%, transparent 70%);\n    filter: blur(24px);\n    z-index: 1;\n    pointer-events: none;\n  }\n\n  .stylon-first-order::after {\n    content: \"\";\n    position: absolute;\n    width: 500px;\n    height: 600px;\n    right: -10%;\n    bottom: -300px;\n    border-radius: 46% 54% 62% 38% / 48% 40% 60% 52%;\n    background: linear-gradient(145deg, #FF6A35 0%, #FF5A1F 48%, #E9440C 100%);\n    transform: rotate(-15deg);\n    box-shadow: -20px -10px 60px rgba(255, 90, 31, 0.2);\n    z-index: 1;\n    pointer-events: none;\n  }\n\n  .stylon-first-order__abstract {\n    position: absolute;\n    width: 200px;\n    height: 350px;\n    right: 35%;\n    top: -10%;\n    border-radius: 58% 42% 65% 35% / 42% 52% 48% 58%;\n    background: linear-gradient(180deg, rgba(255, 90, 31, 0.6), rgba(255, 90, 31, 0.1));\n    transform: rotate(21deg);\n    opacity: 0.4;\n    filter: blur(8px);\n    z-index: 1;\n    pointer-events: none;\n  }\n\n  /* =========================================================\n     LAYOUT \n     ========================================================= */\n\n  .stylon-first-order__inner {\n    position: relative;\n    display: flex;\n    flex-direction: row;\n    width: 100%;\n    height: 100%;\n    min-height: 400px;\n    z-index: 5;\n  }\n\n  /* =========================================================\n     CONTENT AREA\n     ========================================================= */\n\n  .stylon-first-order__content {\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    flex: 1.2; \n    padding: 48px 40px 48px clamp(32px, 6vw, 80px);\n    z-index: 10;\n  }\n\n  .stylon-first-order__eyebrow {\n    display: flex;\n    align-items: center;\n    gap: 12px;\n    margin-bottom: 20px;\n    color: rgba(255, 255, 255, 0.8);\n    font-size: clamp(10px, 1.2vw, 12px);\n    font-weight: 800;\n    letter-spacing: 0.25em;\n    text-transform: uppercase;\n  }\n\n  .stylon-first-order__eyebrow::before {\n    content: \"\";\n    width: 32px;\n    height: 2px;\n    background: var(--stylon-orange);\n  }\n\n  .stylon-first-order__heading {\n    margin: 0;\n    color: var(--stylon-white);\n    font-size: clamp(40px, 5.5vw, 84px);\n    line-height: 0.9;\n    letter-spacing: -0.02em;\n    font-weight: 900;\n    text-transform: uppercase;\n  }\n\n  .stylon-first-order__heading .orange {\n    color: var(--stylon-orange);\n  }\n\n  .stylon-first-order__heading .sub {\n    display: block;\n    margin-top: 12px;\n    font-size: clamp(14px, 1.8vw, 22px);\n    line-height: 1.2;\n    letter-spacing: 0.15em;\n  }\n\n  .stylon-first-order__description {\n    max-width: 420px;\n    margin: 20px 0 0;\n    color: rgba(255, 255, 255, 0.75);\n    font-size: clamp(13px, 1.5vw, 16px);\n    line-height: 1.6;\n    font-weight: 400;\n  }\n\n  /* =========================================================\n     COPY CODE BUTTON\n     ========================================================= */\n\n  .stylon-first-order__code {\n    display: inline-flex;\n    align-items: center;\n    width: max-content;\n    margin-top: 32px;\n    padding: 14px 24px;\n    border: 1px solid rgba(255, 255, 255, 0.2);\n    border-radius: 8px;\n    background: rgba(255, 255, 255, 0.08);\n    backdrop-filter: blur(12px);\n    -webkit-backdrop-filter: blur(12px);\n    cursor: pointer;\n    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);\n    font: inherit;\n    appearance: none;\n    -webkit-appearance: none;\n  }\n\n  .stylon-first-order__code:hover {\n    background: rgba(255, 255, 255, 0.15);\n    border-color: rgba(255, 255, 255, 0.4);\n    transform: translateY(-2px);\n    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);\n  }\n\n  .stylon-first-order__code:active {\n    transform: translateY(0);\n  }\n\n  .stylon-first-order__code-label {\n    margin-right: 12px;\n    color: rgba(255, 255, 255, 0.6);\n    font-size: 11px;\n    font-weight: 800;\n    letter-spacing: 0.2em;\n    text-transform: uppercase;\n  }\n\n  .stylon-first-order__code-value {\n    padding-left: 12px;\n    border-left: 1px solid rgba(255, 255, 255, 0.2);\n    color: var(--stylon-white);\n    font-size: 16px;\n    font-weight: 900;\n    letter-spacing: 0.1em;\n    transition: color 0.3s ease;\n  }\n\n  /* =========================================================\n     MODEL VISUAL AREA\n     ========================================================= */\n\n  .stylon-first-order__visual {\n    position: relative;\n    flex: 1; \n    display: flex;\n    align-items: flex-end;\n    justify-content: flex-end;\n    padding-right: 4%;\n    z-index: 5;\n  }\n\n  .stylon-first-order__model {\n    position: relative;\n    z-index: 4;\n    width: auto;\n    height: 100%;\n    max-height: 480px;\n    object-fit: contain;\n    object-position: bottom right;\n    filter: drop-shadow(-15px 20px 30px rgba(0, 0, 0, 0.5));\n  }\n\n  .stylon-first-order__vertical {\n    position: absolute;\n    right: 24px;\n    top: 50%;\n    transform: translateY(-50%) rotate(90deg);\n    color: rgba(255, 255, 255, 0.15);\n    font-size: 12px;\n    font-weight: 800;\n    letter-spacing: 0.5em;\n    white-space: nowrap;\n    z-index: 7;\n  }\n\n  .stylon-first-order__corner {\n    position: absolute;\n    right: 0;\n    bottom: 0;\n    width: 80px;\n    height: 80px;\n    border-top-left-radius: 100%;\n    background: var(--stylon-orange);\n    z-index: 6;\n  }\n\n  /* =========================================================\n     TABLET RESPONSIVENESS\n     ========================================================= */\n\n  @media screen and (max-width: 900px) {\n    .stylon-first-order,\n    .stylon-first-order__inner { min-height: 340px; }\n    .stylon-first-order__content { padding: 32px 24px 32px 40px; }\n    .stylon-first-order__model { max-height: 360px; }\n    .stylon-first-order__vertical { display: none; }\n  }\n\n  /* =========================================================\n     MOBILE (BIG MODEL OVERLAP)\n     ========================================================= */\n\n  @media screen and (max-width: 749px) {\n    .stylon-first-order,\n    .stylon-first-order__inner {\n      min-height: 260px;\n      height: 260px;\n    }\n\n    .stylon-first-order__content {\n      position: relative;\n      width: 65%; /* Allows text space but lets image take over */\n      padding: 24px 16px 24px 24px;\n      z-index: 10;\n      /* Text shadow added to ensure readability if model overlaps */\n      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);\n    }\n\n    .stylon-first-order__eyebrow {\n      font-size: 8px;\n      margin-bottom: 12px;\n    }\n\n    .stylon-first-order__eyebrow::before {\n      width: 20px;\n    }\n\n    .stylon-first-order__heading {\n      font-size: clamp(28px, 7vw, 36px);\n    }\n\n    .stylon-first-order__heading .sub {\n      font-size: clamp(10px, 3vw, 12px);\n      margin-top: 8px;\n    }\n\n    .stylon-first-order__description {\n      font-size: 11px;\n      margin-top: 12px;\n      line-height: 1.4;\n      max-width: 200px;\n      display: -webkit-box;\n      -webkit-line-clamp: 3;\n      -webkit-box-orient: vertical;\n      overflow: hidden;\n    }\n\n    .stylon-first-order__code {\n      margin-top: 16px;\n      padding: 8px 14px;\n      /* Darken button background slightly on mobile for contrast against image */\n      background: rgba(0, 0, 0, 0.3); \n    }\n\n    .stylon-first-order__code-label {\n      font-size: 8px;\n      margin-right: 8px;\n    }\n\n    .stylon-first-order__code-value {\n      font-size: 12px;\n      padding-left: 8px;\n    }\n\n    /* Absolute positioning to let the model take up massive space */\n    .stylon-first-order__visual {\n      position: absolute;\n      right: -5%; /* Push it slightly off screen for dramatic effect */\n      bottom: 0;\n      width: 55%; \n      height: 100%;\n      padding-right: 0;\n      z-index: 2;\n    }\n\n    .stylon-first-order__model {\n      height: 100%;\n      width: 100%;\n      object-fit: contain;\n      object-position: bottom right;\n      /* Scale the model up drastically */\n      transform: scale(1.3);\n      transform-origin: bottom right; \n      filter: drop-shadow(-10px 10px 20px rgba(0, 0, 0, 0.6));\n    }\n\n    .stylon-first-order__corner {\n      width: 48px;\n      height: 48px;\n    }\n\n    .stylon-first-order::after {\n      width: 250px;\n      height: 250px;\n      right: -20%;\n      bottom: -100px;\n    }\n  }\n\n  /* =========================================================\n     SMALL MOBILE REFINEMENT\n     ========================================================= */\n\n  @media screen and (max-width: 400px) {\n    .stylon-first-order,\n    .stylon-first-order__inner {\n      height: 240px;\n      min-height: 240px;\n    }\n    \n    .stylon-first-order__content {\n      padding: 20px 12px 20px 16px;\n      width: 70%;\n    }\n\n    .stylon-first-order__heading {\n      font-size: 26px;\n    }\n    \n    .stylon-first-order__description {\n      font-size: 10px;\n    }\n    \n    .stylon-first-order__visual {\n      width: 60%; \n    }\n  }\n</style>\n</head>\n<body>\n\n<section class=\"stylon-first-order\" aria-label=\"STYLON First Order Offer\">\n\n  <!-- BACKGROUND SHAPES -->\n  <div class=\"stylon-first-order__abstract\"></div>\n\n  <div class=\"stylon-first-order__inner\">\n\n    <!-- =====================================================\n         OFFER CONTENT\n         ===================================================== -->\n    <div class=\"stylon-first-order__content\">\n      <div class=\"stylon-first-order__eyebrow\">\n        First Order Exclusive\n      </div>\n\n      <h2 class=\"stylon-first-order__heading\">\n        20% <span class=\"orange\">OFF</span>\n        <span class=\"sub\">YOUR FIRST ORDER</span>\n      </h2>\n\n      <p class=\"stylon-first-order__description\">\n        Discover STYLON and enjoy an exclusive welcome offer on your first purchase.\n      </p>\n\n      <!-- Glassmorphism Copy Button -->\n      <button type=\"button\" class=\"stylon-first-order__code\" onclick=\"stylonCopyCode(this)\">\n        <span class=\"stylon-first-order__code-label\">Use Code</span>\n        <span class=\"stylon-first-order__code-value\">FIRST20</span>\n      </button>\n    </div>\n\n    <!-- =====================================================\n         MODEL\n         ===================================================== -->\n    <div class=\"stylon-first-order__visual\">\n      <img\n        class=\"stylon-first-order__model\"\n        src=\"https://cdn.shopify.com/s/files/1/0900/4793/8594/files/model.png?v=1789596721\"\n        alt=\"STYLON Fashion Model\"\n        loading=\"lazy\"\n      >\n      <!-- Vertical text for desktop -->\n      <div class=\"stylon-first-order__vertical\">STYLON</div>\n    </div>\n\n    <!-- Small Orange Corner Details -->\n    <div class=\"stylon-first-order__corner\"></div>\n\n  </div>\n</section>\n\n<!-- Functional script for the copy code button -->\n<script>\n  function stylonCopyCode(button) {\n    var codeValueElement = button.querySelector('.stylon-first-order__code-value');\n    var originalText = codeValueElement.textContent;\n    var codeToCopy = \"FIRST20\";\n\n    function copied() {\n      codeValueElement.textContent = \"COPIED ✓\";\n      button.style.backgroundColor = \"rgba(255, 90, 31, 0.4)\";\n      button.style.borderColor = \"#FF5A1F\";\n\n      setTimeout(function () {\n        codeValueElement.textContent = originalText;\n        button.style.backgroundColor = \"\";\n        button.style.borderColor = \"\";\n      }, 1800);\n    }\n\n    if (navigator.clipboard && window.isSecureContext) {\n      navigator.clipboard.writeText(codeToCopy).then(copied).catch(function () {});\n    } else {\n      var input = document.createElement(\"textarea\");\n      input.value = codeToCopy;\n      input.style.position = \"fixed\";\n      input.style.left = \"-9999px\";\n\n      document.body.appendChild(input);\n      input.focus();\n      input.select();\n\n      try {\n        document.execCommand(\"copy\");\n        copied();\n      } catch (e) {}\n\n      document.body.removeChild(input);\n    }\n  }\n</script>\n\n</body>\n</html>",
+        "background_color": "#faf8f5",
+        "section_width": "page-width",
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
+    "product_list_Q3JJ6r": {
+      "type": "product-list",
+      "blocks": {
+        "static-header": {
+          "type": "_product-list-content",
+          "name": "t:names.header",
+          "static": true,
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": false,
+            "horizontal_alignment": "space-between",
+            "vertical_alignment": "flex-end",
+            "align_baseline": true,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_list_text_HnGdQU": {
+              "type": "_product-list-text",
+              "name": "t:names.collection_title",
+              "settings": {
+                "text": "<h3>{{ closest.collection.title }}</h3>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_list_button_UDhWgw": {
+              "type": "_product-list-button",
+              "name": "t:names.product_list_button",
+              "settings": {
+                "label": "View all",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "custom_button_background": "{{ settings.color_palette.foreground }}",
+                "custom_button_text": "{{ settings.color_palette.background }}",
+                "custom_button_border": "{{ settings.color_palette.background }}",
+                "link_text_color": "",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_list_text_HnGdQU",
+            "product_list_button_UDhWgw"
+          ]
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "t:names.product_card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "background_color": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_gallery_YtYVnf": {
+              "type": "_product-card-gallery",
+              "name": "t:names.product_card_media",
+              "settings": {
+                "image_ratio": "square",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title_4pptDU": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_EpFQyB": {
+              "type": "price",
+              "name": "t:names.product_price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "text_color": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_card_gallery_YtYVnf",
+            "product_title_4pptDU",
+            "price_EpFQyB"
+          ]
+        }
+      },
+      "name": "t:names.products_grid",
+      "settings": {
+        "collection": "premium-collection",
+        "layout_type": "grid",
+        "carousel_on_mobile": false,
+        "max_products": 10,
+        "columns": 5,
+        "mobile_columns": "2",
+        "mobile_card_size": "60cqw",
+        "columns_gap": 8,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "wide-width",
+        "horizontal_alignment": "flex-start",
+        "gap": 28,
+        "background_color": "",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "product_list_iyyJeN": {
+      "type": "product-list",
+      "blocks": {
+        "static-header": {
+          "type": "_product-list-content",
+          "name": "t:names.header",
+          "static": true,
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": false,
+            "horizontal_alignment": "space-between",
+            "vertical_alignment": "flex-end",
+            "align_baseline": true,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_list_text_fre9gw": {
+              "type": "_product-list-text",
+              "name": "t:names.collection_title",
+              "settings": {
+                "text": "<h3>{{ closest.collection.title }}</h3>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_list_button_Dp3BhB": {
+              "type": "_product-list-button",
+              "name": "t:names.product_list_button",
+              "settings": {
+                "label": "View all",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "custom_button_background": "{{ settings.color_palette.foreground }}",
+                "custom_button_text": "{{ settings.color_palette.background }}",
+                "custom_button_border": "{{ settings.color_palette.background }}",
+                "link_text_color": "",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_list_text_fre9gw",
+            "product_list_button_Dp3BhB"
+          ]
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "t:names.product_card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "background_color": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_gallery_girhpj": {
+              "type": "_product-card-gallery",
+              "name": "t:names.product_card_media",
+              "settings": {
+                "image_ratio": "square",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title_P8Q33j": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_gdf3Bq": {
+              "type": "price",
+              "name": "t:names.product_price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "text_color": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_card_gallery_girhpj",
+            "product_title_P8Q33j",
+            "price_gdf3Bq"
+          ]
+        }
+      },
+      "name": "t:names.products_grid",
+      "settings": {
+        "collection": "under-499",
+        "layout_type": "grid",
+        "carousel_on_mobile": false,
+        "max_products": 8,
+        "columns": 5,
+        "mobile_columns": "2",
+        "mobile_card_size": "60cqw",
+        "columns_gap": 8,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "wide-width",
+        "horizontal_alignment": "flex-start",
+        "gap": 28,
+        "background_color": "",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "1788250978afb61d99": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_603a8ba_XXfz64": {
+          "type": "ai_gen_block_603a8ba",
+          "settings": {
+            "desktop_width_percent": 100,
+            "desktop_padding": 28,
+            "mobile_padding": 20,
+            "item_horizontal_padding": 24,
+            "mobile_item_padding": 16,
+            "background_color": "#fafafa",
+            "icon_color": "#ff5a1f",
+            "title_color": "#1f2937",
+            "text_color": "#6b7280",
+            "divider_color": "#e5e7eb",
+            "icon_size": 36,
+            "mobile_icon_size": 28,
+            "icon_spacing": 12,
+            "mobile_icon_spacing": 10,
+            "title_size": 18,
+            "mobile_title_size": 12,
+            "title_weight": 600,
+            "title_letter_spacing": 1,
+            "title_spacing": 6,
+            "mobile_title_spacing": 4,
+            "text_size": 15,
+            "mobile_text_size": 13,
+            "divider_height": 60,
+            "item_1_enabled": true,
+            "item_1_icon": "chat",
+            "item_1_title": "Customer Support",
+            "item_1_text": "Always here to assist",
+            "item_2_enabled": true,
+            "item_2_icon": "craft",
+            "item_2_title": "Handcrafted Quality",
+            "item_2_text": "Artisan tradition",
+            "item_3_enabled": true,
+            "item_3_icon": "lock",
+            "item_3_title": "Secure Checkout",
+            "item_3_text": "Safe and protected"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_603a8ba_XXfz64"
+      ],
+      "name": "Trust Reassurance",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    }
+  },
+  "order": [
+    "hero_tBeCeB",
+    "1789506664328dca9a",
+    "collection_list_pgCmDE",
+    "custom_liquid_QUQX8z",
+    "product_list_CeJ4Bj",
+    "custom_liquid_EbfkQy",
+    "product_list_cGFqiR",
+    "custom_liquid_3qpwzF",
+    "product_list_Q3JJ6r",
+    "product_list_iyyJeN",
+    "1788250978afb61d99"
+  ]
+}

@@ -1,0 +1,377 @@
+{% doc %}
+  @prompt
+    Create a custom luxury trust reassurance section for a premium Indian ethnic fashion brand called Stylon. It should have 4 trust items displayed in a horizontal row on desktop and stacked on mobile: 1) Free shipping - On orders above ₹2,000 (shipping icon), 2) Handcrafted quality - Premium artisan designs (handmade/craft icon), 3) Secure checkout - UPI & card payments (secure/lock icon), 4) Customer support - We're here to help (support icon). Design requirements: dark/black background (#0a0a0a or similar), gold accent color (#C9A84C) for icons and title text, white or light gray supporting text, elegant thin dividers between items, subtle fade-in animation on scroll, icons should be SVG-based or use elegant Unicode symbols, uppercase letter-spacing on titles, clean minimal layout with generous padding. Include customizable settings for: background color, icon color, title color, supporting text color, padding, and each item's title and text. The overall feel should be premium, editorial, and luxurious — matching a high-end fashion storefront., keep 3 points only. remove rest, instead of free shipping use customer support. dont use black background. on mobile 1 column only, make it look bold
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-trust-reassurance-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.background_color }};
+    padding: {{ block.settings.padding_top }}px 40px {{ block.settings.padding_bottom }}px;
+  }
+
+  .ai-trust-reassurance-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .ai-trust-reassurance-container-{{ ai_gen_id }}.ai-trust-visible-{{ ai_gen_id }} {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .ai-trust-item-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: {{ block.settings.item_padding }}px;
+    position: relative;
+  }
+
+  .ai-trust-item-{{ ai_gen_id }}:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 60%;
+    background-color: {{ block.settings.divider_color }};
+    opacity: {{ block.settings.divider_opacity | divided_by: 100.0 }};
+  }
+
+  .ai-trust-icon-{{ ai_gen_id }} {
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    color: {{ block.settings.icon_color }};
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-trust-icon-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+  }
+
+  .ai-trust-title-{{ ai_gen_id }} {
+    color: {{ block.settings.title_color }};
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+    line-height: 1.2;
+  }
+
+  .ai-trust-text-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.text_size }}px;
+    font-weight: 500;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-trust-reassurance-{{ ai_gen_id }} {
+      padding: {{ block.settings.padding_top | times: 0.7 }}px 24px {{ block.settings.padding_bottom | times: 0.7 }}px;
+    }
+
+    .ai-trust-icon-{{ ai_gen_id }} {
+      width: {{ block.settings.icon_size | times: 0.8 }}px;
+      height: {{ block.settings.icon_size | times: 0.8 }}px;
+      margin-bottom: 16px;
+    }
+
+    .ai-trust-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | times: 0.9 }}px;
+    }
+
+    .ai-trust-text-{{ ai_gen_id }} {
+      font-size: {{ block.settings.text_size | times: 0.9 }}px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-trust-reassurance-{{ ai_gen_id }} {
+      padding: {{ block.settings.padding_top | times: 0.6 }}px 20px {{ block.settings.padding_bottom | times: 0.6 }}px;
+    }
+
+    .ai-trust-reassurance-container-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .ai-trust-item-{{ ai_gen_id }}::after {
+      display: none;
+    }
+  }
+{% endstyle %}
+
+<luxury-trust-reassurance-{{ ai_gen_id }}
+  class="ai-trust-reassurance-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-trust-reassurance-container-{{ ai_gen_id }}">
+    <div class="ai-trust-item-{{ ai_gen_id }}">
+      <div class="ai-trust-icon-{{ ai_gen_id }}">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="9" cy="10" r="1" fill="currentColor"/>
+          <circle cx="12" cy="10" r="1" fill="currentColor"/>
+          <circle cx="15" cy="10" r="1" fill="currentColor"/>
+        </svg>
+      </div>
+      <h3 class="ai-trust-title-{{ ai_gen_id }}">{{ block.settings.item_1_title }}</h3>
+      <p class="ai-trust-text-{{ ai_gen_id }}">{{ block.settings.item_1_text }}</p>
+    </div>
+
+    <div class="ai-trust-item-{{ ai_gen_id }}">
+      <div class="ai-trust-icon-{{ ai_gen_id }}">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M16 7V5C16 4.46957 15.7893 3.96086 15.4142 3.58579C15.0391 3.21071 14.5304 3 14 3H10C9.46957 3 8.96086 3.21071 8.58579 3.58579C8.21071 3.96086 8 4.46957 8 5V7" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="12" cy="13" r="2"/>
+          <path d="M12 15v3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3 class="ai-trust-title-{{ ai_gen_id }}">{{ block.settings.item_2_title }}</h3>
+      <p class="ai-trust-text-{{ ai_gen_id }}">{{ block.settings.item_2_text }}</p>
+    </div>
+
+    <div class="ai-trust-item-{{ ai_gen_id }}">
+      <div class="ai-trust-icon-{{ ai_gen_id }}">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <rect x="3" y="11" width="18" height="11" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3 class="ai-trust-title-{{ ai_gen_id }}">{{ block.settings.item_3_title }}</h3>
+      <p class="ai-trust-text-{{ ai_gen_id }}">{{ block.settings.item_3_text }}</p>
+    </div>
+  </div>
+</luxury-trust-reassurance-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class LuxuryTrustReassurance{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.container = this.querySelector('.ai-trust-reassurance-container-{{ ai_gen_id }}');
+        this.hasAnimated = false;
+      }
+
+      connectedCallback() {
+        this.setupIntersectionObserver();
+      }
+
+      setupIntersectionObserver() {
+        const options = {
+          threshold: 0.2,
+          rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !this.hasAnimated) {
+              this.container.classList.add('ai-trust-visible-{{ ai_gen_id }}');
+              this.hasAnimated = true;
+              observer.unobserve(entry.target);
+            }
+          });
+        }, options);
+
+        observer.observe(this.container);
+      }
+    }
+
+    customElements.define('luxury-trust-reassurance-{{ ai_gen_id }}', LuxuryTrustReassurance{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Luxury trust reassurance",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "item_padding",
+      "label": "Item padding",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon",
+      "default": "#C9A84C"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider",
+      "default": "#DFDFDF"
+    },
+    {
+      "type": "range",
+      "id": "divider_opacity",
+      "label": "Divider opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 24,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Customer support"
+    },
+    {
+      "type": "text",
+      "id": "item_1_title",
+      "label": "Title",
+      "default": "Customer support"
+    },
+    {
+      "type": "text",
+      "id": "item_1_text",
+      "label": "Text",
+      "default": "We're here to help"
+    },
+    {
+      "type": "header",
+      "content": "Handcrafted quality"
+    },
+    {
+      "type": "text",
+      "id": "item_2_title",
+      "label": "Title",
+      "default": "Handcrafted quality"
+    },
+    {
+      "type": "text",
+      "id": "item_2_text",
+      "label": "Text",
+      "default": "Premium artisan designs"
+    },
+    {
+      "type": "header",
+      "content": "Secure checkout"
+    },
+    {
+      "type": "text",
+      "id": "item_3_title",
+      "label": "Title",
+      "default": "Secure checkout"
+    },
+    {
+      "type": "text",
+      "id": "item_3_text",
+      "label": "Text",
+      "default": "UPI & card payments"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Luxury trust reassurance"
+    }
+  ]
+}
+{% endschema %}

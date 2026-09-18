@@ -1,0 +1,659 @@
+{% doc %}
+  @prompt
+    Create a Collections List section that displays all collections in a grid layout as distinct cards. Each collection card should show the collection image, collection name, and the number of products in that collection (e.g., "12 Products"). Remove the "View All" button entirely.
+    
+    Section settings to include:
+    - Heading text with separate font size settings for desktop and mobile, letter case option, font weight, color, and alignment — all editable separately for desktop and mobile
+    - Layout options: number of columns for desktop and mobile, gap between cards
+    - Left and right padding option (default: 0), top and bottom section padding
+    - Section background color
+    
+    Card settings:
+    - Card background color, border radius, border color and width
+    - Image aspect ratio option
+    
+    Sale badge/tag settings:
+    - Toggle to show/hide sale badge
+    - Sale badge is positioned top-right of the card image, slightly inset from the top and right edges (not flush to corner)
+    - No animation or movement effect on the badge
+    - Sale badge font size separate for desktop and mobile
+    - Sale badge letter case option
+    - Sale badge padding (keep it minimal/compact)
+    - Sale badge background color and text color
+    
+    Collection name settings:
+    - Font size separate for desktop and mobile
+    - Letter case option
+    - Color
+    - On hover: only the title color changes (no other hover effect on title)
+    
+    Product count settings:
+    - Font size, color, letter case option
+    - Displayed subtly below the collection name with gold accent styling
+    
+    Image hover effect:
+    - Subtle zoom effect on the collection image when hovering the card
+    
+    The overall aesthetic should match a premium dark luxury editorial style with gold accents. Cards should appear as distinct elevated elements., keep colection title case and letter spacing option as well, give soft shdows to cards, make collection titles look modern, give collection title font weight option as well, keep some distance between heading and grid. also give same options for heading which are given to collection title, give option to enable disable translate in hover effect
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-collections-grid-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.section_background_color }};
+    padding: {{ block.settings.padding_top }}px {{ block.settings.padding_horizontal }}px {{ block.settings.padding_bottom }}px {{ block.settings.padding_horizontal }}px;
+  }
+
+  .ai-collections-grid__heading-{{ ai_gen_id }} {
+    text-align: {{ block.settings.heading_alignment_desktop }};
+    font-size: {{ block.settings.heading_size_desktop }}px;
+    text-transform: {{ block.settings.heading_case }};
+    font-weight: {{ block.settings.heading_weight }};
+    letter-spacing: {{ block.settings.heading_letter_spacing }}px;
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 {{ block.settings.heading_bottom_spacing }}px 0;
+    line-height: 1.2;
+  }
+
+  .ai-collections-grid__container-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, 1fr);
+    gap: {{ block.settings.gap }}px;
+  }
+
+  .ai-collection-card-{{ ai_gen_id }} {
+    background-color: {{ block.settings.card_background_color }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    border: {{ block.settings.card_border_width }}px solid {{ block.settings.card_border_color }};
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .ai-collection-card-{{ ai_gen_id }}:hover {
+    {% if block.settings.enable_card_lift %}
+      transform: translateY(-4px);
+    {% endif %}
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  .ai-collection-card__image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: {{ block.settings.image_aspect_ratio }}%;
+    overflow: hidden;
+  }
+
+  .ai-collection-card__image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .ai-collection-card-{{ ai_gen_id }}:hover .ai-collection-card__image-{{ ai_gen_id }} {
+    transform: scale(1.05);
+  }
+
+  .ai-collection-card__image-placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-collection-card__image-placeholder-{{ ai_gen_id }} svg {
+    width: 50%;
+    height: 50%;
+    opacity: 0.3;
+  }
+
+  .ai-collection-card__badge-{{ ai_gen_id }} {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: {{ block.settings.badge_background_color }};
+    color: {{ block.settings.badge_text_color }};
+    font-size: {{ block.settings.badge_size_desktop }}px;
+    text-transform: {{ block.settings.badge_case }};
+    padding: {{ block.settings.badge_padding }}px {{ block.settings.badge_padding | times: 1.5 }}px;
+    border-radius: 4px;
+    z-index: 2;
+  }
+
+  .ai-collection-card__content-{{ ai_gen_id }} {
+    padding: 20px;
+  }
+
+  .ai-collection-card__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size_desktop }}px;
+    text-transform: {{ block.settings.title_case }};
+    letter-spacing: {{ block.settings.title_letter_spacing }}px;
+    font-weight: {{ block.settings.title_weight }};
+    color: {{ block.settings.title_color }};
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+    transition: color 0.3s ease;
+  }
+
+  .ai-collection-card-{{ ai_gen_id }}:hover .ai-collection-card__title-{{ ai_gen_id }} {
+    color: {{ block.settings.title_hover_color }};
+  }
+
+  .ai-collection-card__count-{{ ai_gen_id }} {
+    font-size: {{ block.settings.count_size }}px;
+    text-transform: {{ block.settings.count_case }};
+    color: {{ block.settings.count_color }};
+    margin: 0;
+    font-weight: 400;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-collections-grid__heading-{{ ai_gen_id }} {
+      text-align: {{ block.settings.heading_alignment_mobile }};
+      font-size: {{ block.settings.heading_size_mobile }}px;
+    }
+
+    .ai-collections-grid__container-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
+    }
+
+    .ai-collection-card__badge-{{ ai_gen_id }} {
+      font-size: {{ block.settings.badge_size_mobile }}px;
+    }
+
+    .ai-collection-card__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+<collections-grid-{{ ai_gen_id }} class="ai-collections-grid-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.heading != blank %}
+    <h2 class="ai-collections-grid__heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+  {% endif %}
+
+  <div class="ai-collections-grid__container-{{ ai_gen_id }}">
+    {% for collection in collections %}
+      <a href="{{ collection.url }}" class="ai-collection-card-{{ ai_gen_id }}">
+        <div class="ai-collection-card__image-wrapper-{{ ai_gen_id }}">
+          {% if collection.image %}
+            <img
+              src="{{ collection.image | image_url: width: 800 }}"
+              alt="{{ collection.image.alt | escape }}"
+              loading="lazy"
+              width="{{ collection.image.width }}"
+              height="{{ collection.image.height }}"
+              class="ai-collection-card__image-{{ ai_gen_id }}"
+            >
+          {% else %}
+            <div class="ai-collection-card__image-placeholder-{{ ai_gen_id }}">
+              {{ 'collection-1' | placeholder_svg_tag }}
+            </div>
+          {% endif %}
+
+          {% if block.settings.show_sale_badge %}
+            {% assign has_sale = false %}
+            {% for product in collection.products limit: 50 %}
+              {% if product.compare_at_price > product.price %}
+                {% assign has_sale = true %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
+
+            {% if has_sale %}
+              <div class="ai-collection-card__badge-{{ ai_gen_id }}">Sale</div>
+            {% endif %}
+          {% endif %}
+        </div>
+
+        <div class="ai-collection-card__content-{{ ai_gen_id }}">
+          <h3 class="ai-collection-card__title-{{ ai_gen_id }}">{{ collection.title }}</h3>
+          <p class="ai-collection-card__count-{{ ai_gen_id }}">
+            {{ collection.products_count }}
+            {% if collection.products_count == 1 %}
+              Product
+            {% else %}
+              Products
+            {% endif %}
+          </p>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</collections-grid-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class CollectionsGrid{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+      }
+    }
+
+    customElements.define('collections-grid-{{ ai_gen_id }}', CollectionsGrid{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Collections grid",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop by Collection"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Desktop font size",
+      "min": 16,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Mobile font size",
+      "min": 14,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "heading_case",
+      "label": "Letter case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing",
+      "label": "Letter spacing",
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment_desktop",
+      "label": "Desktop alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment_mobile",
+      "label": "Mobile alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "heading_bottom_spacing",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Desktop columns",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Mobile columns",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap between cards",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "label": "Left and right padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "section_background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Border color",
+      "default": "#DFDFDF"
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_card_lift",
+      "label": "Enable card lift on hover",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_aspect_ratio",
+      "label": "Aspect ratio",
+      "options": [
+        { "value": "100", "label": "Square (1:1)" },
+        { "value": "133", "label": "Portrait (3:4)" },
+        { "value": "75", "label": "Landscape (4:3)" },
+        { "value": "56", "label": "Wide (16:9)" }
+      ],
+      "default": "100"
+    },
+    {
+      "type": "header",
+      "content": "Sale badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale_badge",
+      "label": "Show sale badge",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "badge_size_desktop",
+      "label": "Desktop font size",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "badge_size_mobile",
+      "label": "Mobile font size",
+      "min": 8,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "badge_case",
+      "label": "Letter case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "range",
+      "id": "badge_padding",
+      "label": "Padding",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "color",
+      "id": "badge_background_color",
+      "label": "Background color",
+      "default": "#C9A227"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Collection name"
+    },
+    {
+      "type": "range",
+      "id": "title_size_desktop",
+      "label": "Desktop font size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Mobile font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "title_case",
+      "label": "Letter case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "title_letter_spacing",
+      "label": "Letter spacing",
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "title_hover_color",
+      "label": "Hover color",
+      "default": "#C9A227"
+    },
+    {
+      "type": "header",
+      "content": "Product count"
+    },
+    {
+      "type": "range",
+      "id": "count_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "select",
+      "id": "count_case",
+      "label": "Letter case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "count_color",
+      "label": "Color",
+      "default": "#666666"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collections grid"
+    }
+  ]
+}
+{% endschema %}

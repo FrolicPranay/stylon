@@ -1,0 +1,916 @@
+{% doc %}
+  @prompt
+    Create a Collections List section that displays all collections in a grid layout as distinct cards. Each collection card should show the collection image, collection name, and the number of products in that collection (e.g., "12 Products"). No "View All" button.
+    
+    Section settings:
+    - Heading text with separate font size settings for desktop and mobile, letter case option, font weight, color, and alignment — all editable separately for desktop and mobile
+    - Layout options: number of columns for desktop (default 3) and mobile (default 1), gap between cards
+    - Left and right padding (default: 0px), top and bottom section padding
+    - Section background color
+    
+    Card settings:
+    - Card background color, border radius, border color and width
+    - Image aspect ratio option (options: 3/4 portrait, 1/1 square, 4/3 landscape)
+    
+    Sale badge settings:
+    - Toggle to show/hide sale badge
+    - Sale badge positioned top-right of the card image, slightly inset from top and right edges (not flush to corner), using CSS absolute positioning with top: 10px; right: 10px
+    - No animation or movement on the badge
+    - Sale badge font size separate for desktop and mobile
+    - Sale badge letter case option
+    - Sale badge padding (compact, e.g., 4px 8px)
+    - Sale badge background color and text color
+    
+    Collection name settings:
+    - Font size separate for desktop and mobile
+    - Letter case option
+    - Color
+    - On hover: only the title color changes (no underline, no other effect)
+    
+    Product count settings:
+    - Font size, color, letter case option
+    - Displayed below the collection name with a subtle gold accent (e.g., small gold dot or line before the text)
+    
+    Image hover effect:
+    - Subtle zoom (scale) on the collection image on card hover using CSS transform, no other effects
+    
+    Aesthetic: premium dark luxury editorial style. Dark backgrounds, gold accents (#C9A84C or similar), minimal typography, elevated card appearance with subtle shadows. Images should be large and dominant on both mobile and desktop — the image should take up the majority of the card height. Cards should feel distinct and elevated.
+    
+    Use Liquid to loop through collections (collections object), show collection.image, collection.title, and collection.products_count. Render the sale badge if the toggle is on and the collection has products on sale (check via collection.products). Use CSS custom properties for all theme settings. Make the grid fully responsive using CSS Grid., give different gap options for mobile and desktop , keep differnt collection title editing option for dersktop andd mobile, also provide lette spacing option. same for section heading. remove dot from product count. if any collection title bigger than 2 lines then hide it. coolection title and count padding options. also editing options for product count., slightly increase distance between heading and grid., give  tablet editing options as well, when i enter value like 12 then its taking 10 or 15. this should not happen., give padding option for collection name and count, currently collection name and count line already have padding default. remove it. change option settings according, currently there is much spacing between heading and grid. decrease it , give option to change distance between heading and grid
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-collections-list-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.section_bg_color }};
+    padding: {{ block.settings.section_padding_top }}px {{ block.settings.section_padding_horizontal }}px {{ block.settings.section_padding_bottom }}px {{ block.settings.section_padding_horizontal }}px;
+  }
+
+  .ai-collections-list__heading-{{ ai_gen_id }} {
+    text-align: {{ block.settings.heading_alignment_desktop }};
+    color: {{ block.settings.heading_color }};
+    font-size: {{ block.settings.heading_font_size_desktop }}px;
+    font-weight: {{ block.settings.heading_font_weight }};
+    text-transform: {{ block.settings.heading_letter_case }};
+    letter-spacing: {{ block.settings.heading_letter_spacing_desktop }}px;
+    margin: 0 0 {{ block.settings.heading_bottom_margin }}px 0;
+  }
+
+  .ai-collections-list__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, 1fr);
+    gap: {{ block.settings.card_gap_desktop }}px;
+  }
+
+  .ai-collection-card-{{ ai_gen_id }} {
+    background-color: {{ block.settings.card_bg_color }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    border: {{ block.settings.card_border_width }}px solid {{ block.settings.card_border_color }};
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ai-collection-card-{{ ai_gen_id }}:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .ai-collection-card__image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    aspect-ratio: {{ block.settings.image_aspect_ratio }};
+  }
+
+  .ai-collection-card__image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .ai-collection-card-{{ ai_gen_id }}:hover .ai-collection-card__image-{{ ai_gen_id }} {
+    transform: scale(1.05);
+  }
+
+  .ai-collection-card__image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-collection-card__image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    max-height: 300px;
+    opacity: 0.3;
+  }
+
+  .ai-collection-card__sale-badge-{{ ai_gen_id }} {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: {{ block.settings.sale_badge_bg_color }};
+    color: {{ block.settings.sale_badge_text_color }};
+    padding: 4px 8px;
+    font-size: {{ block.settings.sale_badge_font_size_desktop }}px;
+    text-transform: {{ block.settings.sale_badge_letter_case }};
+    border-radius: 4px;
+    font-weight: 600;
+    z-index: 2;
+  }
+
+  .ai-collection-card__content-{{ ai_gen_id }} {
+    padding: {{ block.settings.content_padding_top }}px {{ block.settings.content_padding_horizontal }}px {{ block.settings.content_padding_bottom }}px {{ block.settings.content_padding_horizontal }}px;
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.title_count_gap }}px;
+    flex-grow: 1;
+  }
+
+  .ai-collection-card__link-{{ ai_gen_id }} {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .ai-collection-card__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.collection_name_font_size_desktop }}px;
+    font-weight: {{ block.settings.collection_name_font_weight_desktop }};
+    text-transform: {{ block.settings.collection_name_letter_case_desktop }};
+    letter-spacing: {{ block.settings.collection_name_letter_spacing_desktop }}px;
+    color: {{ block.settings.collection_name_color_desktop }};
+    margin: 0;
+    padding: 0;
+    transition: color 0.3s ease;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ai-collection-card-{{ ai_gen_id }}:hover .ai-collection-card__title-{{ ai_gen_id }} {
+    color: {{ block.settings.collection_name_hover_color }};
+  }
+
+  .ai-collection-card__product-count-{{ ai_gen_id }} {
+    font-size: {{ block.settings.product_count_font_size }}px;
+    font-weight: {{ block.settings.product_count_font_weight }};
+    color: {{ block.settings.product_count_color }};
+    text-transform: {{ block.settings.product_count_letter_case }};
+    letter-spacing: {{ block.settings.product_count_letter_spacing }}px;
+    padding: 0;
+    margin: 0;
+  }
+
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .ai-collections-list__heading-{{ ai_gen_id }} {
+      text-align: {{ block.settings.heading_alignment_tablet }};
+      font-size: {{ block.settings.heading_font_size_tablet }}px;
+      letter-spacing: {{ block.settings.heading_letter_spacing_tablet }}px;
+    }
+
+    .ai-collections-list__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_tablet }}, 1fr);
+      gap: {{ block.settings.card_gap_tablet }}px;
+    }
+
+    .ai-collection-card__sale-badge-{{ ai_gen_id }} {
+      font-size: {{ block.settings.sale_badge_font_size_tablet }}px;
+    }
+
+    .ai-collection-card__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.collection_name_font_size_tablet }}px;
+      font-weight: {{ block.settings.collection_name_font_weight_tablet }};
+      text-transform: {{ block.settings.collection_name_letter_case_tablet }};
+      letter-spacing: {{ block.settings.collection_name_letter_spacing_tablet }}px;
+      color: {{ block.settings.collection_name_color_tablet }};
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-collections-list__heading-{{ ai_gen_id }} {
+      text-align: {{ block.settings.heading_alignment_mobile }};
+      font-size: {{ block.settings.heading_font_size_mobile }}px;
+      letter-spacing: {{ block.settings.heading_letter_spacing_mobile }}px;
+    }
+
+    .ai-collections-list__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
+      gap: {{ block.settings.card_gap_mobile }}px;
+    }
+
+    .ai-collection-card__sale-badge-{{ ai_gen_id }} {
+      font-size: {{ block.settings.sale_badge_font_size_mobile }}px;
+    }
+
+    .ai-collection-card__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.collection_name_font_size_mobile }}px;
+      font-weight: {{ block.settings.collection_name_font_weight_mobile }};
+      text-transform: {{ block.settings.collection_name_letter_case_mobile }};
+      letter-spacing: {{ block.settings.collection_name_letter_spacing_mobile }}px;
+      color: {{ block.settings.collection_name_color_mobile }};
+    }
+  }
+{% endstyle %}
+
+<collections-list-{{ ai_gen_id }} class="ai-collections-list-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.heading != blank %}
+    <h2 class="ai-collections-list__heading-{{ ai_gen_id }}">
+      {{ block.settings.heading }}
+    </h2>
+  {% endif %}
+
+  <div class="ai-collections-list__grid-{{ ai_gen_id }}">
+    {% for collection in collections %}
+      {% if collection.handle != blank %}
+        <div class="ai-collection-card-{{ ai_gen_id }}">
+          <a href="{{ collection.url }}" class="ai-collection-card__link-{{ ai_gen_id }}">
+            <div class="ai-collection-card__image-wrapper-{{ ai_gen_id }}">
+              {% if collection.image %}
+                <img
+                  src="{{ collection.image | image_url: width: 800 }}"
+                  alt="{{ collection.title | escape }}"
+                  class="ai-collection-card__image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="{{ collection.image.width }}"
+                  height="{{ collection.image.height }}"
+                >
+              {% else %}
+                <div class="ai-collection-card__image-placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-apparel-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+
+              {% if block.settings.show_sale_badge %}
+                {% assign has_sale = false %}
+                {% for product in collection.products limit: 20 %}
+                  {% if product.compare_at_price > product.price %}
+                    {% assign has_sale = true %}
+                    {% break %}
+                  {% endif %}
+                {% endfor %}
+
+                {% if has_sale %}
+                  <div class="ai-collection-card__sale-badge-{{ ai_gen_id }}">
+                    Sale
+                  </div>
+                {% endif %}
+              {% endif %}
+            </div>
+
+            <div class="ai-collection-card__content-{{ ai_gen_id }}">
+              <h3 class="ai-collection-card__title-{{ ai_gen_id }}">
+                {{ collection.title }}
+              </h3>
+
+              <div class="ai-collection-card__product-count-{{ ai_gen_id }}">
+                {{ collection.products_count }}
+                {% if collection.products_count == 1 %}
+                  Product
+                {% else %}
+                  Products
+                {% endif %}
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</collections-list-{{ ai_gen_id }}>
+
+{% schema %}
+{
+  "name": "Collections list",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading text",
+      "default": "Shop by collection"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_desktop",
+      "label": "Desktop font size",
+      "min": 16,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_tablet",
+      "label": "Tablet font size",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_mobile",
+      "label": "Mobile font size",
+      "min": 16,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing_desktop",
+      "label": "Desktop letter spacing",
+      "min": -2,
+      "max": 5,
+      "step": 0.1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing_tablet",
+      "label": "Tablet letter spacing",
+      "min": -2,
+      "max": 5,
+      "step": 0.1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing_mobile",
+      "label": "Mobile letter spacing",
+      "min": -2,
+      "max": 5,
+      "step": 0.1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "heading_letter_case",
+      "label": "Letter case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "Uppercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment_desktop",
+      "label": "Desktop alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment_tablet",
+      "label": "Tablet alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment_mobile",
+      "label": "Mobile alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "heading_bottom_margin",
+      "label": "Distance to grid",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Desktop columns",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "label": "Tablet columns",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Mobile columns",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "card_gap_desktop",
+      "label": "Desktop gap between cards",
+      "min": 10,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "card_gap_tablet",
+      "label": "Tablet gap between cards",
+      "min": 10,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "card_gap_mobile",
+      "label": "Mobile gap between cards",
+      "min": 10,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_horizontal",
+      "label": "Left and right padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Border color",
+      "default": "#E0E0E0"
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "image_aspect_ratio",
+      "label": "Image aspect ratio",
+      "options": [
+        { "value": "3 / 4", "label": "3:4 portrait" },
+        { "value": "1 / 1", "label": "1:1 square" },
+        { "value": "4 / 3", "label": "4:3 landscape" }
+      ],
+      "default": "3 / 4"
+    },
+    {
+      "type": "header",
+      "content": "Card content spacing"
+    },
+    {
+      "type": "range",
+      "id": "content_padding_horizontal",
+      "label": "Left and right padding",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "content_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "content_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "title_count_gap",
+      "label": "Gap between title and count",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Sale badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale_badge",
+      "label": "Show sale badge",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "sale_badge_font_size_desktop",
+      "label": "Desktop font size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "sale_badge_font_size_tablet",
+      "label": "Tablet font size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "sale_badge_font_size_mobile",
+      "label": "Mobile font size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "select",
+      "id": "sale_badge_letter_case",
+      "label": "Letter case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "Uppercase" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "color",
+      "id": "sale_badge_bg_color",
+      "label": "Background",
+      "default": "#C9A84C"
+    },
+    {
+      "type": "color",
+      "id": "sale_badge_text_color",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Collection name - Desktop"
+    },
+    {
+      "type": "range",
+      "id": "collection_name_font_size_desktop",
+      "label": "Font size",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "collection_name_font_weight_desktop",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "select",
+      "id": "collection_name_letter_case_desktop",
+      "label": "Letter case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "Uppercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "collection_name_letter_spacing_desktop",
+      "label": "Letter spacing",
+      "min": -2,
+      "max": 5,
+      "step": 0.1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "collection_name_color_desktop",
+      "label": "Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Collection name - Tablet"
+    },
+    {
+      "type": "range",
+      "id": "collection_name_font_size_tablet",
+      "label": "Font size",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "collection_name_font_weight_tablet",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "select",
+      "id": "collection_name_letter_case_tablet",
+      "label": "Letter case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "Uppercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "collection_name_letter_spacing_tablet",
+      "label": "Letter spacing",
+      "min": -2,
+      "max": 5,
+      "step": 0.1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "collection_name_color_tablet",
+      "label": "Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Collection name - Mobile"
+    },
+    {
+      "type": "range",
+      "id": "collection_name_font_size_mobile",
+      "label": "Font size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "collection_name_font_weight_mobile",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "select",
+      "id": "collection_name_letter_case_mobile",
+      "label": "Letter case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "Uppercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "collection_name_letter_spacing_mobile",
+      "label": "Letter spacing",
+      "min": -2,
+      "max": 5,
+      "step": 0.1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "collection_name_color_mobile",
+      "label": "Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Collection name - Hover"
+    },
+    {
+      "type": "color",
+      "id": "collection_name_hover_color",
+      "label": "Hover color",
+      "default": "#C9A84C"
+    },
+    {
+      "type": "header",
+      "content": "Product count"
+    },
+    {
+      "type": "range",
+      "id": "product_count_font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "product_count_font_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "product_count_color",
+      "label": "Color",
+      "default": "#666666"
+    },
+    {
+      "type": "select",
+      "id": "product_count_letter_case",
+      "label": "Letter case",
+      "options": [
+        { "value": "none", "label": "Default" },
+        { "value": "uppercase", "label": "Uppercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "product_count_letter_spacing",
+      "label": "Letter spacing",
+      "min": -1,
+      "max": 3,
+      "step": 0.1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collections list"
+    }
+  ]
+}
+{% endschema %}

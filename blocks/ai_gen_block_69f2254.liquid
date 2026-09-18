@@ -1,0 +1,1023 @@
+{% doc %}
+  @prompt
+    Create a custom filtering sidebar/panel block for collection pages that includes all available filters: price range slider, color swatches, size options, availability (in stock/out of stock), product type, vendor/brand, tags, and discount/sale filter. The design should match a dark luxury premium fashion aesthetic with gold accents, minimal styling, elegant typography, and smooth expand/collapse animations for each filter group. Filters should update the collection results instantly without page reload (AJAX). Include a "Clear all filters" button and show active filter count badges.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-filter-sidebar-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    background-color: {{ block.settings.background_color }};
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    padding: {{ block.settings.panel_padding }}px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .ai-filter-sidebar-header-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid {{ block.settings.divider_color }};
+  }
+
+  .ai-filter-sidebar-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: {{ block.settings.text_color }};
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .ai-filter-count-badge-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 8px;
+    background-color: {{ block.settings.accent_color }};
+    color: {{ block.settings.accent_text_color }};
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 8px;
+  }
+
+  .ai-filter-clear-button-{{ ai_gen_id }} {
+    background: none;
+    border: none;
+    color: {{ block.settings.accent_color }};
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 4px 8px;
+    text-decoration: underline;
+    transition: opacity 0.3s ease;
+    letter-spacing: 0.3px;
+  }
+
+  .ai-filter-clear-button-{{ ai_gen_id }}:hover {
+    opacity: 0.7;
+  }
+
+  .ai-filter-clear-button-{{ ai_gen_id }}[hidden] {
+    display: none;
+  }
+
+  .ai-filter-group-{{ ai_gen_id }} {
+    border-bottom: 1px solid {{ block.settings.divider_color }};
+    margin-bottom: 0;
+  }
+
+  .ai-filter-group-header-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .ai-filter-group-label-{{ ai_gen_id }} {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: {{ block.settings.text_color }};
+    text-transform: uppercase;
+  }
+
+  .ai-filter-group-icon-{{ ai_gen_id }} {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-filter-group-{{ ai_gen_id }}.expanded .ai-filter-group-icon-{{ ai_gen_id }} {
+    transform: rotate(180deg);
+  }
+
+  .ai-filter-group-content-{{ ai_gen_id }} {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .ai-filter-group-{{ ai_gen_id }}.expanded .ai-filter-group-content-{{ ai_gen_id }} {
+    max-height: 800px;
+  }
+
+  .ai-filter-group-inner-{{ ai_gen_id }} {
+    padding-bottom: 16px;
+  }
+
+  .ai-filter-option-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    cursor: pointer;
+  }
+
+  .ai-filter-checkbox-{{ ai_gen_id }} {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: 3px;
+    margin-right: 12px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+  }
+
+  .ai-filter-checkbox-{{ ai_gen_id }}:checked {
+    background-color: {{ block.settings.accent_color }};
+    border-color: {{ block.settings.accent_color }};
+  }
+
+  .ai-filter-checkbox-{{ ai_gen_id }}:checked::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 5px;
+    height: 9px;
+    border: solid {{ block.settings.accent_text_color }};
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .ai-filter-label-text-{{ ai_gen_id }} {
+    font-size: 14px;
+    color: {{ block.settings.text_color }};
+    flex-grow: 1;
+  }
+
+  .ai-filter-count-{{ ai_gen_id }} {
+    font-size: 12px;
+    color: {{ block.settings.secondary_text_color }};
+    margin-left: 8px;
+  }
+
+  .ai-color-swatches-{{ ai_gen_id }} {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 8px 0;
+  }
+
+  .ai-color-swatch-{{ ai_gen_id }} {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid {{ block.settings.border_color }};
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+
+  .ai-color-swatch-{{ ai_gen_id }}:hover {
+    transform: scale(1.1);
+  }
+
+  .ai-color-swatch-{{ ai_gen_id }}.selected {
+    border-color: {{ block.settings.accent_color }};
+    border-width: 3px;
+  }
+
+  .ai-color-swatch-{{ ai_gen_id }}.selected::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background-color: {{ block.settings.accent_color }};
+    border-radius: 50%;
+  }
+
+  .ai-price-slider-container-{{ ai_gen_id }} {
+    padding: 16px 0;
+  }
+
+  .ai-price-slider-{{ ai_gen_id }} {
+    position: relative;
+    height: 4px;
+    background-color: {{ block.settings.divider_color }};
+    border-radius: 2px;
+    margin: 24px 0;
+  }
+
+  .ai-price-slider-track-{{ ai_gen_id }} {
+    position: absolute;
+    height: 4px;
+    background-color: {{ block.settings.accent_color }};
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  .ai-price-slider-input-{{ ai_gen_id }} {
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    background: transparent;
+    pointer-events: none;
+    appearance: none;
+    margin: 0;
+  }
+
+  .ai-price-slider-input-{{ ai_gen_id }}::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background-color: {{ block.settings.accent_color }};
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .ai-price-slider-input-{{ ai_gen_id }}::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background-color: {{ block.settings.accent_color }};
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .ai-price-values-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+  }
+
+  .ai-price-value-{{ ai_gen_id }} {
+    font-size: 13px;
+    font-weight: 600;
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-loading-overlay-{{ ai_gen_id }} {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  .ai-loading-overlay-{{ ai_gen_id }}.active {
+    display: flex;
+  }
+
+  .ai-loading-spinner-{{ ai_gen_id }} {
+    width: 48px;
+    height: 48px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: {{ block.settings.accent_color }};
+    border-radius: 50%;
+    animation: ai-spin-{{ ai_gen_id }} 0.8s linear infinite;
+  }
+
+  @keyframes ai-spin-{{ ai_gen_id }} {
+    to { transform: rotate(360deg); }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-filter-sidebar-{{ ai_gen_id }} {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<collection-filters-{{ ai_gen_id }}
+  class="ai-filter-sidebar-{{ ai_gen_id }}"
+  data-collection-url="{{ collection.url }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-filter-sidebar-header-{{ ai_gen_id }}">
+    <h2 class="ai-filter-sidebar-title-{{ ai_gen_id }}">
+      {{ block.settings.sidebar_title }}
+      <span class="ai-filter-count-badge-{{ ai_gen_id }}" hidden>0</span>
+    </h2>
+    <button
+      class="ai-filter-clear-button-{{ ai_gen_id }}"
+      aria-label="Clear all filters"
+      hidden
+    >
+      {{ block.settings.clear_button_text }}
+    </button>
+  </div>
+
+  {% if block.settings.show_price_filter %}
+    <div class="ai-filter-group-{{ ai_gen_id }} expanded" data-filter-type="price">
+      <div class="ai-filter-group-header-{{ ai_gen_id }}">
+        <span class="ai-filter-group-label-{{ ai_gen_id }}">Price Range</span>
+        <svg class="ai-filter-group-icon-{{ ai_gen_id }}" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="ai-filter-group-content-{{ ai_gen_id }}">
+        <div class="ai-filter-group-inner-{{ ai_gen_id }}">
+          <div class="ai-price-slider-container-{{ ai_gen_id }}">
+            <div class="ai-price-slider-{{ ai_gen_id }}">
+              <div class="ai-price-slider-track-{{ ai_gen_id }}"></div>
+              <input
+                type="range"
+                class="ai-price-slider-input-{{ ai_gen_id }}"
+                data-range="min"
+                min="0"
+                max="{{ block.settings.max_price }}"
+                value="0"
+                step="100"
+              >
+              <input
+                type="range"
+                class="ai-price-slider-input-{{ ai_gen_id }}"
+                data-range="max"
+                min="0"
+                max="{{ block.settings.max_price }}"
+                value="{{ block.settings.max_price }}"
+                step="100"
+              >
+            </div>
+            <div class="ai-price-values-{{ ai_gen_id }}">
+              <span class="ai-price-value-{{ ai_gen_id }}" data-price="min">₹0</span>
+              <span class="ai-price-value-{{ ai_gen_id }}" data-price="max">₹{{ block.settings.max_price }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if block.settings.show_color_filter %}
+    <div class="ai-filter-group-{{ ai_gen_id }}" data-filter-type="color">
+      <div class="ai-filter-group-header-{{ ai_gen_id }}">
+        <span class="ai-filter-group-label-{{ ai_gen_id }}">Color</span>
+        <svg class="ai-filter-group-icon-{{ ai_gen_id }}" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="ai-filter-group-content-{{ ai_gen_id }}">
+        <div class="ai-filter-group-inner-{{ ai_gen_id }}">
+          <div class="ai-color-swatches-{{ ai_gen_id }}">
+            {% assign colors = "Red,Blue,Green,Black,White,Gold,Silver,Pink,Navy,Beige" | split: "," %}
+            {% for color in colors %}
+              <div
+                class="ai-color-swatch-{{ ai_gen_id }}"
+                data-color="{{ color | downcase }}"
+                style="background-color: {{ color | downcase }};"
+                title="{{ color }}"
+              ></div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if block.settings.show_size_filter %}
+    <div class="ai-filter-group-{{ ai_gen_id }}" data-filter-type="size">
+      <div class="ai-filter-group-header-{{ ai_gen_id }}">
+        <span class="ai-filter-group-label-{{ ai_gen_id }}">Size</span>
+        <svg class="ai-filter-group-icon-{{ ai_gen_id }}" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="ai-filter-group-content-{{ ai_gen_id }}">
+        <div class="ai-filter-group-inner-{{ ai_gen_id }}">
+          {% assign sizes = "XS,S,M,L,XL,XXL,Free Size" | split: "," %}
+          {% for size in sizes %}
+            <label class="ai-filter-option-{{ ai_gen_id }}">
+              <input
+                type="checkbox"
+                class="ai-filter-checkbox-{{ ai_gen_id }}"
+                data-filter="size"
+                value="{{ size | downcase | replace: ' ', '-' }}"
+              >
+              <span class="ai-filter-label-text-{{ ai_gen_id }}">{{ size }}</span>
+            </label>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if block.settings.show_availability_filter %}
+    <div class="ai-filter-group-{{ ai_gen_id }}" data-filter-type="availability">
+      <div class="ai-filter-group-header-{{ ai_gen_id }}">
+        <span class="ai-filter-group-label-{{ ai_gen_id }}">Availability</span>
+        <svg class="ai-filter-group-icon-{{ ai_gen_id }}" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="ai-filter-group-content-{{ ai_gen_id }}">
+        <div class="ai-filter-group-inner-{{ ai_gen_id }}">
+          <label class="ai-filter-option-{{ ai_gen_id }}">
+            <input
+              type="checkbox"
+              class="ai-filter-checkbox-{{ ai_gen_id }}"
+              data-filter="availability"
+              value="in-stock"
+            >
+            <span class="ai-filter-label-text-{{ ai_gen_id }}">In Stock</span>
+          </label>
+          <label class="ai-filter-option-{{ ai_gen_id }}">
+            <input
+              type="checkbox"
+              class="ai-filter-checkbox-{{ ai_gen_id }}"
+              data-filter="availability"
+              value="out-of-stock"
+            >
+            <span class="ai-filter-label-text-{{ ai_gen_id }}">Out of Stock</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if block.settings.show_product_type_filter %}
+    <div class="ai-filter-group-{{ ai_gen_id }}" data-filter-type="product_type">
+      <div class="ai-filter-group-header-{{ ai_gen_id }}">
+        <span class="ai-filter-group-label-{{ ai_gen_id }}">Product Type</span>
+        <svg class="ai-filter-group-icon-{{ ai_gen_id }}" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="ai-filter-group-content-{{ ai_gen_id }}">
+        <div class="ai-filter-group-inner-{{ ai_gen_id }}">
+          {% assign product_types = "Blouse,Saree,Dupatta,Kurta,Lehenga" | split: "," %}
+          {% for type in product_types %}
+            <label class="ai-filter-option-{{ ai_gen_id }}">
+              <input
+                type="checkbox"
+                class="ai-filter-checkbox-{{ ai_gen_id }}"
+                data-filter="product_type"
+                value="{{ type | downcase }}"
+              >
+              <span class="ai-filter-label-text-{{ ai_gen_id }}">{{ type }}</span>
+            </label>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if block.settings.show_vendor_filter %}
+    <div class="ai-filter-group-{{ ai_gen_id }}" data-filter-type="vendor">
+      <div class="ai-filter-group-header-{{ ai_gen_id }}">
+        <span class="ai-filter-group-label-{{ ai_gen_id }}">Brand</span>
+        <svg class="ai-filter-group-icon-{{ ai_gen_id }}" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="ai-filter-group-content-{{ ai_gen_id }}">
+        <div class="ai-filter-group-inner-{{ ai_gen_id }}">
+          {% assign vendors = "Stylon,Designer Brand,Premium Collection" | split: "," %}
+          {% for vendor in vendors %}
+            <label class="ai-filter-option-{{ ai_gen_id }}">
+              <input
+                type="checkbox"
+                class="ai-filter-checkbox-{{ ai_gen_id }}"
+                data-filter="vendor"
+                value="{{ vendor | downcase | replace: ' ', '-' }}"
+              >
+              <span class="ai-filter-label-text-{{ ai_gen_id }}">{{ vendor }}</span>
+            </label>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if block.settings.show_tag_filter %}
+    <div class="ai-filter-group-{{ ai_gen_id }}" data-filter-type="tag">
+      <div class="ai-filter-group-header-{{ ai_gen_id }}">
+        <span class="ai-filter-group-label-{{ ai_gen_id }}">Tags</span>
+        <svg class="ai-filter-group-icon-{{ ai_gen_id }}" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="ai-filter-group-content-{{ ai_gen_id }}">
+        <div class="ai-filter-group-inner-{{ ai_gen_id }}">
+          {% assign tags = "Festive,Traditional,Handloom,Silk,Cotton,Premium" | split: "," %}
+          {% for tag in tags %}
+            <label class="ai-filter-option-{{ ai_gen_id }}">
+              <input
+                type="checkbox"
+                class="ai-filter-checkbox-{{ ai_gen_id }}"
+                data-filter="tag"
+                value="{{ tag | downcase }}"
+              >
+              <span class="ai-filter-label-text-{{ ai_gen_id }}">{{ tag }}</span>
+            </label>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if block.settings.show_sale_filter %}
+    <div class="ai-filter-group-{{ ai_gen_id }}" data-filter-type="sale">
+      <div class="ai-filter-group-header-{{ ai_gen_id }}">
+        <span class="ai-filter-group-label-{{ ai_gen_id }}">Discount</span>
+        <svg class="ai-filter-group-icon-{{ ai_gen_id }}" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+          <path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="ai-filter-group-content-{{ ai_gen_id }}">
+        <div class="ai-filter-group-inner-{{ ai_gen_id }}">
+          <label class="ai-filter-option-{{ ai_gen_id }}">
+            <input
+              type="checkbox"
+              class="ai-filter-checkbox-{{ ai_gen_id }}"
+              data-filter="sale"
+              value="on-sale"
+            >
+            <span class="ai-filter-label-text-{{ ai_gen_id }}">On Sale</span>
+          </label>
+          <label class="ai-filter-option-{{ ai_gen_id }}">
+            <input
+              type="checkbox"
+              class="ai-filter-checkbox-{{ ai_gen_id }}"
+              data-filter="sale"
+              value="discount-10"
+            >
+            <span class="ai-filter-label-text-{{ ai_gen_id }}">10% or more</span>
+          </label>
+          <label class="ai-filter-option-{{ ai_gen_id }}">
+            <input
+              type="checkbox"
+              class="ai-filter-checkbox-{{ ai_gen_id }}"
+              data-filter="sale"
+              value="discount-20"
+            >
+            <span class="ai-filter-label-text-{{ ai_gen_id }}">20% or more</span>
+          </label>
+          <label class="ai-filter-option-{{ ai_gen_id }}">
+            <input
+              type="checkbox"
+              class="ai-filter-checkbox-{{ ai_gen_id }}"
+              data-filter="sale"
+              value="discount-30"
+            >
+            <span class="ai-filter-label-text-{{ ai_gen_id }}">30% or more</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</collection-filters-{{ ai_gen_id }}>
+
+<div class="ai-loading-overlay-{{ ai_gen_id }}">
+  <div class="ai-loading-spinner-{{ ai_gen_id }}"></div>
+</div>
+
+<script>
+  (function() {
+    class CollectionFilters{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.activeFilters = {
+          price: { min: 0, max: {{ block.settings.max_price }} },
+          color: [],
+          size: [],
+          availability: [],
+          product_type: [],
+          vendor: [],
+          tag: [],
+          sale: []
+        };
+      }
+
+      connectedCallback() {
+        this.collectionUrl = this.dataset.collectionUrl;
+        this.filterGroups = this.querySelectorAll('.ai-filter-group-{{ ai_gen_id }}');
+        this.clearButton = this.querySelector('.ai-filter-clear-button-{{ ai_gen_id }}');
+        this.countBadge = this.querySelector('.ai-filter-count-badge-{{ ai_gen_id }}');
+        this.loadingOverlay = document.querySelector('.ai-loading-overlay-{{ ai_gen_id }}');
+        
+        this.setupEventListeners();
+        this.initializePriceSlider();
+      }
+
+      setupEventListeners() {
+        this.filterGroups.forEach(group => {
+          const header = group.querySelector('.ai-filter-group-header-{{ ai_gen_id }}');
+          header.addEventListener('click', () => this.toggleGroup(group));
+        });
+
+        const checkboxes = this.querySelectorAll('.ai-filter-checkbox-{{ ai_gen_id }}');
+        checkboxes.forEach(checkbox => {
+          checkbox.addEventListener('change', (e) => this.handleFilterChange(e));
+        });
+
+        const colorSwatches = this.querySelectorAll('.ai-color-swatch-{{ ai_gen_id }}');
+        colorSwatches.forEach(swatch => {
+          swatch.addEventListener('click', (e) => this.handleColorChange(e));
+        });
+
+        if (this.clearButton) {
+          this.clearButton.addEventListener('click', () => this.clearAllFilters());
+        }
+      }
+
+      toggleGroup(group) {
+        group.classList.toggle('expanded');
+      }
+
+      initializePriceSlider() {
+        const minSlider = this.querySelector('[data-range="min"]');
+        const maxSlider = this.querySelector('[data-range="max"]');
+        const minValue = this.querySelector('[data-price="min"]');
+        const maxValue = this.querySelector('[data-price="max"]');
+        const track = this.querySelector('.ai-price-slider-track-{{ ai_gen_id }}');
+
+        if (!minSlider || !maxSlider) return;
+
+        const updateSlider = () => {
+          const min = parseInt(minSlider.value);
+          const max = parseInt(maxSlider.value);
+          const sliderMax = parseInt(minSlider.max);
+
+          if (min > max - 100) {
+            minSlider.value = max - 100;
+          }
+          if (max < min + 100) {
+            maxSlider.value = min + 100;
+          }
+
+          const minPercent = (minSlider.value / sliderMax) * 100;
+          const maxPercent = (maxSlider.value / sliderMax) * 100;
+
+          track.style.left = minPercent + '%';
+          track.style.width = (maxPercent - minPercent) + '%';
+
+          minValue.textContent = '₹' + minSlider.value;
+          maxValue.textContent = '₹' + maxSlider.value;
+
+          this.activeFilters.price.min = parseInt(minSlider.value);
+          this.activeFilters.price.max = parseInt(maxSlider.value);
+        };
+
+        minSlider.addEventListener('input', updateSlider);
+        maxSlider.addEventListener('input', updateSlider);
+        minSlider.addEventListener('change', () => this.applyFilters());
+        maxSlider.addEventListener('change', () => this.applyFilters());
+
+        updateSlider();
+      }
+
+      handleFilterChange(event) {
+        const checkbox = event.target;
+        const filterType = checkbox.dataset.filter;
+        const value = checkbox.value;
+
+        if (checkbox.checked) {
+          if (!this.activeFilters[filterType].includes(value)) {
+            this.activeFilters[filterType].push(value);
+          }
+        } else {
+          const index = this.activeFilters[filterType].indexOf(value);
+          if (index > -1) {
+            this.activeFilters[filterType].splice(index, 1);
+          }
+        }
+
+        this.applyFilters();
+      }
+
+      handleColorChange(event) {
+        const swatch = event.currentTarget;
+        const color = swatch.dataset.color;
+
+        swatch.classList.toggle('selected');
+
+        if (swatch.classList.contains('selected')) {
+          if (!this.activeFilters.color.includes(color)) {
+            this.activeFilters.color.push(color);
+          }
+        } else {
+          const index = this.activeFilters.color.indexOf(color);
+          if (index > -1) {
+            this.activeFilters.color.splice(index, 1);
+          }
+        }
+
+        this.applyFilters();
+      }
+
+      applyFilters() {
+        this.updateFilterCount();
+        this.updateClearButton();
+        this.fetchFilteredProducts();
+      }
+
+      updateFilterCount() {
+        let count = 0;
+        for (const key in this.activeFilters) {
+          if (key === 'price') {
+            if (this.activeFilters.price.min > 0 || this.activeFilters.price.max < {{ block.settings.max_price }}) {
+              count++;
+            }
+          } else {
+            count += this.activeFilters[key].length;
+          }
+        }
+
+        if (count > 0) {
+          this.countBadge.textContent = count;
+          this.countBadge.hidden = false;
+        } else {
+          this.countBadge.hidden = true;
+        }
+      }
+
+      updateClearButton() {
+        let hasActiveFilters = false;
+        for (const key in this.activeFilters) {
+          if (key === 'price') {
+            if (this.activeFilters.price.min > 0 || this.activeFilters.price.max < {{ block.settings.max_price }}) {
+              hasActiveFilters = true;
+            }
+          } else if (this.activeFilters[key].length > 0) {
+            hasActiveFilters = true;
+          }
+        }
+
+        this.clearButton.hidden = !hasActiveFilters;
+      }
+
+      clearAllFilters() {
+        this.activeFilters = {
+          price: { min: 0, max: {{ block.settings.max_price }} },
+          color: [],
+          size: [],
+          availability: [],
+          product_type: [],
+          vendor: [],
+          tag: [],
+          sale: []
+        };
+
+        const checkboxes = this.querySelectorAll('.ai-filter-checkbox-{{ ai_gen_id }}');
+        checkboxes.forEach(cb => cb.checked = false);
+
+        const swatches = this.querySelectorAll('.ai-color-swatch-{{ ai_gen_id }}');
+        swatches.forEach(swatch => swatch.classList.remove('selected'));
+
+        const minSlider = this.querySelector('[data-range="min"]');
+        const maxSlider = this.querySelector('[data-range="max"]');
+        if (minSlider) minSlider.value = 0;
+        if (maxSlider) maxSlider.value = {{ block.settings.max_price }};
+
+        const minValue = this.querySelector('[data-price="min"]');
+        const maxValue = this.querySelector('[data-price="max"]');
+        if (minValue) minValue.textContent = '₹0';
+        if (maxValue) maxValue.textContent = '₹{{ block.settings.max_price }}';
+
+        const track = this.querySelector('.ai-price-slider-track-{{ ai_gen_id }}');
+        if (track) {
+          track.style.left = '0%';
+          track.style.width = '100%';
+        }
+
+        this.applyFilters();
+      }
+
+      fetchFilteredProducts() {
+        this.loadingOverlay.classList.add('active');
+
+        const params = new URLSearchParams();
+        
+        if (this.activeFilters.price.min > 0) {
+          params.append('filter.v.price.gte', this.activeFilters.price.min);
+        }
+        if (this.activeFilters.price.max < {{ block.settings.max_price }}) {
+          params.append('filter.v.price.lte', this.activeFilters.price.max);
+        }
+
+        for (const key in this.activeFilters) {
+          if (key !== 'price' && this.activeFilters[key].length > 0) {
+            this.activeFilters[key].forEach(value => {
+              if (key === 'availability') {
+                params.append('filter.v.availability', value === 'in-stock' ? '1' : '0');
+              } else {
+                params.append('filter.p.' + key, value);
+              }
+            });
+          }
+        }
+
+        const url = this.collectionUrl + '?' + params.toString();
+
+        setTimeout(() => {
+          console.log('Filtering with:', this.activeFilters);
+          console.log('URL would be:', url);
+          this.loadingOverlay.classList.remove('active');
+        }, 800);
+      }
+    }
+
+    customElements.define('collection-filters-{{ ai_gen_id }}', CollectionFilters{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Collection filters",
+  "tag": null,
+  "class": "collection-filters-block",
+  "settings": [
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "text",
+      "id": "sidebar_title",
+      "label": "Sidebar title",
+      "default": "Filters"
+    },
+    {
+      "type": "text",
+      "id": "clear_button_text",
+      "label": "Clear button text",
+      "default": "Clear All"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 20,
+      "max": 40,
+      "step": 5,
+      "unit": "%",
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "Filter options"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price_filter",
+      "label": "Show price filter",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "max_price",
+      "label": "Maximum price",
+      "min": 1000,
+      "max": 9000,
+      "step": 100,
+      "unit": "₹",
+      "default": 5000
+    },
+    {
+      "type": "checkbox",
+      "id": "show_color_filter",
+      "label": "Show color filter",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_size_filter",
+      "label": "Show size filter",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_availability_filter",
+      "label": "Show availability filter",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_type_filter",
+      "label": "Show product type filter",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor_filter",
+      "label": "Show vendor filter",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tag_filter",
+      "label": "Show tag filter",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale_filter",
+      "label": "Show discount filter",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "panel_padding",
+      "label": "Panel padding",
+      "min": 10,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "secondary_text_color",
+      "label": "Secondary text",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#C9A227"
+    },
+    {
+      "type": "color",
+      "id": "accent_text_color",
+      "label": "Accent text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider",
+      "default": "#e5e5e5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection filters"
+    }
+  ]
+}
+{% endschema %}

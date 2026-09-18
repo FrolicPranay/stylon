@@ -1,0 +1,620 @@
+{% doc %}
+  @prompt
+    Create a premium, minimal black footer section for the STYLON fashion e-commerce website to be placed in the theme footer area. Use these exact settings:
+    
+    LOGO:
+    - Logo image picker (editable), desktop height 40px, mobile height 32px
+    
+    SOCIAL MEDIA (all editable via Theme Customizer):
+    - Show social icons and labels
+    - Instagram: https://www.instagram.com/sheelai_in?igsh=aXkzZ216MnA2bXps (label: Instagram)
+    - YouTube: https://www.youtube.com/@sheelai4206 (label: YouTube)
+    - Facebook: https://www.facebook.com/blousesdisigner (label: Facebook)
+    - Desktop icon size: 20px, Mobile icon size: 18px
+    - Desktop label font size: 13px, Mobile: 12px
+    - Desktop icon spacing: 20px, Mobile: 16px
+    
+    POLICY LINKS (using Shopify dynamic policy URLs, all editable):
+    - Privacy Policy, Refund Policy, Terms of Service, Shipping Policy, Contact Information
+    - Desktop link font size: 13px, Mobile: 12px
+    - Desktop link spacing: 24px, Mobile: 16px
+    
+    COPYRIGHT:
+    - Text: © 2026 STYLON. All rights reserved. (editable)
+    - Desktop font size: 12px, Mobile: 11px
+    
+    COLORS (all editable):
+    - Background: #000000
+    - Link color: #f5f5f5
+    - Icon color: #f5f5f5
+    - Copyright color: #a0a0a0
+    
+    SPACING (all editable):
+    - Desktop top/bottom padding: 60px
+    - Mobile top/bottom padding: 40px
+    - Desktop section spacing: 32px
+    - Mobile section spacing: 24px
+    
+    LAYOUT:
+    - Match width exactly to the website's existing main content container (not full-bleed)
+    - All content perfectly centered
+    - Single self-contained section, no columns or nested blocks
+    - Fully responsive on desktop, tablet, and mobile
+    - No gradients, heavy shadows, newsletters, payment icons, or unnecessary elements
+    - Luxury, editorial aesthetic for a premium fashion brand
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-footer-{{ ai_gen_id }} {
+    display: block;
+    background-color: {{ block.settings.background_color }};
+    width: 100%;
+  }
+
+  .ai-footer-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: {{ block.settings.desktop_padding_vertical }}px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: {{ block.settings.desktop_section_spacing }}px;
+  }
+
+  .ai-footer-logo-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: center;
+  }
+
+  .ai-footer-logo-{{ ai_gen_id }} img {
+    height: {{ block.settings.logo_height_desktop }}px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .ai-footer-social-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: {{ block.settings.desktop_icon_spacing }}px;
+  }
+
+  .ai-footer-social-link-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: {{ block.settings.link_color }};
+    transition: opacity 0.2s ease;
+  }
+
+  .ai-footer-social-link-{{ ai_gen_id }}:hover {
+    opacity: 0.7;
+  }
+
+  .ai-footer-social-icon-{{ ai_gen_id }} {
+    width: {{ block.settings.desktop_icon_size }}px;
+    height: {{ block.settings.desktop_icon_size }}px;
+    color: {{ block.settings.icon_color }};
+  }
+
+  .ai-footer-social-label-{{ ai_gen_id }} {
+    font-size: {{ block.settings.desktop_label_font_size }}px;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+
+  .ai-footer-policies-{{ ai_gen_id }} {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: {{ block.settings.desktop_link_spacing }}px;
+  }
+
+  .ai-footer-policy-link-{{ ai_gen_id }} {
+    font-size: {{ block.settings.desktop_link_font_size }}px;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    color: {{ block.settings.link_color }};
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+    letter-spacing: 0.01em;
+  }
+
+  .ai-footer-policy-link-{{ ai_gen_id }}:hover {
+    opacity: 0.7;
+  }
+
+  .ai-footer-copyright-{{ ai_gen_id }} {
+    font-size: {{ block.settings.desktop_copyright_font_size }}px;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    color: {{ block.settings.copyright_color }};
+    text-align: center;
+    letter-spacing: 0.01em;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-footer-container-{{ ai_gen_id }} {
+      padding: {{ block.settings.mobile_padding_vertical }}px 16px;
+      gap: {{ block.settings.mobile_section_spacing }}px;
+    }
+
+    .ai-footer-logo-{{ ai_gen_id }} img {
+      height: {{ block.settings.logo_height_mobile }}px;
+    }
+
+    .ai-footer-social-{{ ai_gen_id }} {
+      gap: {{ block.settings.mobile_icon_spacing }}px;
+    }
+
+    .ai-footer-social-icon-{{ ai_gen_id }} {
+      width: {{ block.settings.mobile_icon_size }}px;
+      height: {{ block.settings.mobile_icon_size }}px;
+    }
+
+    .ai-footer-social-label-{{ ai_gen_id }} {
+      font-size: {{ block.settings.mobile_label_font_size }}px;
+    }
+
+    .ai-footer-policies-{{ ai_gen_id }} {
+      gap: {{ block.settings.mobile_link_spacing }}px;
+    }
+
+    .ai-footer-policy-link-{{ ai_gen_id }} {
+      font-size: {{ block.settings.mobile_link_font_size }}px;
+    }
+
+    .ai-footer-copyright-{{ ai_gen_id }} {
+      font-size: {{ block.settings.mobile_copyright_font_size }}px;
+    }
+  }
+{% endstyle %}
+
+<footer-stylon-{{ ai_gen_id }} class="ai-footer-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-footer-container-{{ ai_gen_id }}">
+    {% if block.settings.logo != blank %}
+      <div class="ai-footer-logo-{{ ai_gen_id }}">
+        <img
+          src="{{ block.settings.logo | image_url: width: 400 }}"
+          alt="{{ shop.name }}"
+          loading="lazy"
+          width="{{ block.settings.logo_height_desktop | times: 2 }}"
+          height="{{ block.settings.logo_height_desktop }}"
+        >
+      </div>
+    {% endif %}
+
+    {% if block.settings.show_social %}
+      <div class="ai-footer-social-{{ ai_gen_id }}">
+        {% if block.settings.instagram_url != blank %}
+          <a
+            href="{{ block.settings.instagram_url }}"
+            class="ai-footer-social-link-{{ ai_gen_id }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="{{ block.settings.instagram_label }}"
+          >
+            <svg class="ai-footer-social-icon-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            <span class="ai-footer-social-label-{{ ai_gen_id }}">{{ block.settings.instagram_label }}</span>
+          </a>
+        {% endif %}
+
+        {% if block.settings.youtube_url != blank %}
+          <a
+            href="{{ block.settings.youtube_url }}"
+            class="ai-footer-social-link-{{ ai_gen_id }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="{{ block.settings.youtube_label }}"
+          >
+            <svg class="ai-footer-social-icon-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+              <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+            </svg>
+            <span class="ai-footer-social-label-{{ ai_gen_id }}">{{ block.settings.youtube_label }}</span>
+          </a>
+        {% endif %}
+
+        {% if block.settings.facebook_url != blank %}
+          <a
+            href="{{ block.settings.facebook_url }}"
+            class="ai-footer-social-link-{{ ai_gen_id }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="{{ block.settings.facebook_label }}"
+          >
+            <svg class="ai-footer-social-icon-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            </svg>
+            <span class="ai-footer-social-label-{{ ai_gen_id }}">{{ block.settings.facebook_label }}</span>
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <nav class="ai-footer-policies-{{ ai_gen_id }}" aria-label="Footer policies">
+      {% if shop.privacy_policy %}
+        <a href="{{ shop.privacy_policy.url }}" class="ai-footer-policy-link-{{ ai_gen_id }}">
+          {{ block.settings.privacy_policy_label }}
+        </a>
+      {% endif %}
+
+      {% if shop.refund_policy %}
+        <a href="{{ shop.refund_policy.url }}" class="ai-footer-policy-link-{{ ai_gen_id }}">
+          {{ block.settings.refund_policy_label }}
+        </a>
+      {% endif %}
+
+      {% if shop.terms_of_service %}
+        <a href="{{ shop.terms_of_service.url }}" class="ai-footer-policy-link-{{ ai_gen_id }}">
+          {{ block.settings.terms_of_service_label }}
+        </a>
+      {% endif %}
+
+      {% if shop.shipping_policy %}
+        <a href="{{ shop.shipping_policy.url }}" class="ai-footer-policy-link-{{ ai_gen_id }}">
+          {{ block.settings.shipping_policy_label }}
+        </a>
+      {% endif %}
+
+      {% if block.settings.contact_url != blank %}
+        <a href="{{ block.settings.contact_url }}" class="ai-footer-policy-link-{{ ai_gen_id }}">
+          {{ block.settings.contact_label }}
+        </a>
+      {% endif %}
+    </nav>
+
+    <div class="ai-footer-copyright-{{ ai_gen_id }}">
+      {{ block.settings.copyright_text }}
+    </div>
+  </div>
+</footer-stylon-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class FooterStylon{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+      }
+    }
+
+    customElements.define('footer-stylon-{{ ai_gen_id }}', FooterStylon{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "STYLON footer",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_height_desktop",
+      "label": "Desktop height",
+      "min": 20,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "logo_height_mobile",
+      "label": "Mobile height",
+      "min": 16,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Social media"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show social icons",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "text",
+      "id": "instagram_label",
+      "label": "Instagram label",
+      "default": "Instagram"
+    },
+    {
+      "type": "url",
+      "id": "youtube_url",
+      "label": "YouTube URL"
+    },
+    {
+      "type": "text",
+      "id": "youtube_label",
+      "label": "YouTube label",
+      "default": "YouTube"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "text",
+      "id": "facebook_label",
+      "label": "Facebook label",
+      "default": "Facebook"
+    },
+    {
+      "type": "range",
+      "id": "desktop_icon_size",
+      "label": "Desktop icon size",
+      "min": 12,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_icon_size",
+      "label": "Mobile icon size",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "desktop_label_font_size",
+      "label": "Desktop label font size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "mobile_label_font_size",
+      "label": "Mobile label font size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "desktop_icon_spacing",
+      "label": "Desktop icon spacing",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_icon_spacing",
+      "label": "Mobile icon spacing",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Policy links"
+    },
+    {
+      "type": "text",
+      "id": "privacy_policy_label",
+      "label": "Privacy policy label",
+      "default": "Privacy Policy"
+    },
+    {
+      "type": "text",
+      "id": "refund_policy_label",
+      "label": "Refund policy label",
+      "default": "Refund Policy"
+    },
+    {
+      "type": "text",
+      "id": "terms_of_service_label",
+      "label": "Terms of service label",
+      "default": "Terms of Service"
+    },
+    {
+      "type": "text",
+      "id": "shipping_policy_label",
+      "label": "Shipping policy label",
+      "default": "Shipping Policy"
+    },
+    {
+      "type": "url",
+      "id": "contact_url",
+      "label": "Contact URL"
+    },
+    {
+      "type": "text",
+      "id": "contact_label",
+      "label": "Contact label",
+      "default": "Contact Information"
+    },
+    {
+      "type": "range",
+      "id": "desktop_link_font_size",
+      "label": "Desktop link font size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "mobile_link_font_size",
+      "label": "Mobile link font size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "desktop_link_spacing",
+      "label": "Desktop link spacing",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_link_spacing",
+      "label": "Mobile link spacing",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Copyright"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright text",
+      "default": "© 2026 STYLON. All rights reserved."
+    },
+    {
+      "type": "range",
+      "id": "desktop_copyright_font_size",
+      "label": "Desktop font size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "mobile_copyright_font_size",
+      "label": "Mobile font size",
+      "min": 9,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon color",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "copyright_color",
+      "label": "Copyright color",
+      "default": "#a0a0a0"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_vertical",
+      "label": "Desktop top/bottom padding",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_vertical",
+      "label": "Mobile top/bottom padding",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "desktop_section_spacing",
+      "label": "Desktop section spacing",
+      "min": 16,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mobile_section_spacing",
+      "label": "Mobile section spacing",
+      "min": 12,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "STYLON footer"
+    }
+  ]
+}
+{% endschema %}

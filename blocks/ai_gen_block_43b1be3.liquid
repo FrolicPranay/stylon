@@ -1,0 +1,454 @@
+{% doc %}
+  @prompt
+    Create a modern, premium collection section for a luxury Indian ethnic fashion store called STYLON. Editorial-style layout with large fashion imagery and elegant typography.
+    
+    DESIGN: Clean grid layout, 3 columns desktop, 2 columns mobile, 1 column on small mobile. Each card has a large portrait-ratio (2:3) fashion image, collection name in elegant uppercase heading below the image, minimal "Explore →" CTA link, entire card is clickable. Rounded corners (8-12px). Subtle zoom-in hover effect on image. Soft shadow on hover. Balanced gap spacing between cards.
+    
+    COLORS: Card background #F8F4EC cream, title color #171717 deep black, CTA color #8C6A2F antique gold, section background white or very light cream.
+    
+    TYPOGRAPHY: Collection name in uppercase with letter-spacing for luxury feel. CTA in small elegant text with arrow.
+    
+    SECTION SETTINGS: Configurable heading text (default "Explore Our Collections"), number of columns (2-4), gap size, and ability to select collections to display (up to 6). Section heading centered above the grid with a thin gold underline accent.
+    
+    ISOLATION: All CSS scoped to this section only. No impact on any other theme styles., dont cap collection cards to 6 collection cards, keep collection card image square
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .stylon-collection-section-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.section_background_color }};
+    padding: {{ block.settings.section_padding_top }}px 20px {{ block.settings.section_padding_bottom }}px;
+  }
+
+  .stylon-collection-container-{{ ai_gen_id }} {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .stylon-collection-header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: {{ block.settings.header_spacing }}px;
+  }
+
+  .stylon-collection-heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 400;
+  }
+
+  .stylon-collection-underline-{{ ai_gen_id }} {
+    width: 80px;
+    height: 2px;
+    background-color: {{ block.settings.accent_color }};
+    margin: 0 auto;
+  }
+
+  .stylon-collection-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, 1fr);
+    gap: {{ block.settings.gap_size }}px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .stylon-collection-card-{{ ai_gen_id }} {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    overflow: hidden;
+    border-radius: {{ block.settings.card_border_radius }}px;
+    background-color: {{ block.settings.card_background_color }};
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .stylon-collection-card-{{ ai_gen_id }}:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .stylon-collection-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    border-radius: {{ block.settings.card_border_radius }}px {{ block.settings.card_border_radius }}px 0 0;
+  }
+
+  .stylon-collection-image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .stylon-collection-card-{{ ai_gen_id }}:hover .stylon-collection-image-{{ ai_gen_id }} {
+    transform: scale(1.05);
+  }
+
+  .stylon-collection-placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .stylon-collection-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .stylon-collection-content-{{ ai_gen_id }} {
+    padding: 24px 20px;
+    text-align: center;
+  }
+
+  .stylon-collection-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.collection_title_size }}px;
+    color: {{ block.settings.title_color }};
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+  }
+
+  .stylon-collection-cta-{{ ai_gen_id }} {
+    font-size: {{ block.settings.cta_size }}px;
+    color: {{ block.settings.cta_color }};
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.3s ease;
+  }
+
+  .stylon-collection-card-{{ ai_gen_id }}:hover .stylon-collection-cta-{{ ai_gen_id }} {
+    gap: 10px;
+  }
+
+  .stylon-collection-arrow-{{ ai_gen_id }} {
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+
+  .stylon-collection-empty-state-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: 989px) {
+    .stylon-collection-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stylon-collection-heading-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.heading_size }}px * 0.8);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .stylon-collection-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
+    }
+
+    .stylon-collection-heading-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.heading_size }}px * 0.65);
+    }
+
+    .stylon-collection-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.collection_title_size }}px * 0.85);
+    }
+
+    .stylon-collection-content-{{ ai_gen_id }} {
+      padding: 18px 16px;
+    }
+  }
+{% endstyle %}
+
+<stylon-collection-section-{{ ai_gen_id }} class="stylon-collection-section-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="stylon-collection-container-{{ ai_gen_id }}">
+    {% if block.settings.section_heading != blank %}
+      <div class="stylon-collection-header-{{ ai_gen_id }}">
+        <h2 class="stylon-collection-heading-{{ ai_gen_id }}">{{ block.settings.section_heading }}</h2>
+        <div class="stylon-collection-underline-{{ ai_gen_id }}"></div>
+      </div>
+    {% endif %}
+
+    {% assign selected_collections = block.settings.collections %}
+
+    {% if selected_collections.count > 0 %}
+      <div class="stylon-collection-grid-{{ ai_gen_id }}">
+        {% for collection in selected_collections %}
+          <a href="{{ collection.url }}" class="stylon-collection-card-{{ ai_gen_id }}">
+            <div class="stylon-collection-image-wrapper-{{ ai_gen_id }}">
+              {% if collection.featured_image %}
+                <img
+                  src="{{ collection.featured_image | image_url: width: 800 }}"
+                  alt="{{ collection.featured_image.alt | escape }}"
+                  class="stylon-collection-image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="800"
+                  height="800"
+                >
+              {% else %}
+                <div class="stylon-collection-placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-apparel-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="stylon-collection-content-{{ ai_gen_id }}">
+              <h3 class="stylon-collection-title-{{ ai_gen_id }}">{{ collection.title }}</h3>
+              <span class="stylon-collection-cta-{{ ai_gen_id }}">
+                {{ block.settings.cta_text }}
+                <span class="stylon-collection-arrow-{{ ai_gen_id }}">→</span>
+              </span>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="stylon-collection-empty-state-{{ ai_gen_id }}">
+        Select collections to display in this section
+      </div>
+    {% endif %}
+  </div>
+</stylon-collection-section-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class StylonCollectionSection{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.cards = this.querySelectorAll('.stylon-collection-card-{{ ai_gen_id }}');
+        this.setupAccessibility();
+      }
+
+      setupAccessibility() {
+        this.cards.forEach((card) => {
+          card.setAttribute('role', 'link');
+          card.setAttribute('tabindex', '0');
+          
+          card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              card.click();
+            }
+          });
+        });
+      }
+    }
+
+    customElements.define('stylon-collection-section-{{ ai_gen_id }}', StylonCollectionSection{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Premium collection grid",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section heading"
+    },
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Heading text",
+      "default": "Explore Our Collections"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#171717"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent underline color",
+      "default": "#8C6A2F"
+    },
+    {
+      "type": "range",
+      "id": "header_spacing",
+      "label": "Spacing below heading",
+      "min": 20,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Collections"
+    },
+    {
+      "type": "collection_list",
+      "id": "collections",
+      "label": "Collections"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "gap_size",
+      "label": "Gap between cards",
+      "min": 12,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Card background",
+      "default": "#F8F4EC"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "collection_title_size",
+      "label": "Collection title size",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#171717"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "Explore"
+    },
+    {
+      "type": "range",
+      "id": "cta_size",
+      "label": "CTA text size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "cta_color",
+      "label": "CTA color",
+      "default": "#8C6A2F"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "color",
+      "id": "section_background_color",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Premium collection grid"
+    }
+  ]
+}
+{% endschema %}

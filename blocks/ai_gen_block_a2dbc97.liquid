@@ -1,0 +1,396 @@
+{% doc %}
+  @prompt
+    Create a beautiful, modern, and stylish scrolling marquee/ticker section for a luxury Indian ethnic fashion brand. The marquee should scroll continuously and smoothly from right to left. It should feature elegant text announcements (e.g., "New Arrivals", "Free Shipping on Orders Above ₹2000", "Handcrafted with Love", "Authentic Indian Craftsmanship"). Style it with a dark/black background with gold accent text to match a premium luxury aesthetic. Include customizable settings for: background color, text color, scroll speed, font size, and the ability to add multiple marquee items. Add subtle separators (like a diamond ◆ or star ✦) between items. The animation should be smooth with no flickering or gaps, using CSS animation., make colors nice . make it look more beautiful, no free shipping is there . add different women clothing types, increase speed, increase speed more
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-luxury-marquee-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background: {{ block.settings.background_gradient }};
+    padding: {{ block.settings.padding_vertical }}px 0;
+    overflow: hidden;
+    position: relative;
+    border-top: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    border-bottom: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    contain: layout paint style;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  .ai-luxury-marquee__track-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    animation: ai-marquee-scroll-{{ ai_gen_id }} {{ block.settings.scroll_speed }}s linear infinite;
+    animation-fill-mode: both;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+  }
+
+  .ai-luxury-marquee__group-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: {{ block.settings.item_spacing }}px;
+    flex-shrink: 0;
+    padding-right: {{ block.settings.item_spacing }}px;
+  }
+
+  .ai-luxury-marquee__item-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: {{ block.settings.item_spacing }}px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .ai-luxury-marquee__text-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.font_size }}px;
+    font-family: {{ block.settings.font_family.family }}, {{ block.settings.font_family.fallback_families }};
+    font-weight: {{ block.settings.font_family.weight }};
+    font-style: {{ block.settings.font_family.style }};
+    letter-spacing: {{ block.settings.letter_spacing }}px;
+    text-transform: {% if block.settings.uppercase %}uppercase{% else %}none{% endif %};
+    text-shadow: {% if block.settings.text_glow %}0 0 20px {{ block.settings.text_color }}40{% else %}none{% endif %};
+  }
+
+  .ai-luxury-marquee__separator-{{ ai_gen_id }} {
+    color: {{ block.settings.separator_color }};
+    font-size: {{ block.settings.font_size }}px;
+    flex-shrink: 0;
+    opacity: {{ block.settings.separator_opacity | divided_by: 100.0 }};
+  }
+
+  @keyframes ai-marquee-scroll-{{ ai_gen_id }} {
+    0% {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      -webkit-transform: translate3d(-50%, 0, 0);
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ai-luxury-marquee__track-{{ ai_gen_id }} {
+      animation: none;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-luxury-marquee__text-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.font_size }}px * 0.8);
+    }
+
+    .ai-luxury-marquee__separator-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.font_size }}px * 0.8);
+    }
+  }
+{% endstyle %}
+
+<luxury-marquee-{{ ai_gen_id }} class="ai-luxury-marquee-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-luxury-marquee__track-{{ ai_gen_id }}">
+    {% liquid
+      assign items_array = ''
+      if block.settings.item_1 != blank
+        assign items_array = items_array | append: block.settings.item_1 | append: '||'
+      endif
+      if block.settings.item_2 != blank
+        assign items_array = items_array | append: block.settings.item_2 | append: '||'
+      endif
+      if block.settings.item_3 != blank
+        assign items_array = items_array | append: block.settings.item_3 | append: '||'
+      endif
+      if block.settings.item_4 != blank
+        assign items_array = items_array | append: block.settings.item_4 | append: '||'
+      endif
+      if block.settings.item_5 != blank
+        assign items_array = items_array | append: block.settings.item_5 | append: '||'
+      endif
+      if block.settings.item_6 != blank
+        assign items_array = items_array | append: block.settings.item_6 | append: '||'
+      endif
+
+      assign items = items_array | split: '||'
+    %}
+
+    {% if items.size > 0 %}
+      {% for i in (1..2) %}
+        <div class="ai-luxury-marquee__group-{{ ai_gen_id }}" aria-hidden="{% if i == 2 %}true{% else %}false{% endif %}">
+          {% for item in items %}
+            {% if item != blank %}
+              <div class="ai-luxury-marquee__item-{{ ai_gen_id }}">
+                <span class="ai-luxury-marquee__text-{{ ai_gen_id }}">{{ item }}</span>
+                <span class="ai-luxury-marquee__separator-{{ ai_gen_id }}">{{ block.settings.separator }}</span>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endfor %}
+    {% else %}
+      {% for i in (1..2) %}
+        <div class="ai-luxury-marquee__group-{{ ai_gen_id }}" aria-hidden="{% if i == 2 %}true{% else %}false{% endif %}">
+          <div class="ai-luxury-marquee__item-{{ ai_gen_id }}">
+            <span class="ai-luxury-marquee__text-{{ ai_gen_id }}">Sarees</span>
+            <span class="ai-luxury-marquee__separator-{{ ai_gen_id }}">{{ block.settings.separator }}</span>
+          </div>
+          <div class="ai-luxury-marquee__item-{{ ai_gen_id }}">
+            <span class="ai-luxury-marquee__text-{{ ai_gen_id }}">Lehengas</span>
+            <span class="ai-luxury-marquee__separator-{{ ai_gen_id }}">{{ block.settings.separator }}</span>
+          </div>
+          <div class="ai-luxury-marquee__item-{{ ai_gen_id }}">
+            <span class="ai-luxury-marquee__text-{{ ai_gen_id }}">Kurtis</span>
+            <span class="ai-luxury-marquee__separator-{{ ai_gen_id }}">{{ block.settings.separator }}</span>
+          </div>
+          <div class="ai-luxury-marquee__item-{{ ai_gen_id }}">
+            <span class="ai-luxury-marquee__text-{{ ai_gen_id }}">Anarkalis</span>
+            <span class="ai-luxury-marquee__separator-{{ ai_gen_id }}">{{ block.settings.separator }}</span>
+          </div>
+          <div class="ai-luxury-marquee__item-{{ ai_gen_id }}">
+            <span class="ai-luxury-marquee__text-{{ ai_gen_id }}">Salwar Kameez</span>
+            <span class="ai-luxury-marquee__separator-{{ ai_gen_id }}">{{ block.settings.separator }}</span>
+          </div>
+          <div class="ai-luxury-marquee__item-{{ ai_gen_id }}">
+            <span class="ai-luxury-marquee__text-{{ ai_gen_id }}">Dupattas</span>
+            <span class="ai-luxury-marquee__separator-{{ ai_gen_id }}">{{ block.settings.separator }}</span>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</luxury-marquee-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class LuxuryMarquee{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+    }
+
+    if (!customElements.get('luxury-marquee-{{ ai_gen_id }}')) {
+      customElements.define('luxury-marquee-{{ ai_gen_id }}', LuxuryMarquee{{ ai_gen_id }});
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Luxury marquee",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Marquee content"
+    },
+    {
+      "type": "text",
+      "id": "item_1",
+      "label": "Announcement 1",
+      "default": "Sarees"
+    },
+    {
+      "type": "text",
+      "id": "item_2",
+      "label": "Announcement 2",
+      "default": "Lehengas"
+    },
+    {
+      "type": "text",
+      "id": "item_3",
+      "label": "Announcement 3",
+      "default": "Kurtis"
+    },
+    {
+      "type": "text",
+      "id": "item_4",
+      "label": "Announcement 4",
+      "default": "Anarkalis"
+    },
+    {
+      "type": "text",
+      "id": "item_5",
+      "label": "Announcement 5",
+      "default": "Salwar Kameez"
+    },
+    {
+      "type": "text",
+      "id": "item_6",
+      "label": "Announcement 6",
+      "default": "Dupattas"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Background",
+      "default": "linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%)"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#D4AF37"
+    },
+    {
+      "type": "color",
+      "id": "separator_color",
+      "label": "Separator",
+      "default": "#8B7355"
+    },
+    {
+      "type": "range",
+      "id": "separator_opacity",
+      "label": "Separator opacity",
+      "min": 10,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "default": 60
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border",
+      "default": "#D4AF3730"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "text_glow",
+      "label": "Text glow effect",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Separator"
+    },
+    {
+      "type": "select",
+      "id": "separator",
+      "label": "Symbol",
+      "options": [
+        {
+          "value": "◆",
+          "label": "Diamond ◆"
+        },
+        {
+          "value": "✦",
+          "label": "Star ✦"
+        },
+        {
+          "value": "•",
+          "label": "Dot •"
+        },
+        {
+          "value": "⋄",
+          "label": "Open diamond ⋄"
+        },
+        {
+          "value": "✧",
+          "label": "Open star ✧"
+        },
+        {
+          "value": "|",
+          "label": "Bar |"
+        }
+      ],
+      "default": "✦"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "font_family",
+      "label": "Font",
+      "default": "inter_n5"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "label": "Letter spacing",
+      "min": 0,
+      "max": 4,
+      "step": 0.5,
+      "unit": "px",
+      "default": 1.5
+    },
+    {
+      "type": "checkbox",
+      "id": "uppercase",
+      "label": "Uppercase text",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "label": "Vertical padding",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "item_spacing",
+      "label": "Item spacing",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Scroll speed",
+      "min": 5,
+      "max": 60,
+      "step": 5,
+      "unit": "s",
+      "default": 15,
+      "info": "Lower value = faster scroll"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Luxury marquee"
+    }
+  ]
+}
+{% endschema %}

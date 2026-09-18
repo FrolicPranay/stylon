@@ -1,0 +1,156 @@
+{% doc %}
+  @prompt
+    Create a beautiful, modern, premium hero section with support for exactly 3 separate banner images. Each banner image must be individually uploadable/selectable by the store admin via theme editor settings (3 separate image picker settings). The banners auto-slide smoothly from right to left, one at a time, every 8 seconds, with a seamless CSS transition. No text, no buttons, no overlays, no dots, no arrows — show only the full-width banner images. The section must be clean, elegant, full-width, and fully responsive for both desktop and mobile. Use a smooth horizontal sliding animation with CSS transitions (not JavaScript scroll). The image height should be 100vh on desktop and auto-adjust gracefully on mobile. Images should use object-fit: cover to fill the frame perfectly., not able to change the height , keep only 1 image to add. no need of crousal, if desktop is large then mobile should be small. mobile viewers should see complete banner. , banner should be small on mobile
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-premium-hero-{{ ai_gen_id }} {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: {{ block.settings.desktop_height }}vh;
+    overflow: hidden;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-premium-hero-{{ ai_gen_id }} {
+      height: {{ block.settings.mobile_height }}vh;
+    }
+  }
+
+  .ai-premium-hero__image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-premium-hero__image-{{ ai_gen_id }} {
+      object-fit: contain;
+    }
+  }
+
+  .ai-premium-hero__placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ai-premium-hero__placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+    max-height: 500px;
+  }
+
+  .ai-premium-hero__empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    pointer-events: none;
+  }
+{% endstyle %}
+
+<premium-hero-{{ ai_gen_id }}
+  class="ai-premium-hero-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.banner_image != blank %}
+    <img
+      src="{{ block.settings.banner_image | image_url: width: 2400 }}"
+      srcset="{{ block.settings.banner_image | image_url: width: 750 }} 750w,
+              {{ block.settings.banner_image | image_url: width: 1100 }} 1100w,
+              {{ block.settings.banner_image | image_url: width: 1500 }} 1500w,
+              {{ block.settings.banner_image | image_url: width: 2000 }} 2000w,
+              {{ block.settings.banner_image | image_url: width: 2400 }} 2400w"
+      sizes="100vw"
+      alt="{{ block.settings.banner_image.alt | escape }}"
+      loading="eager"
+      width="{{ block.settings.banner_image.width }}"
+      height="{{ block.settings.banner_image.height }}"
+      class="ai-premium-hero__image-{{ ai_gen_id }}"
+    >
+  {% else %}
+    <div class="ai-premium-hero__placeholder-{{ ai_gen_id }}">
+      {{ 'hero-apparel-1' | placeholder_svg_tag }}
+      <div class="ai-premium-hero__empty-state-{{ ai_gen_id }}">
+        Add your banner image
+      </div>
+    </div>
+  {% endif %}
+</premium-hero-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class PremiumHero{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+    }
+
+    customElements.define('premium-hero-{{ ai_gen_id }}', PremiumHero{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Premium hero banner",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Banner image"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner image"
+    },
+    {
+      "type": "header",
+      "content": "Desktop layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "label": "Height",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Mobile layout"
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "label": "Height",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "default": 40,
+      "info": "Image will display fully without cropping"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Premium hero banner"
+    }
+  ]
+}
+{% endschema %}
