@@ -1,0 +1,1356 @@
+<!-- --VERSION-14-- -->
+
+{% style %}
+:root {
+--vtl-neutral-70: #5e5e5e;
+--vtl-neutral-03: #f8f8f8;
+--vtl-neutral-01: #fff;
+--vtl-size-1: 1px;
+--vtl-size-2: 2px;
+--vtl-size-4: 4px;
+--vtl-size-6: 6px;
+--vtl-size-8: 8px;
+--vtl-size-12: 12px;
+--vtl-size-14: 14px;
+--vtl-size-16: 16px;
+--vtl-size-20: 20px;
+--vtl-size-24: 24px;
+--vtl-size-32: 32px;
+--vtl-size-40: 40px;
+--vtl-font-weight-400: 400;
+--vtl-font-weight-600: 600;
+--vtl-line-height-140: 1.4;
+--vtl-border-width-1: var(--vtl-size-1);
+--vtl-color-bg-fill-inverse-on-light: var(--vtl-neutral-01);
+--vtl-color-bg-surface-tertiary-on-light: var(--vtl-neutral-03);
+--vtl-color-text-disable-on-light: var(--vtl-neutral-70);
+--vtl-space-2: var(--vtl-size-2);
+--vtl-space-4: var(--vtl-size-4);
+--vtl-space-6: var(--vtl-size-6);
+--vtl-space-8: var(--vtl-size-8);
+--vtl-space-12: var(--vtl-size-12);
+--vtl-space-16: var(--vtl-size-16);
+--vtl-space-20: var(--vtl-size-20);
+--vtl-space-24: var(--vtl-size-24);
+--vtl-space-32: var(--vtl-size-32);
+--vtl-space-40: var(--vtl-size-40);
+--vtl-font-size-14: var(--vtl-size-14);
+}
+
+
+{% endstyle %}
+
+<!-- --UUID-fa2fef94-- -->
+
+{% style %}#shopify-section-{{ section.id }}{display:flow-root}{% endstyle %}
+
+<section 
+  class="Vtls-{{ section.id | handle }} VtlsValueIconsBackground {% if section.settings.section_width == 100 %}VtlsValueIconsBackground--fullWidth{% endif %}"
+  role="region"
+  {%- if section.settings.heading != blank -%} aria-labelledby="VtlsValueIconsBackgroundHeading-{{ section.id | handle }}"{%- else -%} aria-label="Value Icons Section"{%- endif -%}
+>
+
+{% liquid
+	assign loading = "lazy"
+	assign fetchpriority = "auto"
+	assign preload = false
+	assign icon_sizes = section.settings.icon_size | append: "px"
+
+	if section.index == 1
+		assign loading = "eager"
+		assign fetchpriority = "high"
+		assign preload = true
+	endif
+
+	if section.settings.icon_card_background != blank and section.settings.icon_card_background != 'rgba(0,0,0,0)'
+		assign icon_card_has_bg_color = true 
+	else
+      assign icon_card_has_bg_color = false
+    endif
+
+    if section.settings.icon_card_border != blank and section.settings.icon_card_border != 'rgba(0,0,0,0)'
+      assign icon_card_has_border_color = true 
+    else
+      assign icon_card_has_border_color = false
+    endif
+  %}
+
+  <div class="VtlsValueIconsBackgroundContainer
+    {% if section.settings.background_image == blank and section.settings.section_background_style == 'image' %}VtlsValueIconsBackgroundContainer--emptyImage{% endif %}
+    VtlsValueIconsBackgroundContainer--backgroundStyle-{{ section.settings.section_background_style }}
+    {% if section.settings.section_background_style == 'gradient' and section.settings.enable_animation == true %}VtlsValueIconsBackgroundContainer--hasAnimation{% endif %}">
+	    {%- if section.settings.section_background_style == "image" -%}
+	      <div class="VtlsValueIconsBackgroundContainer__BackgroundMedia" aria-hidden="true">
+	        {%- if section.settings.background_image != blank -%}
+	          {{-
+	            section.settings.background_image
+	            | image_url: width: section.settings.background_image.width
+	            | image_tag:
+	                class: "VtlsValueIconsBackgroundContainer__BackgroundImage",
+	                sizes: "100vw",
+	                widths: "400, 600, 800, 1200, 1600, 1800, 2400, 2800, 3200",
+	                loading: loading,
+	                fetchpriority: fetchpriority,
+	                preload: preload
+	          -}}
+	        {%- else -%}
+	          <img
+	            src="data:image/webp;base64,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"
+	            alt=""
+	            sizes="100vw"
+	            class="VtlsValueIconsBackgroundContainer__BackgroundImage"
+	          >
+	        {%- endif -%}
+	        <div class="VtlsValueIconsBackgroundContainer__BackgroundOverlay"></div>
+	      </div>
+	    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2
+        class="VtlsValueIconsBackgroundHeading
+               VtlsValueIconsBackgroundHeading--alignment-{{ section.settings.heading_alignment }}
+               VtlsValueIconsBackgroundHeading--style-{{ section.settings.heading_style }}"
+        id="VtlsValueIconsBackgroundHeading-{{ section.id | handle }}"
+      >
+        {{ section.settings.heading }}
+      </h2>
+    {%- endif -%}
+
+    <ul class="VtlsValueIconsBackgroundList VtlsValueIconsBackgroundList--mobileLayout-{% if section.settings.icon_card_layout == 'vertical' %}{{ section.settings.icons_mobile_layout_vertical }}{% else %}{{ section.settings.icons_mobile_layout_horizontal }}{% endif %}">
+      {%- for block in section.blocks -%}
+
+				{% capture vtls_icon %}
+					{% case block.settings.icon %}
+						{% when 'lock' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"/></svg>   
+						{% when 'shield_alt' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M466.5 83.7l-192-80a48.2 48.2 0 0 0 -36.9 0l-192 80C27.7 91.1 16 108.6 16 128c0 198.5 114.5 335.7 221.5 380.3 11.8 4.9 25.1 4.9 36.9 0C360.1 472.6 496 349.3 496 128c0-19.4-11.7-36.9-29.5-44.3zM256.1 446.3l-.1-381 175.9 73.3c-3.3 151.4-82.1 261.1-175.8 307.7z"/></svg>
+						{% when 'user_shield' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M622.3 271.1l-115.2-45c-4.1-1.6-12.6-3.7-22.2 0l-115.2 45c-10.7 4.2-17.7 14-17.7 24.9 0 111.6 68.7 188.8 132.9 213.9 9.6 3.7 18 1.6 22.2 0C558.4 489.9 640 420.5 640 296c0-10.9-7-20.7-17.7-24.9zM496 462.4V273.3l95.5 37.3c-5.6 87.1-60.9 135.4-95.5 151.8zM224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm96 40c0-2.5 .8-4.8 1.1-7.2-2.5-.1-4.9-.8-7.5-.8h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c6.8 0 13.3-1.5 19.2-4-54-42.9-99.2-116.7-99.2-212z"/></svg>
+						{% when 'check_circle' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zM227.3 387.3l184-184c6.2-6.2 6.2-16.4 0-22.6l-22.6-22.6c-6.2-6.2-16.4-6.2-22.6 0L216 308.1l-70.1-70.1c-6.2-6.2-16.4-6.2-22.6 0l-22.6 22.6c-6.2 6.2-6.2 16.4 0 22.6l104 104c6.2 6.2 16.4 6.2 22.6 0z"/></svg>    
+						{% when 'key' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M512 176C512 273.2 433.2 352 336 352c-11.2 0-22.2-1.1-32.8-3.1l-24 27A24 24 0 0 1 261.2 384H224v40c0 13.3-10.7 24-24 24h-40v40c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24v-78.1c0-6.4 2.5-12.5 7-17l161.8-161.8C163.1 213.8 160 195.3 160 176 160 78.8 238.8 0 336 0 433.5 0 512 78.5 512 176zM336 128c0 26.5 21.5 48 48 48s48-21.5 48-48-21.5-48-48-48-48 21.5-48 48z"/></svg>
+						{% when 'shipping_fast' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M624 352h-16V243.9c0-12.7-5.1-24.9-14.1-33.9L494 110.1c-9-9-21.2-14.1-33.9-14.1H416V48c0-26.5-21.5-48-48-48H112C85.5 0 64 21.5 64 48v48H8c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8h272c4.4 0 8 3.6 8 8v16c0 4.4-3.6 8-8 8H40c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8h208c4.4 0 8 3.6 8 8v16c0 4.4-3.6 8-8 8H8c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8h208c4.4 0 8 3.6 8 8v16c0 4.4-3.6 8-8 8H64v128c0 53 43 96 96 96s96-43 96-96h128c0 53 43 96 96 96s96-43 96-96h48c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zM160 464c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm320 0c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm80-208H416V144h44.1l99.9 99.9V256z"/></svg>
+						{% when 'box' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M509.5 184.6L458.9 32.8C452.4 13.2 434.1 0 413.4 0H272v192h238.7c-.4-2.5-.4-5-1.2-7.4zM240 0H98.6c-20.7 0-39 13.2-45.5 32.8L2.5 184.6c-.8 2.4-.8 4.9-1.2 7.4H240V0zM0 224v240c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V224H0z"/></svg>
+						{% when 'truck' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M624 352h-16V243.9c0-12.7-5.1-24.9-14.1-33.9L494 110.1c-9-9-21.2-14.1-33.9-14.1H416V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v320c0 26.5 21.5 48 48 48h16c0 53 43 96 96 96s96-43 96-96h128c0 53 43 96 96 96s96-43 96-96h48c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zM160 464c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm320 0c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm80-208H416V144h44.1l99.9 99.9V256z"/></svg>
+						{% when 'route' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M416 320h-96c-17.6 0-32-14.4-32-32s14.4-32 32-32h96s96-107 96-160-43-96-96-96-96 43-96 96c0 25.5 22.2 63.4 45.3 96H320c-52.9 0-96 43.1-96 96s43.1 96 96 96h96c17.6 0 32 14.4 32 32s-14.4 32-32 32H185.5c-16 24.8-33.8 47.7-47.3 64H416c52.9 0 96-43.1 96-96s-43.1-96-96-96zm0-256c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zM96 256c-53 0-96 43-96 96s96 160 96 160 96-107 96-160-43-96-96-96zm0 128c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"/></svg>
+						{% when 'headset' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M192 208c0-17.7-14.3-32-32-32h-16c-35.4 0-64 28.7-64 64v48c0 35.4 28.7 64 64 64h16c17.7 0 32-14.3 32-32V208zm176 144c35.4 0 64-28.7 64-64v-48c0-35.4-28.7-64-64-64h-16c-17.7 0-32 14.3-32 32v112c0 17.7 14.3 32 32 32h16zM256 0C113.2 0 4.6 118.8 0 256v16c0 8.8 7.2 16 16 16h16c8.8 0 16-7.2 16-16v-16c0-114.7 93.3-208 208-208s208 93.3 208 208h-.1c.1 2.4 .1 165.7 .1 165.7 0 23.4-18.9 42.3-42.3 42.3H320c0-26.5-21.5-48-48-48h-32c-26.5 0-48 21.5-48 48s21.5 48 48 48h181.7c49.9 0 90.3-40.4 90.3-90.3V256C507.4 118.8 398.8 0 256 0z"/></svg>
+						{% when 'envelope' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7 .3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2 .4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg>
+						{% when 'comments' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M416 192c0-88.4-93.1-160-208-160S0 103.6 0 192c0 34.3 14.1 65.9 38 92-13.4 30.2-35.5 54.2-35.8 54.5-2.2 2.3-2.8 5.7-1.5 8.7S4.8 352 8 352c36.6 0 66.9-12.3 88.7-25 32.2 15.7 70.3 25 111.3 25 114.9 0 208-71.6 208-160zm122 220c23.9-26 38-57.7 38-92 0-66.9-53.5-124.2-129.3-148.1 .9 6.6 1.3 13.3 1.3 20.1 0 105.9-107.7 192-240 192-10.8 0-21.3-.8-31.7-1.9C207.8 439.6 281.8 480 368 480c41 0 79.1-9.2 111.3-25 21.8 12.7 52.1 25 88.7 25 3.2 0 6.1-1.9 7.3-4.8 1.3-2.9 .7-6.3-1.5-8.7-.3-.3-22.4-24.2-35.8-54.5z"/></svg>
+						{% when 'question_circle' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M504 256c0 137-111 248-248 248S8 393 8 256C8 119.1 119 8 256 8s248 111.1 248 248zM262.7 90c-54.5 0-89.3 23-116.5 63.8-3.5 5.3-2.4 12.4 2.7 16.3l34.7 26.3c5.2 3.9 12.6 3 16.7-2.1 17.9-22.7 30.1-35.8 57.3-35.8 20.4 0 45.7 13.1 45.7 33 0 15-12.4 22.7-32.5 34C247.1 238.5 216 254.9 216 296v4c0 6.6 5.4 12 12 12h56c6.6 0 12-5.4 12-12v-1.3c0-28.5 83.2-29.6 83.2-106.7 0-58-60.2-102-116.5-102zM256 338c-25.4 0-46 20.6-46 46 0 25.4 20.6 46 46 46s46-20.6 46-46c0-25.4-20.6-46-46-46z"/></svg>
+						{% when 'map_marker_alt' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M192 0C85.9 0 0 86 0 192c0 71.1 24 93.3 151.3 297.4 18.8 30.1 62.7 30.1 81.5 0C360.1 285.2 384 263.1 384 192 384 85.9 298 0 192 0zm0 464C64.6 259.7 48 246.8 48 192c0-79.5 64.5-144 144-144s144 64.5 144 144c0 54.6-15.2 65.4-144 272zm-80-272c0-44.2 35.8-80 80-80s80 35.8 80 80-35.8 80-80 80-80-35.8-80-80z"/></svg>
+						{% when 'award' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M97.1 362.6c-8.7-8.7-4.2-6.2-25.1-11.9-9.5-2.6-17.9-7.5-25.4-13.3L1.2 448.7c-4.4 10.8 3.8 22.5 15.4 22l52.7-2L105.6 507c8 8.4 22 5.8 26.4-5l52.1-127.6c-10.8 6-22.9 9.6-35.3 9.6-19.5 0-37.8-7.6-51.6-21.4zM382.8 448.7l-45.4-111.2c-7.6 5.9-15.9 10.8-25.4 13.3-21.1 5.6-16.5 3.2-25.1 11.9-13.8 13.8-32.1 21.4-51.6 21.4-12.4 0-24.5-3.6-35.3-9.6L252 502c4.4 10.8 18.4 13.4 26.4 5l36.3-38.3 52.7 2c11.6 .4 19.8-11.3 15.4-22zM263 340c15.3-15.6 17-14.2 38.8-20.1 13.9-3.8 24.8-14.8 28.5-29 7.5-28.4 5.5-25 26-45.8 10.2-10.4 14.1-25.4 10.4-39.6-7.5-28.4-7.5-24.4 0-52.8 3.7-14.1-.3-29.2-10.4-39.6-20.4-20.8-18.5-17.4-26-45.8-3.7-14.1-14.6-25.2-28.5-29-27.9-7.6-24.5-5.6-45-26.4-10.2-10.4-25-14.4-38.9-10.6-27.9 7.6-24 7.6-51.9 0-13.9-3.8-28.7 .3-38.9 10.6-20.4 20.8-17.1 18.8-44.9 26.4-13.9 3.8-24.8 14.8-28.5 29-7.5 28.4-5.5 25-26 45.8-10.2 10.4-14.2 25.4-10.4 39.6 7.5 28.4 7.5 24.4 0 52.8-3.7 14.1 .3 29.2 10.4 39.6 20.4 20.8 18.5 17.4 26 45.8 3.7 14.1 14.6 25.2 28.5 29C104.6 326 106.3 325 121 340c13.2 13.5 33.8 15.9 49.7 5.8a39.7 39.7 0 0 1 42.5 0c15.9 10.1 36.5 7.7 49.7-5.8zM97.7 176c0-53 42.2-96 94.3-96s94.3 43 94.3 96-42.2 96-94.3 96-94.3-43-94.3-96z"/></svg>
+						{% when 'gem' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M485.5 0L576 160H474.9L405.7 0h79.8zm-128 0l69.2 160H149.3L218.5 0h139zm-267 0h79.8l-69.2 160H0L90.5 0zM0 192h100.7l123 251.7c1.5 3.1-2.7 5.9-5 3.3L0 192zm148.2 0h279.6l-137 318.2c-1 2.4-4.5 2.4-5.5 0L148.2 192zm204.1 251.7l123-251.7H576L357.3 446.9c-2.3 2.7-6.5-.1-5-3.2z"/></svg>
+						{% when 'hands' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M204.8 230.4c-10.6-14.1-30.7-17-44.8-6.4-14.1 10.6-17 30.7-6.4 44.8l38.1 50.8c4.8 6.4 4.1 15.3-1.5 20.9l-12.8 12.8c-6.7 6.7-17.6 6.2-23.6-1.1L64 244.4V96c0-17.7-14.3-32-32-32S0 78.3 0 96v218.4c0 10.9 3.7 21.5 10.5 30l104.1 134.3c5 6.5 8.4 13.9 10.4 21.7 1.8 6.9 8.1 11.6 15.3 11.6H272c8.8 0 16-7.2 16-16V384c0-27.7-9-54.6-25.6-76.8l-57.6-76.8zM608 64c-17.7 0-32 14.3-32 32v148.4l-89.8 107.8c-6 7.2-17 7.7-23.6 1.1l-12.8-12.8c-5.6-5.6-6.3-14.5-1.5-20.9l38.1-50.8c10.6-14.1 7.7-34.2-6.4-44.8-14.1-10.6-34.2-7.7-44.8 6.4l-57.6 76.8C361 329.4 352 356.3 352 384v112c0 8.8 7.2 16 16 16h131.7c7.1 0 13.5-4.7 15.3-11.6 2-7.8 5.4-15.2 10.4-21.7l104.1-134.3c6.8-8.5 10.5-19.1 10.5-30V96c0-17.7-14.3-32-32-32z"/></svg>
+						{% when 'thumbs-up' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M104 224H24c-13.3 0-24 10.7-24 24v240c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V248c0-13.3-10.7-24-24-24zM64 472c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zM384 81.5c0 42.4-26 66.2-33.3 94.5h101.7c33.4 0 59.4 27.7 59.6 58.1 .1 17.9-7.5 37.2-19.4 49.2l-.1 .1c9.8 23.3 8.2 56-9.3 79.5 8.7 25.9-.1 57.7-16.4 74.8 4.3 17.6 2.2 32.6-6.1 44.6C440.2 511.6 389.6 512 346.8 512l-2.8 0c-48.3 0-87.8-17.6-119.6-31.7-16-7.1-36.8-15.9-52.7-16.2-6.5-.1-11.8-5.5-11.8-12v-213.8c0-3.2 1.3-6.3 3.6-8.5 39.6-39.1 56.6-80.6 89.1-113.1 14.8-14.8 20.2-37.2 25.4-58.9C282.5 39.3 291.8 0 312 0c24 0 72 8 72 81.5z"/></svg>
+						{% when 'star' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg>
+						{% when 'undo_alt' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M255.5 8c-66.3 .1-126.4 26.2-170.9 68.7L49 41C33.9 25.9 8 36.6 8 57.9V192c0 13.3 10.7 24 24 24h134.1c21.4 0 32.1-25.9 17-41l-41.8-41.8c30.9-28.9 70.8-44.9 113.2-45.3 92.4-.8 170.3 74 169.5 169.4C423.2 348 349.8 424 256 424c-41.1 0-80-14.7-110.6-41.6-4.7-4.2-11.9-3.9-16.4 .6L89.3 422.7c-4.9 4.9-4.6 12.8 .5 17.4C133.8 479.8 192.1 504 256 504c137 0 248-111 248-248C504 119.2 392.4 7.8 255.5 8z"/></svg>
+						{% when 'calendar_check' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M436 160H12c-6.6 0-12-5.4-12-12v-36c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48v36c0 6.6-5.4 12-12 12zM12 192h424c6.6 0 12 5.4 12 12v260c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V204c0-6.6 5.4-12 12-12zm333.3 95.9l-28.2-28.4c-4.7-4.7-12.3-4.7-17-.1L194.1 364.7l-46-46.4c-4.7-4.7-12.3-4.7-17-.1l-28.4 28.2c-4.7 4.7-4.7 12.3-.1 17l82.6 83.3c4.7 4.7 12.3 4.7 17 .1l143-141.8c4.7-4.7 4.7-12.3 .1-17z"/></svg>
+						{% when 'sync_alt' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M370.7 133.3C339.5 104 298.9 88 255.8 88c-77.5 .1-144.3 53.2-162.8 126.9-1.3 5.4-6.1 9.2-11.7 9.2H24.1c-7.5 0-13.2-6.8-11.8-14.2C33.9 94.9 134.8 8 256 8c66.4 0 126.8 26.1 171.3 68.7L463 41C478.1 25.9 504 36.6 504 57.9V192c0 13.3-10.7 24-24 24H345.9c-21.4 0-32.1-25.9-17-41l41.8-41.7zM32 296h134.1c21.4 0 32.1 25.9 17 41l-41.8 41.8c31.3 29.3 71.8 45.3 114.9 45.3 77.4-.1 144.3-53.1 162.8-126.8 1.3-5.4 6.1-9.2 11.7-9.2h57.3c7.5 0 13.2 6.8 11.8 14.2C478.1 417.1 377.2 504 256 504c-66.4 0-126.8-26.1-171.3-68.7L49 471C33.9 486.1 8 475.4 8 454.1V320c0-13.3 10.7-24 24-24z"/></svg>
+						{% when 'handshake' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M434.7 64h-85.9c-8 0-15.7 3-21.6 8.4l-98.3 90c-.1 .1-.2 .3-.3 .4-16.6 15.6-16.3 40.5-2.1 56 12.7 13.9 39.4 17.6 56.1 2.7 .1-.1 .3-.1 .4-.2l79.9-73.2c6.5-5.9 16.7-5.5 22.6 1 6 6.5 5.5 16.6-1 22.6l-26.1 23.9L504 313.8c2.9 2.4 5.5 5 7.9 7.7V128l-54.6-54.6c-5.9-6-14.1-9.4-22.6-9.4zM544 128.2v223.9c0 17.7 14.3 32 32 32h64V128.2h-96zm48 223.9c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16zM0 384h64c17.7 0 32-14.3 32-32V128.2H0V384zm48-63.9c8.8 0 16 7.2 16 16s-7.2 16-16 16-16-7.2-16-16c0-8.9 7.2-16 16-16zm435.9 18.6L334.6 217.5l-30 27.5c-29.7 27.1-75.2 24.5-101.7-4.4-26.9-29.4-24.8-74.9 4.4-101.7L289.1 64h-83.8c-8.5 0-16.6 3.4-22.6 9.4L128 128v223.9h18.3l90.5 81.9c27.4 22.3 67.7 18.1 90-9.3l.2-.2 17.9 15.5c15.9 13 39.4 10.5 52.3-5.4l31.4-38.6 5.4 4.4c13.7 11.1 33.9 9.1 45-4.7l9.5-11.7c11.2-13.8 9.1-33.9-4.6-45.1z"/></svg>
+						{% when 'seedling' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M64 96H0c0 123.7 100.3 224 224 224v144c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V320C288 196.3 187.7 96 64 96zm384-64c-84.2 0-157.4 46.5-195.7 115.2 27.7 30.2 48.2 66.9 59 107.6C424 243.1 512 147.9 512 32h-64z"/></svg>
+						{% when 'recycle' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M184.6 261.9c3.2 14-12.1 24.6-24.1 17.2l-40.7-25.5-50.9 81.4C55.6 356.3 71 384 96 384H148c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H96.1c-75.3 0-121.3-83-81.4-146.9l50.8-81.4-40.7-25.4c-12.1-7.5-9-26 4.9-29.2l110.2-25.5c8.6-2 17.2 3.4 19.2 12l25.5 110.2zm98.6-182.9l41.3 66.1-40.7 25.5c-12.1 7.5-9 26 4.9 29.2l110.2 25.5c8.7 2 17.2-3.4 19.2-12l25.5-110.2c3.2-13.8-12-24.7-24.1-17.2l-40.7 25.4-41.3-66.1c-37.5-60-125.2-60.2-162.8 0l-18 28.8c-3.5 5.6-1.8 13 3.8 16.5l33.9 21.2c5.6 3.5 13 1.8 16.5-3.8l18-28.7c12.7-20.3 42-19.7 54.3 0zM497.3 301.1l-27.5-44.1c-3.5-5.6-10.9-7.3-16.5-3.8l-33.9 21.2c-5.6 3.5-7.3 10.9-3.8 16.5l27.6 44.1c13.3 21.2-2.1 49-27.1 49H320V336c0-14.2-17.2-21.4-27.3-11.3l-80 80c-6.2 6.2-6.2 16.4 0 22.6l80 80C302.7 517.3 320 510.3 320 496V448h95.9c75.3 0 121.3-83 81.4-146.9z"/></svg>
+						{% when 'hand-holding-heart' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M275.3 250.5c7 7.4 18.4 7.4 25.5 0l108.9-114.2c31.6-33.2 29.8-88.2-5.6-118.8-30.8-26.7-76.7-21.9-104.9 7.7L288 36.9l-11.1-11.6C248.7-4.4 202.8-9.2 172 17.5c-35.3 30.6-37.2 85.6-5.6 118.8l108.9 114.2zm290 77.6c-11.8-10.7-30.2-10-42.6 0L430.3 402c-11.3 9.1-25.4 14-40 14H272c-8.8 0-16-7.2-16-16s7.2-16 16-16h78.3c15.9 0 30.7-10.9 33.3-26.6 3.3-20-12.1-37.4-31.6-37.4H192c-27 0-53.1 9.3-74.1 26.3L71.4 384H16c-8.8 0-16 7.2-16 16v96c0 8.8 7.2 16 16 16h356.8c14.5 0 28.6-4.9 40-14L564 377c15.2-12.1 16.4-35.3 1.3-48.9z"/></svg>
+						{% when 'globe' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M336.5 160C322 70.7 287.8 8 248 8s-74 62.7-88.5 152h177zM152 256c0 22.2 1.2 43.5 3.3 64h185.3c2.1-20.5 3.3-41.8 3.3-64s-1.2-43.5-3.3-64H155.3c-2.1 20.5-3.3 41.8-3.3 64zm324.7-96c-28.6-67.9-86.5-120.4-158-141.6 24.4 33.8 41.2 84.7 50 141.6h108zM177.2 18.4C105.8 39.6 47.8 92.1 19.3 160h108c8.7-56.9 25.5-107.8 49.9-141.6zM487.4 192H372.7c2.1 21 3.3 42.5 3.3 64s-1.2 43-3.3 64h114.6c5.5-20.5 8.6-41.8 8.6-64s-3.1-43.5-8.5-64zM120 256c0-21.5 1.2-43 3.3-64H8.6C3.2 212.5 0 233.8 0 256s3.2 43.5 8.6 64h114.6c-2-21-3.2-42.5-3.2-64zm39.5 96c14.5 89.3 48.7 152 88.5 152s74-62.7 88.5-152h-177zm159.3 141.6c71.4-21.2 129.4-73.7 158-141.6h-108c-8.8 56.9-25.6 107.8-50 141.6zM19.3 352c28.6 67.9 86.5 120.4 158 141.6-24.4-33.8-41.2-84.7-50-141.6h-108z"/></svg>
+						{% when 'map_marked_alt' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M288 0c-69.6 0-126 56.4-126 126 0 56.3 82.4 158.8 113.9 196 6.4 7.5 17.8 7.5 24.2 0C331.7 284.8 414 182.3 414 126 414 56.4 357.6 0 288 0zm0 168c-23.2 0-42-18.8-42-42s18.8-42 42-42 42 18.8 42 42-18.8 42-42 42zM20.1 216A32 32 0 0 0 0 245.7v250.3c0 11.3 11.4 19.1 21.9 14.9L160 448V214.9c-8.8-16-16.1-31.5-21.3-46.4L20.1 216zM288 359.7c-14.1 0-27.4-6.2-36.5-17-19.7-23.2-40.6-49.6-59.5-76.7v182l192 64V266c-18.9 27.1-39.8 53.5-59.5 76.7-9.1 10.8-22.4 17-36.5 17zm266.1-198.5L416 224v288l139.9-56A32 32 0 0 0 576 426.3V176c0-11.3-11.4-19.1-21.9-14.9z"/></svg>
+						{% when 'wallet' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M461.2 128H80c-8.8 0-16-7.2-16-16s7.2-16 16-16h384c8.8 0 16-7.2 16-16 0-26.5-21.5-48-48-48H64C28.7 32 0 60.7 0 96v320c0 35.4 28.7 64 64 64h397.2c28 0 50.8-21.5 50.8-48V176c0-26.5-22.8-48-50.8-48zM416 336c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"/></svg>
+						{% when 'credit_card' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M0 432c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V256H0v176zm192-68c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H204c-6.6 0-12-5.4-12-12v-40zm-128 0c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM576 80v48H0V80c0-26.5 21.5-48 48-48h480c26.5 0 48 21.5 48 48z"/></svg>
+						{% when 'receipt' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M358.4 3.2L320 48 265.6 3.2a15.9 15.9 0 0 0 -19.2 0L192 48 137.6 3.2a15.9 15.9 0 0 0 -19.2 0L64 48 25.6 3.2C15-4.7 0 2.8 0 16v480c0 13.2 15 20.7 25.6 12.8L64 464l54.4 44.8a15.9 15.9 0 0 0 19.2 0L192 464l54.4 44.8a15.9 15.9 0 0 0 19.2 0L320 464l38.4 44.8c10.5 7.9 25.6 .4 25.6-12.8V16c0-13.2-15-20.7-25.6-12.8zM320 360c0 4.4-3.6 8-8 8H72c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h240c4.4 0 8 3.6 8 8v16zm0-96c0 4.4-3.6 8-8 8H72c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h240c4.4 0 8 3.6 8 8v16zm0-96c0 4.4-3.6 8-8 8H72c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h240c4.4 0 8 3.6 8 8v16z"/></svg>
+						{% when 'lightbulb' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M96.1 454.4c0 6.3 1.9 12.5 5.4 17.7l17.1 25.7a32 32 0 0 0 26.6 14.3h61.7a32 32 0 0 0 26.6-14.3l17.1-25.7a32 32 0 0 0 5.4-17.7l0-38.4H96l.1 38.4zM0 176c0 44.4 16.5 84.9 43.6 115.8 16.5 18.9 42.4 58.2 52.2 91.5 0 .3 .1 .5 .1 .8h160.2c0-.3 .1-.5 .1-.8 9.9-33.2 35.7-72.6 52.2-91.5C335.6 260.9 352 220.4 352 176 352 78.6 272.9-.3 175.5 0 73.4 .3 0 83 0 176zm176-80c-44.1 0-80 35.9-80 80 0 8.8-7.2 16-16 16s-16-7.2-16-16c0-61.8 50.2-112 112-112 8.8 0 16 7.2 16 16s-7.2 16-16 16z"/></svg>
+						{% when 'magic' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M224 96l16-32 32-16-32-16-16-32-16 32-32 16 32 16 16 32zM80 160l26.7-53.3L160 80l-53.3-26.7L80 0 53.3 53.3 0 80l53.3 26.7L80 160zm352 128l-26.7 53.3L352 368l53.3 26.7L432 448l26.7-53.3L512 368l-53.3-26.7L432 288zm70.6-193.8L417.8 9.4C411.5 3.1 403.3 0 395.2 0c-8.2 0-16.4 3.1-22.6 9.4L9.4 372.5c-12.5 12.5-12.5 32.8 0 45.3l84.9 84.9c6.3 6.3 14.4 9.4 22.6 9.4 8.2 0 16.4-3.1 22.6-9.4l363.1-363.2c12.5-12.5 12.5-32.8 0-45.2zM359.5 203.5l-50.9-50.9 86.6-86.6 50.9 50.9-86.6 86.6z"/></svg>
+						{% when 'pencil_ruler' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M109.5 244l134.6-134.6-44.1-44.1-61.7 61.7a7.9 7.9 0 0 1 -11.2 0l-11.2-11.2c-3.1-3.1-3.1-8.1 0-11.2l61.7-61.7-33.6-33.7C131.5-3.1 111.4-3.1 99 9.3L9.3 99c-12.4 12.4-12.4 32.5 0 44.9l100.2 100.2zm388.5-116.8c18.8-18.8 18.8-49.2 0-67.9l-45.3-45.3c-18.8-18.8-49.2-18.8-68 0l-46 46 113.2 113.2 46-46zM316.1 82.7l-297 297L.3 487.1c-2.5 14.5 10.1 27.1 24.6 24.6l107.5-18.8L429.3 195.9 316.1 82.7zm186.6 285.4l-33.6-33.6-61.7 61.7c-3.1 3.1-8.1 3.1-11.2 0l-11.2-11.2c-3.1-3.1-3.1-8.1 0-11.2l61.7-61.7-44.1-44.1L267.9 402.5l100.2 100.2c12.4 12.4 32.5 12.4 44.9 0l89.7-89.7c12.4-12.4 12.4-32.5 0-44.9z"/></svg>
+						{% when 'store' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 616 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M602 118.6L537.1 15C531.3 5.7 521 0 510 0H106C95 0 84.7 5.7 78.9 15L14 118.6c-33.5 53.5-3.8 127.9 58.8 136.4 4.5 .6 9.1 .9 13.7 .9 29.6 0 55.8-13 73.8-33.1 18 20.1 44.3 33.1 73.8 33.1 29.6 0 55.8-13 73.8-33.1 18 20.1 44.3 33.1 73.8 33.1 29.6 0 55.8-13 73.8-33.1 18.1 20.1 44.3 33.1 73.8 33.1 4.7 0 9.2-.3 13.7-.9 62.8-8.4 92.6-82.8 59-136.4zM529.5 288c-10 0-19.9-1.5-29.5-3.8V384H116v-99.8c-9.6 2.2-19.5 3.8-29.5 3.8-6 0-12.1-.4-18-1.2-5.6-.8-11.1-2.1-16.4-3.6V480c0 17.7 14.3 32 32 32h448c17.7 0 32-14.3 32-32V283.2c-5.4 1.6-10.8 2.9-16.4 3.6-6.1 .8-12.1 1.2-18.2 1.2z"/></svg>
+						{% when 'gift' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M32 448c0 17.7 14.3 32 32 32h160V320H32v128zm256 32h160c17.7 0 32-14.3 32-32V320H288v160zm192-320h-42.1c6.2-12.1 10.1-25.5 10.1-40 0-48.5-39.5-88-88-88-41.6 0-68.5 21.3-103 68.3-34.5-47-61.4-68.3-103-68.3-48.5 0-88 39.5-88 88 0 14.5 3.8 27.9 10.1 40H32c-17.7 0-32 14.3-32 32v80c0 8.8 7.2 16 16 16h480c8.8 0 16-7.2 16-16v-80c0-17.7-14.3-32-32-32zm-326.1 0c-22.1 0-40-17.9-40-40s17.9-40 40-40c19.9 0 34.6 3.3 86.1 80h-86.1zm206.1 0h-86.1c51.4-76.5 65.7-80 86.1-80 22.1 0 40 17.9 40 40s-17.9 40-40 40z"/></svg>
+						{% when 'percent' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M112 224c61.9 0 112-50.1 112-112S173.9 0 112 0 0 50.1 0 112s50.1 112 112 112zm0-160c26.5 0 48 21.5 48 48s-21.5 48-48 48-48-21.5-48-48 21.5-48 48-48zm224 224c-61.9 0-112 50.1-112 112s50.1 112 112 112 112-50.1 112-112-50.1-112-112-112zm0 160c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zM392.3 .2l31.6-.1c19.4-.1 30.9 21.8 19.7 37.8L77.4 501.6a24 24 0 0 1 -19.6 10.2l-33.4 .1c-19.5 0-30.9-21.9-19.7-37.8l368-463.7C377.2 4 384.5 .2 392.3 .2z"/></svg>
+						{% when 'ruler-combined' %}
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M160 288h-56c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h56v-64h-56c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h56V96h-56c-4.4 0-8-3.6-8-8V72c0-4.4 3.6-8 8-8h56V32c0-17.7-14.3-32-32-32H32C14.3 0 0 14.3 0 32v448c0 2.8 .9 5.2 1.6 7.8L160 329.4V288zm320 64h-32v56c0 4.4-3.6 8-8 8h-16c-4.4 0-8-3.6-8-8v-56h-64v56c0 4.4-3.6 8-8 8h-16c-4.4 0-8-3.6-8-8v-56h-64v56c0 4.4-3.6 8-8 8h-16c-4.4 0-8-3.6-8-8v-56h-41.4L24.2 510.4c2.6 .7 5 1.6 7.8 1.6h448c17.7 0 32-14.3 32-32v-96c0-17.7-14.3-32-32-32z"/></svg>
+					{% when 'palette' %}
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M204.3 5C104.9 24.4 24.8 104.3 5.2 203.4c-37 187 131.7 326.4 258.8 306.7 41.2-6.4 61.4-54.6 42.5-91.7-23.1-45.4 9.9-98.4 60.9-98.4h79.7c35.8 0 64.8-29.6 64.9-65.3C511.5 97.1 368.1-26.9 204.3 5zM96 320c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm32-128c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128-64c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 64c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"/></svg>
+					{% when 'flower' %}
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true"><!--!Font Awesome Free v5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M223.99908,224a32,32,0,1,0,32.00782,32A32.06431,32.06431,0,0,0,223.99908,224Zm214.172-96c-10.877-19.5-40.50979-50.75-116.27544-41.875C300.39168,34.875,267.63386,0,223.99908,0s-76.39066,34.875-97.89653,86.125C50.3369,77.375,20.706,108.5,9.82907,128-6.54984,157.375-5.17484,201.125,34.958,256-5.17484,310.875-6.54984,354.625,9.82907,384c29.13087,52.375,101.64652,43.625,116.27348,41.875C147.60842,477.125,180.36429,512,223.99908,512s76.3926-34.875,97.89652-86.125c14.62891,1.75,87.14456,10.5,116.27544-41.875C454.55,354.625,453.175,310.875,413.04017,256,453.175,201.125,454.55,157.375,438.171,128ZM63.33886,352c-4-7.25-.125-24.75,15.00391-48.25,6.87695,6.5,14.12891,12.875,21.88087,19.125,1.625,13.75,4,27.125,6.75,40.125C82.34472,363.875,67.09081,358.625,63.33886,352Zm36.88478-162.875c-7.752,6.25-15.00392,12.625-21.88087,19.125-15.12891-23.5-19.00392-41-15.00391-48.25,3.377-6.125,16.37891-11.5,37.88478-11.5,1.75,0,3.875.375,5.75.375C104.09864,162.25,101.84864,175.625,100.22364,189.125ZM223.99908,64c9.50195,0,22.25586,13.5,33.88282,37.25-11.252,3.75-22.50391,8-33.88282,12.875-11.377-4.875-22.62892-9.125-33.88283-12.875C201.74516,77.5,214.49712,64,223.99908,64Zm0,384c-9.502,0-22.25392-13.5-33.88283-37.25,11.25391-3.75,22.50587-8,33.88283-12.875C235.378,402.75,246.62994,407,257.8819,410.75,246.25494,434.5,233.501,448,223.99908,448Zm0-112a80,80,0,1,1,80-80A80.00023,80.00023,0,0,1,223.99908,336ZM384.6593,352c-3.625,6.625-19.00392,11.875-43.63479,11,2.752-13,5.127-26.375,6.752-40.125,7.75195-6.25,15.00391-12.625,21.87891-19.125C384.7843,327.25,388.6593,344.75,384.6593,352ZM369.65538,208.25c-6.875-6.5-14.127-12.875-21.87891-19.125-1.625-13.5-3.875-26.875-6.752-40.25,1.875,0,4.002-.375,5.752-.375,21.50391,0,34.50782,5.375,37.88283,11.5C388.6593,167.25,384.7843,184.75,369.65538,208.25Z"/></svg>
+					{% when 'bolt' %}
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" aria-hidden="true"><!--!Font Awesome Free v5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M296 160H180.6l42.6-129.8C227.2 15 215.7 0 200 0H56C44 0 33.8 8.9 32.2 20.8l-32 240C-1.7 275.2 9.5 288 24 288h118.7L96.6 482.5c-3.6 15.2 8 29.5 23.3 29.5 8.4 0 16.4-4.4 20.8-12l176-304c9.3-15.9-2.2-36-20.7-36z"/></svg>
+					{% when 'sun' %}
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free v5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M458.622 255.92l45.985-45.005c13.708-12.977 7.316-36.039-10.664-40.339l-62.65-15.99 17.661-62.015c4.991-17.838-11.829-34.663-29.661-29.671l-61.994 17.667-15.984-62.671C337.085.197 313.765-6.276 300.99 7.228L256 53.57 211.011 7.229c-12.63-13.351-36.047-7.234-40.325 10.668l-15.984 62.671-61.995-17.667C74.87 57.907 58.056 74.738 63.046 92.572l17.661 62.015-62.65 15.99C.069 174.878-6.31 197.944 7.392 210.915l45.985 45.005-45.985 45.004c-13.708 12.977-7.316 36.039 10.664 40.339l62.65 15.99-17.661 62.015c-4.991 17.838 11.829 34.663 29.661 29.671l61.994-17.667 15.984 62.671c4.439 18.575 27.696 24.018 40.325 10.668L256 458.61l44.989 46.001c12.5 13.488 35.987 7.486 40.325-10.668l15.984-62.671 61.994 17.667c17.836 4.994 34.651-11.837 29.661-29.671l-17.661-62.015 62.65-15.99c17.987-4.302 24.366-27.367 10.664-40.339l-45.984-45.004z"/></svg>
+					{% when 'dot-circle' %}
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free v5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M256 56c110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200-110.532 0-200-89.451-200-200 0-110.532 89.451-200 200-200m0-48C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 168c-44.183 0-80 35.817-80 80s35.817 80 80 80 80-35.817 80-80-35.817-80-80-80z"/></svg>
+					{% when 'heart' %}
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free v5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>
+					{% when 'dot' %}
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><!--!Font Awesome Free v5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm80 248c0 44.112-35.888 80-80 80s-80-35.888-80-80 35.888-80 80-80 80 35.888 80 80z"/></svg>
+					{% when 'asterisk' %}
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512" aria-hidden="true"><!--!Font Awesome Free v5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z"/></svg>
+					{% when 'check' %}
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free v5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>
+					{% when 'check-circle' %}
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free v5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 48c110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200-110.532 0-200-89.451-200-200 0-110.532 89.451-200 200-200m140.204 130.267l-22.536-22.718c-4.667-4.705-12.265-4.736-16.97-.068L215.346 303.697l-59.792-60.277c-4.667-4.705-12.265-4.736-16.97-.069l-22.719 22.536c-4.705 4.667-4.736 12.265-.068 16.971l90.781 91.516c4.667 4.705 12.265 4.736 16.97.068l172.589-171.204c4.704-4.668 4.734-12.266.067-16.971z"/></svg>
+					{% when 'check-square' %}
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free v5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M400 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zm0 400H48V80h352v352zm-35.864-241.724L191.547 361.48c-4.705 4.667-12.303 4.637-16.97-.068l-90.781-91.516c-4.667-4.705-4.637-12.303.069-16.971l22.719-22.536c4.705-4.667 12.303-4.637 16.97.069l59.792 60.277 141.352-140.216c4.705-4.667 12.303-4.637 16.97.068l22.536 22.718c4.667 4.706 4.637 12.304-.068 16.971z"/></svg>                  
+					{% endcase %}
+				{% endcapture %}
+
+        {% liquid
+          assign heading = block.settings.icon_title
+          assign description = block.settings.icon_description
+          assign icon = block.settings.icon
+          assign font_awesome = block.settings.font_awesome
+          assign custom_icon = block.settings.custom_icon
+          assign hide_icon = false
+          if icon == "hidden" and block.settings.icon_type == "icon" and font_awesome == blank
+            assign hide_icon = true
+          endif
+        %}
+
+        {%- capture icon_css_variables -%}
+          {%- if block.settings.icon_color != blank and block.settings.icon_color != 'rgba(0,0,0,0)' and block.settings.icon_color_enabled == true -%}
+            --block-icon-color: {{- block.settings.icon_color -}};
+          {%- endif -%}
+					{% if block.settings.icon_type == 'upload' and block.settings.image_shape == 'square' -%}
+						--block-image-border-radius: {{- block.settings.image_corner_radius -}}px;
+					{% elsif block.settings.icon_type == 'upload' and block.settings.image_shape == 'circle' -%}
+						--block-image-border-radius: 50%;
+					{% endif -%}
+        {%- endcapture -%}
+
+        <li class="VtlsValueIconsBackgroundBlock VtlsValueIconsBackgroundBlock-{{ block.id }}
+          {% if icon_card_has_border_color and section.settings.icon_card_style == 'border' %}VtlsValueIconsBackgroundBlock--hasBorder{% endif %}
+          {% if icon_card_has_bg_color and section.settings.icon_card_style == 'color' %}VtlsValueIconsBackgroundBlock--hasBackground{% endif %}
+          {% if section.settings.icon_card_style == 'color' and section.settings.icon_card_shadow == true %}VtlsValueIconsBackgroundBlock--hasShadow{% endif %}
+          VtlsValueIconsBackgroundBlock--shadowSize-{{ section.settings.shadow_size }}
+          VtlsValueIconsBackgroundBlock--layout-{{ section.settings.icon_card_layout }}"
+          data-icon-alignment="{{ section.settings.icon_alignment }}"
+          {{ block.shopify_attributes }}
+          style="{{- icon_css_variables | strip_newlines | escape -}}"
+        >
+          {%- unless hide_icon -%}
+            <div class="VtlsValueIconsBackgroundBlock__IconWrapper" aria-hidden="true">
+              {%- if block.settings.icon_type == 'upload' and custom_icon != blank -%}
+                <div class="VtlsValueIconsBackgroundBlock__Icon" aria-hidden="true">
+                  {{- custom_icon
+                     | image_url: width: custom_icon.width
+                     | image_tag:
+                        sizes: icon_sizes,
+                        widths: "30, 40, 60, 80, 100, 200, 400, 600",
+                        fetchpriority: fetchpriority,
+                        loading: loading,
+                        preload: preload
+                  -}}
+                </div>
+              {%- elsif block.settings.icon_type == 'icon' and font_awesome != blank -%}
+                {% unless content_for_header contains "font-awesome" %}
+                  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+                        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+                        crossorigin="anonymous">
+                {% endunless %}
+                <div class="VtlsValueIconsBackgroundBlock__Icon" aria-hidden="true">
+                  {{ font_awesome }}
+                </div>
+              {%- elsif block.settings.icon_type == 'icon' and icon != "none" and icon != "hidden" -%}
+                <div class="VtlsValueIconsBackgroundBlock__Icon" aria-hidden="true">
+                  {{ vtls_icon }}
+                </div>
+              {%- else -%}
+                <div class="VtlsValueIconsBackgroundBlock__Icon" aria-hidden="true">
+                  <img src="data:image/webp;base64,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"
+                       alt="{{ heading | default: 'Default icon illustration' }}"
+                       width="520" height="520"
+                       class="VtlsValueIconsBackgroundBlock__IconDefault">
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endunless -%}
+          <div class="VtlsValueIconsBackgroundBlock__TextContent">
+            {%- if heading != blank -%}
+              <h5 class="VtlsValueIconsBackgroundBlock__Heading">
+                {{ heading }}
+              </h5>
+            {%- endif -%}
+            {%- if description != blank -%}
+              <p class="VtlsValueIconsBackgroundBlock__Description">
+                {{ description }}
+              </p>
+            {%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+	"name": "❤️ Value Icons Cards",
+	"settings": [
+		{
+			"type": "header",
+			"content": "Icons"
+		},
+		{
+			"type": "color",
+			"id": "icon_color",
+			"label": "Icon color",
+			"default": "#222222",
+			"info": "Does not apply to uploaded custom icons."
+		},
+		{
+			"type": "range",
+			"id": "icon_size",
+			"min": 12,
+			"max": 120,
+			"step": 2,
+			"unit": "px",
+			"label": "Icon size",
+			"default": 34
+		},
+		{
+			"type": "select",
+			"id": "icon_title_size",
+			"label": "Icon title size",
+			"options": [
+				{
+					"value": "16",
+					"label": "Small"
+				},
+				{
+					"value": "20",
+					"label": "Medium"
+				},
+				{
+					"value": "24",
+					"label": "Large"
+				}
+			],
+			"default": "20"
+		},
+		{
+			"type": "color",
+			"id": "icon_title_color",
+			"label": "Icon title color",
+			"default": "#222222"
+		},
+		{
+			"type": "select",
+			"id": "icon_description_size",
+			"label": "Icon description size",
+			"options": [
+				{
+					"value": "14",
+					"label": "Small"
+				},
+				{
+					"value": "16",
+					"label": "Medium"
+				},
+				{
+					"value": "20",
+					"label": "Large"
+				}
+			],
+			"default": "14"
+		},
+		{
+			"type": "color",
+			"id": "icon_description_color",
+			"label": "Icon description color",
+			"default": "#222222"
+		},
+		{
+			"type": "range",
+			"id": "icons_per_row_desktop_vertical",
+			"min": 2,
+			"max": 6,
+			"step": 1,
+			"label": "Icons per row on desktop",
+			"visible_if": "{{ section.settings.icon_card_layout == 'vertical' }}",
+			"default": 4
+		},
+		{
+			"type": "range",
+			"id": "icons_per_row_desktop_horizontal",
+			"min": 2,
+			"max": 4,
+			"step": 1,
+			"label": "Icons per row on desktop",
+			"visible_if": "{{ section.settings.icon_card_layout == 'horizontal' }}",
+			"default": 4
+		},
+		{
+			"type": "select",
+			"id": "icons_mobile_layout_vertical",
+			"label": "Icons layout on mobile",
+			"visible_if": "{{ section.settings.icon_card_layout == 'vertical' }}",
+			"options": [
+				{
+					"value": "slider",
+					"label": "Slider"
+				},
+				{
+					"value": "1",
+					"label": "1 per row"
+				},
+				{
+					"value": "2",
+					"label": "2 per row"
+				}
+			],
+			"default": "2"
+		},
+		{
+			"type": "select",
+			"id": "icons_mobile_layout_horizontal",
+			"label": "Icons layout on mobile",
+			"visible_if": "{{ section.settings.icon_card_layout == 'horizontal' }}",
+			"options": [
+				{
+					"value": "slider",
+					"label": "Slider"
+				},
+				{
+					"value": "1",
+					"label": "1 per row"
+				}
+			],
+			"default": "1"
+		},
+		{
+			"type": "range",
+			"id": "space_between_icons",
+			"min": 0,
+			"max": 40,
+			"step": 2,
+			"unit": "px",
+			"label": "Space between icons",
+			"default": 24
+		},
+		{
+			"type": "range",
+			"id": "space_between_rows",
+			"min": 0,
+			"max": 80,
+			"step": 4,
+			"unit": "px",
+			"label": "Space between rows",
+			"default": 24
+		},
+		{
+			"type": "header",
+			"content": "Icon cards"
+		},
+		{
+			"type": "select",
+			"id": "icon_card_layout",
+			"label": "Icon card layout",
+			"options": [
+				{
+					"value": "vertical",
+					"label": "Vertical"
+				},
+				{
+					"value": "horizontal",
+					"label": "Horizontal"
+				}
+			],
+			"default": "horizontal"
+		},
+		{
+			"type": "select",
+			"id": "icon_alignment",
+			"label": "Icon alignment",
+			"visible_if": "{{ section.settings.icon_card_layout == 'horizontal' }}",
+			"options": [
+				{
+					"value": "left",
+					"label": "Left"
+				},
+				{
+					"value": "right",
+					"label": "Right"
+				}
+			],
+			"default": "left"
+		},
+		{
+			"type": "select",
+			"id": "icon_card_style",
+			"label": "Icon card style",
+			"options": [
+				{
+					"value": "color",
+					"label": "Color"
+				},
+				{
+					"value": "border",
+					"label": "Border"
+				}
+			],
+			"default": "color"
+		},
+		{
+			"type": "color",
+			"id": "icon_card_background",
+			"label": "Icon card background color",
+			"visible_if":"{{ section.settings.icon_card_style == 'color' }}",
+			"default": "#F8F8F8"
+		},
+		{
+			"type": "range",
+			"id": "icon_card_opacity",
+			"label": "Icon card opacity",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "%",
+			"default": 100,
+			"visible_if":"{{ section.settings.icon_card_style == 'color' }}"
+		},
+		{
+			"type": "color",
+			"id": "icon_card_border",
+			"label": "Icon card border color",
+			"visible_if":"{{ section.settings.icon_card_style == 'border' }}",
+			"default": "#222222"
+		},
+		{
+			"type": "checkbox",
+			"id": "icon_card_shadow",
+			"label": "Add shadow",
+			"visible_if":"{{ section.settings.icon_card_style == 'color' }}",
+			"default": false
+		},
+		{
+			"type": "color",
+			"id": "icon_card_shadow_color",
+			"label": "Shadow color",
+			"visible_if":"{{ section.settings.icon_card_shadow == true }}",
+			"default": "#222222"
+		},
+		{
+			"type": "select",
+			"id": "shadow_size",
+			"label": "Shadow size",
+			"visible_if":"{{ section.settings.icon_card_shadow == true }}",
+			"options": [
+				{
+					"value": "small",
+					"label": "Small"
+				},
+				{
+					"value": "medium",
+					"label": "Medium"
+				},
+				{
+					"value": "large",
+					"label": "Large"
+				},
+				{
+					"value": "xlarge",
+					"label": "XLarge"
+				}
+			],
+			"default": "large"
+		},
+		{
+			"type": "range",
+			"id": "icon_card_radius",
+			"min": 0,
+			"max": 40,
+			"step": 2,
+			"unit": "px",
+			"label": "Icon card corner radius",
+			"default": 16
+		},
+		{
+			"type": "header",
+			"content": "Heading (optional)"
+		},
+		{
+			"type": "text",
+			"id": "heading",
+			"label": "Heading"
+		},
+		{
+			"type": "select",
+			"id": "heading_size",
+			"label": "Heading size",
+			"options": [
+				{
+					"value": "24",
+					"label": "Small"
+				},
+				{
+					"value": "32",
+					"label": "Medium"
+				},
+				{
+					"value": "48",
+					"label": "Large"
+				}
+			],
+			"default": "32"
+		},
+		{
+			"type": "select",
+			"id": "heading_style",
+			"label": "Heading style",
+			"options": [
+				{
+					"value": "regular",
+					"label": "Regular"
+				},
+				{
+					"value": "bold",
+					"label": "Bold"
+				}
+			],
+			"default": "regular"
+		},
+		{
+			"type": "select",
+			"id": "heading_alignment",
+			"label": "Heading alignment",
+			"options": [
+				{
+					"value": "left",
+					"label": "Left"
+				},
+				{
+					"value": "center",
+					"label": "Center"
+				},
+				{
+					"value": "right",
+					"label": "Right"
+				}
+			],
+			"default": "center"
+		},
+		{
+			"type": "color",
+			"id": "heading_color",
+			"label": "Heading color",
+			"default": "#222222"
+		},
+		{
+			"type": "header",
+			"content": "Design"
+		},
+		{
+			"type": "select",
+			"id": "section_background_style",
+			"label": "Section background",
+			"options": [
+				{
+					"value": "color",
+					"label": "Color"
+				},
+				{
+					"value": "gradient",
+					"label": "Gradient"
+				},
+				{
+					"value": "image",
+					"label": "Image"
+				}
+			],
+			"default": "color"
+		},
+		{
+			"type": "color",
+			"id": "section_background",
+			"label": "Background color",
+			"visible_if": "{{ section.settings.section_background_style == 'color' }}"
+		},
+		{
+			"type": "color_background",
+			"id": "section_gradient",
+			"label": "Background gradient",
+			"default": "linear-gradient(to right, #fed951, #ff46c7)",
+			"visible_if": "{{ section.settings.section_background_style == 'gradient' }}"
+		},
+		{
+			"type": "checkbox",
+			"id": "enable_animation",
+			"label": "Apply animation",
+			"default": false,
+			"visible_if": "{{ section.settings.section_background_style == 'gradient' }}"
+		},
+		{
+			"type": "image_picker",
+			"id": "background_image",
+			"label": "Background image",
+			"visible_if": "{{ section.settings.section_background_style == 'image' }}"
+		},
+		{
+			"type": "color",
+			"id": "overlay_color",
+			"label": "Background overlay color",
+			"default": "#222222",
+			"visible_if": "{{ section.settings.section_background_style == 'image' }}"
+		},
+		{
+			"type": "range",
+			"id": "overlay_opacity",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "%",
+			"label": "Background overlay opacity",
+			"visible_if": "{{ section.settings.section_background_style == 'image' }}",
+			"default": 0
+		},
+		{
+			"type": "header",
+			"content": "Layout"
+		},
+		{
+			"type": "range",
+			"id": "section_width",
+			"min": 70,
+			"max": 100,
+			"step": 1,
+			"unit": "%",
+			"label": "Section width",
+			"default": 85,
+			"info": "Applies only to desktop"
+		},
+		{
+			"type": "text",
+			"id": "section_max_width",
+			"label": "Custom max width (optional)",
+			"info": "Section max width in pixels"
+		},
+		{
+			"type": "select",
+			"id": "spacing_type",
+			"label": "Section spacing",
+			"options": [
+				{
+					"value": "desktop",
+					"label": "Desktop"
+				},
+				{
+					"value": "mobile",
+					"label": "Mobile"
+				}
+			],
+			"default": "desktop"
+		},
+		{
+			"type": "range",
+			"id": "padding_top",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top padding",
+			"visible_if": "{{ section.settings.spacing_type == 'desktop' }}",
+			"default": 40
+		},
+		{
+			"type": "range",
+			"id": "padding_bottom",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Bottom padding",
+			"visible_if": "{{ section.settings.spacing_type == 'desktop' }}",
+			"default": 40
+		},
+		{
+			"type": "range",
+			"id": "margin_top",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top margin",
+			"visible_if": "{{ section.settings.spacing_type == 'desktop' }}",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "margin_bottom",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Bottom margin",
+			"visible_if": "{{ section.settings.spacing_type == 'desktop' }}",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "padding_top_mobile",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top padding",
+			"visible_if": "{{ section.settings.spacing_type == 'mobile' }}",
+			"default": 30
+		},
+		{
+			"type": "range",
+			"id": "padding_bottom_mobile",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Bottom padding",
+			"visible_if": "{{ section.settings.spacing_type == 'mobile' }}",
+			"default": 30
+		},
+		{
+			"type": "range",
+			"id": "margin_top_mobile",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Top margin",
+			"visible_if": "{{ section.settings.spacing_type == 'mobile' }}",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "margin_bottom_mobile",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Bottom margin",
+			"visible_if": "{{ section.settings.spacing_type == 'mobile' }}",
+			"default": 0
+		}
+	],
+	"blocks": [
+		{
+			"type": "icon",
+			"limit": 12,
+			"name": "Icon",
+			"settings": [
+				{
+					"type": "select",
+					"id": "icon_type",
+					"label": "Icon type",
+					"options": [
+						{
+							"value": "icon",
+							"label": "Icon"
+						},
+						{
+							"value": "upload",
+							"label": "Upload"
+						}
+					],
+					"default": "icon"
+				},
+				{
+					"type": "select",
+					"id": "icon",
+					"label": "Icon",
+					"visible_if": "{{ block.settings.icon_type == 'icon' }}",
+					"options": [
+						{
+							"value": "none",
+							"label": "Default"
+						},
+						{
+							"value": "hidden",
+							"label": "None"
+						},
+						{
+							"value": "lock",
+							"label": "Secure checkout"
+						},
+						{
+							"value": "shield_alt",
+							"label": "Buyer protection"
+						},
+						{
+							"value": "user_shield",
+							"label": "Data privacy"
+						},
+						{
+							"value": "check_circle",
+							"label": "Satisfaction guarantee"
+						},
+						{
+							"value": "key",
+							"label": "Verified and Secure"
+						},
+						{
+							"value": "shipping_fast",
+							"label": "Fast shipping"
+						},
+						{
+							"value": "box",
+							"label": "Discreet packaging"
+						},
+						{
+							"value": "truck",
+							"label": "Free delivery"
+						},
+						{
+							"value": "route",
+							"label": "Trackable orders"
+						},
+						{
+							"value": "headset",
+							"label": "Customer support"
+						},
+						{
+							"value": "envelope",
+							"label": "Email us"
+						},
+						{
+							"value": "comments",
+							"label": "Live chat"
+						},
+						{
+							"value": "question_circle",
+							"label": "FAQs"
+						},
+						{
+							"value": "map_marker_alt",
+							"label": "Our location"
+						},
+						{
+							"value": "award",
+							"label": "Certified product"
+						},
+						{
+							"value": "gem",
+							"label": "Premium quality"
+						},
+						{
+							"value": "hands",
+							"label": "Handmade"
+						},
+						{
+							"value": "thumbs-up",
+							"label": "Customer approved"
+						},
+						{
+							"value": "star",
+							"label": "Top rated"
+						},
+						{
+							"value": "undo_alt",
+							"label": "Easy returns"
+						},
+						{
+							"value": "calendar_check",
+							"label": "Money back guarantee"
+						},
+						{
+							"value": "sync_alt",
+							"label": "Exchange policy"
+						},
+						{
+							"value": "handshake",
+							"label": "Hassle-free policy"
+						},
+						{
+							"value": "seedling",
+							"label": "Eco-friendly"
+						},
+						{
+							"value": "recycle",
+							"label": "Recycled materials"
+						},
+						{
+							"value": "hand-holding-heart",
+							"label": "Ethical brand"
+						},
+						{
+							"value": "globe",
+							"label": "Globally sourced"
+						},
+						{
+							"value": "map_marked_alt",
+							"label": "Locally sourced"
+						},
+						{
+							"value": "wallet",
+							"label": "Multiple payment options"
+						},
+						{
+							"value": "credit_card",
+							"label": "Buy now, pay later"
+						},
+						{
+							"value": "receipt",
+							"label": "Purchase confirmation"
+						},
+						{
+							"value": "lightbulb",
+							"label": "Innovative"
+						},
+						{
+							"value": "magic",
+							"label": "Easy to use"
+						},
+						{
+							"value": "pencil_ruler",
+							"label": "Customizable"
+						},
+						{
+							"value": "store",
+							"label": "Store"
+						},
+						{
+							"value": "gift",
+							"label": "Gift card"
+						},
+						{
+							"value": "percent",
+							"label": "Exclusive deals"
+						},
+						{
+							"value": "ruler-combined",
+							"label": "Product size"
+						},
+						{
+							"value": "palette",
+							"label": "Product color"
+						},
+						{
+							"value": "flower",
+							"label": "Flower"
+						},
+						{
+							"value": "bolt",
+							"label": "Bolt"
+						},
+						{
+							"value": "sun",
+							"label": "Sun"
+						},
+						{
+							"value": "dot-circle",
+							"label": "Dot circle"
+						},
+						{
+							"value": "dot",
+							"label": "Dot"
+						},
+						{
+							"value": "heart",
+							"label": "Heart"
+						},
+						{
+							"value": "asterisk",
+							"label": "Asterisk"
+						},
+						{
+							"value": "check",
+							"label": "Check"
+						},
+						{
+							"value": "check-circle",
+							"label": "Check circle"
+						},
+						{
+							"value": "check-square",
+							"label": "Check square"
+						}
+					],
+					"default": "none"
+				},
+				{
+					"type": "html",
+					"id": "font_awesome",
+					"label": "Custom icon (Font Awesome V5)",
+					"info": "Paste here the HTML code for any Font Awesome v5 icon. Example: <i class='fas fa-store'></i>. Find the full icon list [here](https://fontawesome.com/v5/search?ic=free-collection).",
+					"visible_if": "{{ block.settings.icon_type == 'icon' }}"
+				},
+				{
+					"type": "image_picker",
+					"id": "custom_icon",
+					"label": "Upload your image",
+					"info": "Recommended aspect ratio is square (1:1)",
+					"visible_if": "{{ block.settings.icon_type == 'upload' }}"
+				},
+				{
+					"type": "select",
+					"id": "image_shape",
+					"label": "Image shape",
+					"visible_if": "{{ block.settings.icon_type == 'upload' }}",
+					"options": [
+						{
+							"value": "square",
+							"label": "Square"
+						},
+						{
+							"value": "circle",
+							"label": "Circle"
+						}
+					],
+					"default": "square"
+				},
+				{
+					"type": "range",
+					"id": "image_corner_radius",
+					"label": "Image corner radius",
+					"min": 0,
+					"max": 100,
+					"step": 1,
+					"unit": "px",
+					"default": 0,
+					"visible_if": "{{ block.settings.image_shape == 'square' and block.settings.icon_type == 'upload' }}"
+				},
+				{
+					"type": "checkbox",
+					"id": "icon_color_enabled",
+					"label": "Change icon color",
+					"default": false,
+					"visible_if": "{{ block.settings.icon_type == 'icon' }}"
+				},
+				{
+					"type": "color",
+					"id": "icon_color",
+					"label": "Icon color",
+					"default": "#222222",
+					"visible_if": "{{ block.settings.icon_type == 'icon' and block.settings.icon_color_enabled == true }}",
+					"info": "Replaces the icon color from general icon settings"
+				},
+				{
+					"type": "header",
+					"content": "Text"
+				},
+				{
+					"type": "text",
+					"id": "icon_title",
+					"label": "Icon title",
+					"default": "Key Benefit"
+				},
+				{
+					"type": "inline_richtext",
+					"id": "icon_description",
+					"label": "Icon description",
+					"default": "Describe how the benefit brings value"
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "❤️ Square: Value Icons Cards",
+			"category": "Square sections",
+			"blocks": [
+				{
+					"type": "icon"
+				},
+				{
+					"type": "icon"
+				},
+				{
+					"type": "icon"
+				},
+				{
+					"type": "icon"
+				}
+			]
+		}
+	]
+}
+{% endschema %}
+
+{% style %}
+	.Vtls-{{ section.id | handle }} {
+		--section-margin-top: {{- section.settings.margin_top -}}px;
+		--section-margin-bottom: {{- section.settings.margin_bottom -}}px;
+		--section-margin-top-mobile: {{- section.settings.margin_top_mobile -}}px;
+		--section-margin-bottom-mobile: {{- section.settings.margin_bottom_mobile -}}px;
+		--section-padding-top: {{- section.settings.padding_top -}}px;
+		--section-padding-bottom: {{- section.settings.padding_bottom -}}px;
+		--section-padding-top-mobile: {{- section.settings.padding_top_mobile -}}px;
+		--section-padding-bottom-mobile: {{- section.settings.padding_bottom_mobile -}}px;
+		--section-max-width: {{- section.settings.section_max_width -}}px;
+		--section-width: {{- section.settings.section_width -}}%;
+		--section-background-color: {{- section.settings.section_background -}};
+		--section-background-gradient: {{ section.settings.section_gradient }};
+		--section-overlay-color: {{- section.settings.overlay_color -}};
+		--section-overlay-opacity: {{- section.settings.overlay_opacity -}}%;
+
+		--section-heading-alignment: {{ section.settings.heading_alignment }};
+		--section-heading-color: {{ section.settings.heading_color }};
+		--section-heading-size: {{ section.settings.heading_size }}px;
+
+		--section-icon-color: {{- section.settings.icon_color -}};
+		--section-icon-size: {{- section.settings.icon_size -}}px;
+		--section-icon-title-size: {{- section.settings.icon_title_size -}}px;
+		--section-icon-title-color: {{- section.settings.icon_title_color -}};
+		--section-icon-description-size: {{- section.settings.icon_description_size -}}px;
+		--section-icon-description-color: {{- section.settings.icon_description_color -}};
+		--section-icons-per-row-desktop: {%- if section.settings.icon_card_layout == 'horizontal' -%}{{- section.settings.icons_per_row_desktop_horizontal -}}{%- else -%}{{- section.settings.icons_per_row_desktop_vertical -}}{%- endif -%};
+		--section-icons-mobile-layout: {%- if section.settings.icon_card_layout == 'vertical' -%}{{- section.settings.icons_mobile_layout_vertical -}}{%- else -%}{{- section.settings.icons_mobile_layout_horizontal -}}{%- endif -%};
+		--section-space-between-icons: {{- section.settings.space_between_icons -}}px;
+		--section-space-between-rows: {{- section.settings.space_between_rows -}}px;
+		--section-icon-card-layout: {{ section.settings.icon_card_layout }};
+		--section-icon-alignment: {{ section.settings.icon_alignment }};
+		--section-icon-card-background: {{- section.settings.icon_card_background -}};
+		--section-icon-card-opacity: {{- section.settings.icon_card_opacity -}}%;
+		--section-icon-card-border: {{- section.settings.icon_card_border -}};
+		--section-icon-card-radius: {{- section.settings.icon_card_radius -}}px;
+		--section-icon-card-shadow-color: {{- section.settings.icon_card_shadow_color | color_modify: 'alpha', 0.1 -}};
+	}
+
+	
+
+.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground{display:block}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground--fullWidth .VtlsValueIconsBackgroundContainer .VtlsValueIconsBackgroundHeading{padding:var(--vtl-space-8) var(--vtl-space-20) var(--vtl-space-4) var(--vtl-space-20)}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground--fullWidth .VtlsValueIconsBackgroundContainer .VtlsValueIconsBackgroundHeading{padding:0 var(--vtl-space-16) var(--vtl-space-16) var(--vtl-space-16)}}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundContainer{margin:var(--section-margin-top-mobile) auto var(--section-margin-bottom-mobile);padding:calc(var(--section-padding-top-mobile) - var(--vtl-space-16)) 0 calc(var(--section-padding-bottom-mobile) - var(--vtl-space-16));list-style-type:none;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundContainer{margin:var(--section-margin-top) auto var(--section-margin-bottom);padding:calc(var(--section-padding-top) - var(--vtl-space-16)) 0 calc(var(--section-padding-bottom) - var(--vtl-space-16))}}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundContainer--backgroundStyle-color{background-color:var(--section-background-color)}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundContainer--backgroundStyle-image{position:relative;height:100%;width:100%}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundContainer--emptyImage{position:relative;height:100%;width:100%}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundContainer .VtlsValueIconsBackgroundContainer__BackgroundMedia{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundContainer .VtlsValueIconsBackgroundContainer__BackgroundImage{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;display:block}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundContainer .VtlsValueIconsBackgroundContainer__BackgroundOverlay{position:absolute;inset:0;z-index:1;display:block;background-color:var(--section-overlay-color);opacity:var(--section-overlay-opacity)}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundContainer--backgroundStyle-gradient{background:var(--section-background-gradient)}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundContainer--hasAnimation{background-size:300% 300%;background-position:0% 50%;animation:gradient-flow 10s ease-in-out infinite}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundHeading{margin:0 auto;font-size:calc(var(--section-heading-size)*.75);text-decoration:none;color:var(--section-heading-color);display:block;width:100%;z-index:2;text-align:var(--section-heading-alignment);pointer-events:auto;padding:var(--vtl-space-8) var(--vtl-space-20) var(--vtl-space-4) var(--vtl-space-20)}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundHeading--style-regular{font-weight:var(--vtl-font-weight-400)}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundHeading--style-bold{font-weight:var(--vtl-font-weight-600)}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundHeading{font-size:var(--section-heading-size);padding:0 var(--vtl-space-16) var(--vtl-space-16) var(--vtl-space-16);width:var(--section-width);max-width:var(--section-max-width, unset)}}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundList{display:flex;flex-direction:row;justify-content:center;align-items:stretch;width:100%;z-index:2;padding:var(--vtl-space-16) var(--vtl-space-20);flex-wrap:wrap;column-gap:var(--section-space-between-icons);row-gap:var(--section-space-between-rows);margin:0 auto;list-style-type:none}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundList{width:var(--section-width);max-width:var(--section-max-width);column-gap:var(--section-space-between-icons)}}@media(max-width: 992px){.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundList--mobileLayout-slider{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;column-gap:var(--vtl-space-16);margin-left:var(--vtl-space-20);padding-left:unset;justify-content:flex-start;scrollbar-width:none;-ms-overflow-style:none}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundList--mobileLayout-slider::-webkit-scrollbar{display:none}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundList--mobileLayout-slider .VtlsValueIconsBackgroundBlock{flex:0 0 auto;scroll-snap-align:start}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundList--mobileLayout-slider .VtlsValueIconsBackgroundBlock.VtlsValueIconsBackgroundBlock--layout-vertical{max-width:220px;min-width:220px}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundList--mobileLayout-slider .VtlsValueIconsBackgroundBlock.VtlsValueIconsBackgroundBlock--layout-horizontal{max-width:260px;min-width:260px}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundList--mobileLayout-slider .VtlsValueIconsBackgroundBlock:last-child{margin-right:var(--vtl-space-20)}}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock{display:flex;width:calc((100% - var(--section-space-between-icons)*(var(--section-icons-mobile-layout) - 1))/var(--section-icons-mobile-layout));flex-direction:column;align-items:center;justify-content:flex-start;gap:var(--vtl-space-16);transition:transform .4s ease-in-out}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--layout-horizontal[data-icon-alignment=left]{padding:var(--vtl-space-20) var(--vtl-space-20) var(--vtl-space-20) var(--vtl-space-24);flex-direction:row}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--layout-horizontal[data-icon-alignment=left] .VtlsValueIconsBackgroundBlock__TextContent{align-items:flex-start}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--layout-horizontal[data-icon-alignment=left] .VtlsValueIconsBackgroundBlock__Heading,.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--layout-horizontal[data-icon-alignment=left] .VtlsValueIconsBackgroundBlock__Description{text-align:left}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--layout-horizontal[data-icon-alignment=right]{flex-direction:row-reverse;padding:var(--vtl-space-20) var(--vtl-space-24) var(--vtl-space-20) var(--vtl-space-20)}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--layout-horizontal[data-icon-alignment=right] .VtlsValueIconsBackgroundBlock__TextContent{align-items:flex-end}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--layout-horizontal[data-icon-alignment=right] .VtlsValueIconsBackgroundBlock__Heading,.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--layout-horizontal[data-icon-alignment=right] .VtlsValueIconsBackgroundBlock__Description{text-align:right}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--layout-vertical{flex-direction:column;padding:var(--vtl-space-20);gap:var(--vtl-space-8)}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--layout-vertical .VtlsValueIconsBackgroundBlock__TextContent{align-items:center}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--layout-vertical .VtlsValueIconsBackgroundBlock__Heading,.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--layout-vertical .VtlsValueIconsBackgroundBlock__Description{text-align:center}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock:hover{transform:translateY(calc(var(--vtl-space-8) * -1))}}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock:focus{outline:var(--vtl-space-2) solid currentColor;outline-offset:var(--vtl-space-2)}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock:focus:not(:focus-visible){outline:none}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock:focus-visible{outline:var(--vtl-space-2) solid currentColor;outline-offset:var(--vtl-space-2)}@media(min-width: 480px){.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock{max-width:248px}}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock{max-width:unset;width:calc((100% - var(--section-space-between-icons)*(var(--section-icons-per-row-desktop) - 1))/var(--section-icons-per-row-desktop))}}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--hasBackground,.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--hasBorder{border-radius:var(--section-icon-card-radius)}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--hasBackground{background-color:color-mix(in srgb, var(--section-icon-card-background, var(--vtl-color-bg-surface-tertiary-on-light)) var(--section-icon-card-opacity, 100%), transparent)}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--hasBorder{border:var(--vtl-border-width-1) solid var(--section-icon-card-border)}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--hasShadow{padding:var(--vtl-space-20);border-radius:var(--section-icon-card-radius)}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--hasShadow.VtlsValueIconsBackgroundBlock--shadowSize-small{box-shadow:0px var(--vtl-space-4) var(--vtl-space-12) color-mix(in srgb, var(--section-icon-card-shadow-color) 60%, transparent)}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--hasShadow.VtlsValueIconsBackgroundBlock--shadowSize-medium{box-shadow:0px var(--vtl-space-4) var(--vtl-space-12) var(--section-icon-card-shadow-color)}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--hasShadow.VtlsValueIconsBackgroundBlock--shadowSize-large{box-shadow:0px var(--vtl-space-6) var(--vtl-space-16) var(--section-icon-card-shadow-color)}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock--hasShadow.VtlsValueIconsBackgroundBlock--shadowSize-xlarge{box-shadow:0px var(--vtl-space-12) var(--vtl-space-20) var(--section-icon-card-shadow-color)}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock__IconWrapper{overflow:hidden;aspect-ratio:1/1;height:var(--section-icon-size);width:var(--section-icon-size);flex-shrink:0;display:flex;align-items:center;justify-content:center}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock__IconWrapper:has(i){aspect-ratio:unset;width:unset;height:auto;overflow:visible}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock__Icon{width:100%;height:100%;color:var(--block-icon-color, var(--section-icon-color));display:flex;align-items:center;justify-content:center}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock__Icon .VtlsValueIconsBackgroundBlock__IconDefault{border-radius:50%}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock__Icon img{display:block;border-radius:var(--block-image-border-radius);width:100%;height:100%;object-fit:cover}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock__Icon svg{display:block;width:100%;height:100%}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock__Icon svg,.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock__Icon svg path{fill:var(--block-icon-color, var(--section-icon-color))}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock__Icon i{font-size:var(--section-icon-size)}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock__TextContent{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--vtl-space-4)}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock__Heading{margin:0;font-size:calc(var(--section-icon-title-size)*.75);text-decoration:none;color:var(--section-icon-title-color);font-weight:var(--vtl-font-weight-600);display:block;width:100%;text-align:center}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock__Heading{font-size:var(--section-icon-title-size)}}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock__Description{margin:0;font-size:calc(var(--section-icon-description-size)*.75);text-decoration:none;color:var(--section-icon-description-color);display:block;width:100%;text-align:center}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock__Description a{color:var(--section-icon-description-color);margin:0;padding:0;text-decoration:underline;text-underline-offset:var(--vtl-space-2);transition:opacity .3s ease-in}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock__Description a:hover{opacity:.85}@media(min-width: 992px){.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock__Description{font-size:var(--section-icon-description-size)}}@media(prefers-contrast: high){.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock{border:var(--vtl-border-width-1) solid currentColor}}@media(prefers-reduced-motion: reduce){.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock{transition:none}.Vtls-{{ section.id | handle }}.VtlsValueIconsBackground .VtlsValueIconsBackgroundBlock__Description a{transition:none}}@keyframes gradient-flow{0%{background-position:0% 50%}25%{background-position:50% 100%}50%{background-position:100% 50%}75%{background-position:50% 0%}100%{background-position:0% 50%}}
+
+{% endstyle %}
+
+<script>
+	(function () {
+		const uninstallMessage = 'Displaying this section requires an active Square: Theme Sections & AI Pages subscription. Reinstall the <a href="https://apps.shopify.com/theme-sections-ai-page-builder" target="_blank">Square: Theme Sections & AI Pages app</a> to activate it or consider removing the section.';
+		const downgradeMessage = 'You downgraded to a free plan. You need to upgrade your <a href="https://apps.shopify.com/theme-sections-ai-page-builder" target="_blank">Square: Theme Sections & AI Pages app</a> plan to activate it or consider removing the section.';
+		const projectId = '5';
+		const sectionsSelector = '.shopify-section';
+		const apps = {
+			'1': {
+				prefix: 'vitals',
+				hostname: 'https://appsolve.io'
+			},
+			'5': {
+				prefix: 'tsapb',
+				hostname: 'https://theme-sections.sqa-api.com'
+			}
+		};
+
+		const cacheKeysMetaFields = '{{ shop.metafields.vitals.tsck }}';
+		const shopId = '{{ shop.id }}';
+
+		const getHostname = () => {
+			if (apps[projectId].hostname) {
+				return apps[projectId].hostname;
+			}
+
+			console.error(`hostname for appId ${projectId} cannot be determined.`);
+			return undefined;
+		}
+
+		const disableSection = (message, selector) => {
+			const mainContainer = document.querySelector(selector);
+			const contentContainer = document.querySelector(`${selector} > section`);
+
+			if ('{{ request.design_mode }}' === 'true') {
+				contentContainer.innerHTML = `<h2 class="VtlsUninstallBG"><div class="VtlsUninstallBG__Text">${message}</div></h2>`;
+			} else {
+				mainContainer.style.display = 'none';
+				mainContainer.remove();
+			}
+		};
+
+		const getThemeSectionIdsByUUID = (installedThemeSections, uuid, appId) => {
+			const listIds = [];
+
+			installedThemeSections.forEach((installedThemeSection) => {
+				if (installedThemeSection.id.includes(`${apps[appId].prefix}_${uuid}`)) {
+					listIds.push(installedThemeSection.id);
+				}
+			})
+
+			return listIds;
+		}
+
+		const getThemeSectionsStatusList = (url) => fetch(url, {
+			method: 'GET',
+		}).then((response) => response.json());
+
+		const evaluateThemeSections = (url) => {
+			getThemeSectionsStatusList(url).then(response => {
+				const { data, f, i } = response;
+				const installedThemeSections = document.querySelectorAll(sectionsSelector);
+
+				data.forEach((themeSection) => {
+					const { e, u, a } = themeSection;
+
+					if (!e) {
+						const themeSectionsWithUUID = getThemeSectionIdsByUUID(installedThemeSections, u, a);
+						let message = '';
+
+						if (f) {
+							message = downgradeMessage;
+						}
+
+						if (!i) {
+							message = uninstallMessage;
+						}
+
+						themeSectionsWithUUID.forEach((themeSectionSelector) => {
+							disableSection(message, `#${themeSectionSelector}`);
+						})
+					}
+				});
+			})
+		}
+
+		if (shopId) {
+			if (window.vtlsSecurityCheckStarted === undefined) {
+				window.vtlsSecurityCheckStarted = true;
+
+				let url = '';
+				const hostname = getHostname();
+
+				if (!hostname) {
+					return;
+				}
+
+				const baseUrl = `${hostname}/bundle/api/v2/sf/ts`;
+
+				if (cacheKeysMetaFields) {
+					url = `${baseUrl}/${shopId}/${cacheKeysMetaFields}.json`;
+				} else {
+					const timestamp = Math.round(new Date().getTime() / 1000 / 10000) * 10000;
+					url = `${baseUrl}/${shopId}/${timestamp}.json`;
+				}
+
+				evaluateThemeSections(url);
+			}
+		}
+	})();
+</script>
+
+{% style %}
+	
+
+.VtlsUninstallBG{background-color:var(--vtl-color-bg-fill-inverse-on-light);background-image:url("data:image/avif;base64,iVBORw0KGgoAAAANSUhEUgAABOcAAABkCAQAAABnAJxfAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAACYktHRAD/h4/MvwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB+gLFQgmAgUXFkMAAARaSURBVHja7daxbSRBEATB8ZzvKw0h1dcIlJS4jl25Azlavffn9/3v++e//+vvCwqFQqFQKBRKSklEUCgUCoVCoVAMOgqFQqFQKJSzSiKCQqFQKBQKhWLQUSgUCoVCoZxVEhEUCoVCoVAoFIOOQqFQKBQK5VOURASFQqFQKBQKZVUSERQKhUKhUCiUVUlEUCgUCoVCoVBWZbtOPoVCoVAoFArlovIKERQKhUKhUCiUVXmFCAqFQqFQKBTKqrxCBIVCoVAoFAplVV4hgkKhUCgUCoUyK4kICoVCoVAoFMqqJCIoFAqFQqFQKKuSiKBQKBQKhUKhrEoigkKhUCgUCoVi0FEoFAqFQqGcVRIRFAqFQqFQKBSDjkKhUCgUCuWskoigUCgUCoVCoRh0FAqFQqFQKGeVRASFQqFQKBQKxaCjUCgUCoVCOaskIigUCoVCoVAoBh2FQqFQKBTKWSURQaFQKBQKhUIx6CgUCoVCoVDOKokICoVCoVAoFIpBR6FQKBQKhXJWSURQKBQKhUKhUAw6CoVCoVAolLNKIoJCoVAoFAqFYtBRKBQKhUKhnFUSERQKhUKhUCgUg45CoVAoFArlrJKIoFAoFAqFQqEYdBQKhUKhUChnlUQEhUKhUCgUCsWgo1AoFAqFQvkUJRFBoVAoFAqFQlmVRASFQqFQKBQKZVUSERQKhUKhUCiUVdmuk0+hUCgUCoVCuai8QgSFQqFQKBQKZVVeIYJCoVAoFAqFsiqvEEGhUCgUCoVCWZVXiKBQKBQKhUKhzEoigkKhUCgUCoWyKokICoVCoVAoFMqqJCIoFAqFQqFQKKuSiKBQKBQKhUKhGHQUCoVCoVAoZ5VEBIVCoVAoFArFoKNQKBQKhUI5qyQiKBQKhUKhUCgGHYVCoVAoFMpZJRFBoVAoFAqFQjHoKBQKhUKhUM4qiQgKhUKhUCgUikFHoVAoFAqFclZJRFAoFAqFQqFQDDoKhUKhUCiUs0oigkKhUCgUCoVi0FEoFAqFQqGcVRIRFAqFQqFQKBSDjkKhUCgUCuWskoigUCgUCoVCoRh0FAqFQqFQKGeVRASFQqFQKBQKxaCjUCgUCoVCOaskIigUCoVCoVAoBh2FQqFQKBTKWSURQaFQKBQKhUIx6CgUCoVCoVA+RUlEUCgUCoVCoVBWJRFBoVAoFAqFQlmVRASFQqFQKBQKZVW26+RTKBQKhUKhUC4qrxBBoVAoFAqFQlmVV4igUCgUCoVCoazKK0RQKBQKhUKhUFblFSIoFAqFQqFQKLOSiKBQKBQKhUKhrEoigkKhUCgUCoWyKokICoVCoVAoFMqqJCIoFAqFQqFQKAYdhUKhUCgUylklEUGhUCgUCoVCMegoFAqFQqFQziqJCAqFQqFQKBSKQUehUCgUCoVyVklEUCgUCoVCoVAMOgqFQqFQKJSzSiKCQqFQKBQKhWLQUSgUCoVCoZxVEhEUCoVCoVAoFIOOQqFQKBQK5dOVX5nMB52iezhxAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDI0LTExLTIxVDA4OjM4OjAyKzAwOjAw30WrCwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyNC0xMS0yMVQwODozODowMiswMDowMK4YE7cAAAAodEVYdGRhdGU6dGltZXN0YW1wADIwMjQtMTEtMjFUMDg6Mzg6MDIrMDA6MDD5DTJoAAAAAElFTkSuQmCC");background-position:center;background-size:cover;text-align:center;padding:var(--vtl-space-32);margin:0}.VtlsUninstallBG__Text{color:var(--vtl-color-text-disable-on-light);font-family:Inter,sans-serif;font-size:var(--vtl-font-size-14);font-weight:var(--vtl-font-weight-400);line-height:var(--vtl-line-height-140);padding:var(--vtl-space-16) var(--vtl-space-16) var(--vtl-space-16) var(--vtl-space-40);background-color:var(--vtl-color-bg-fill-inverse-on-light);display:inline-block}.VtlsUninstallBG__Text::before{content:url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%0A%09%09%09%3Cpath%20d%3D%22M9.99994%206.75C10.4142%206.75%2010.7499%207.08579%2010.7499%207.5V11C10.7499%2011.4142%2010.4142%2011.75%209.99994%2011.75C9.58573%2011.75%209.24994%2011.4142%209.24994%2011V7.5C9.24994%207.08579%209.58573%206.75%209.99994%206.75Z%22%20fill%3D%22%23B28400%22%2F%3E%0A%09%09%09%3Cpath%20d%3D%22M11%2013.5C11%2014.0523%2010.5523%2014.5%2010%2014.5C9.44772%2014.5%209%2014.0523%209%2013.5C9%2012.9477%209.44772%2012.5%2010%2012.5C10.5523%2012.5%2011%2012.9477%2011%2013.5Z%22%20fill%3D%22%23B28400%22%2F%3E%0A%09%09%09%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M10%203.5C8.95471%203.5%208.21616%204.20232%207.84762%204.94672C7.65565%205.33448%206.75984%207.0441%205.84305%208.79353L5.81531%208.84646C4.9229%2010.5493%204.01714%2012.2777%203.80716%2012.702C3.4351%2013.4537%203.32931%2014.4519%203.89953%2015.316C4.46911%2016.1791%205.44222%2016.5%206.36356%2016.5L13.6364%2016.5C14.5577%2016.5%2015.5308%2016.1791%2016.1004%2015.316C16.6707%2014.4519%2016.5649%2013.4537%2016.1928%2012.702C15.9832%2012.2784%2015.08%2010.555%2014.1889%208.85476L14.1569%208.79352C13.24%207.044%2012.3443%205.33454%2012.1524%204.94693C11.784%204.20242%2011.0454%203.5%2010%203.5ZM9.1919%205.61225C9.59605%204.79592%2010.4041%204.79592%2010.8081%205.61225C11.0102%206.02061%2011.9201%207.75686%2012.8296%209.49243C13.7383%2011.2262%2014.6466%2012.9594%2014.8485%2013.3673C15.2525%2014.1837%2014.8485%2015%2013.6364%2015L6.36356%2015C5.1515%2015%204.74746%2014.1837%205.1515%2013.3673C5.35376%2012.9587%206.26468%2011.2205%207.1748%209.4838C8.08283%207.75111%208.99005%206.01994%209.1919%205.61225Z%22%20fill%3D%22%23B28400%22%2F%3E%0A%09%09%3C%2Fsvg%3E");position:absolute;width:var(--vtl-space-20);height:var(--vtl-space-20);margin-left:calc(-1*var(--vtl-space-24))}.VtlsUninstallBG__Text a{color:var(--vtl-color-text-disable-on-light)}.VtlsUninstallBG__Text a:hover{text-decoration:none}
+
+{% endstyle %}
+
