@@ -128,11 +128,6 @@
         "disabled": false,
         "settings": {}
       },
-      "15521780835499905587": {
-        "type": "shopify://apps/square-instagram-feed/blocks/app-embed/8c9f3786-8bb5-488d-a397-b1285ed978df",
-        "disabled": false,
-        "settings": {}
-      },
       "144831480468751239": {
         "type": "shopify://apps/essential-upsell/blocks/app-embed/50627fd9-24fd-4250-8614-accc12826d80",
         "disabled": false,
@@ -198,8 +193,8 @@
         "disabled": false,
         "settings": {}
       },
-      "1232542678405107163": {
-        "type": "shopify://apps/instafeed/blocks/head-block/c447db20-095d-4a10-9725-b5977662c9d5",
+      "13305437469741356523": {
+        "type": "shopify://apps/gsc-instagram-feed/blocks/embed/96970b1b-b770-454f-b16b-51f47e1aa4ed",
         "disabled": false,
         "settings": {}
       }
