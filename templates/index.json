@@ -1100,6 +1100,121 @@
         "padding-block-end": 48
       }
     },
+    "tsapb_fa2fef94_D7TKjg": {
+      "type": "tsapb-fa2fef94",
+      "blocks": {
+        "icon_C6DGfP": {
+          "type": "icon",
+          "settings": {
+            "icon_type": "icon",
+            "icon": "shipping_fast",
+            "font_awesome": "",
+            "custom_icon": "shopify://shop_images/30_-bag.png",
+            "image_shape": "square",
+            "image_corner_radius": 0,
+            "icon_color_enabled": false,
+            "icon_color": "#222222",
+            "icon_title": "Fast Delivery",
+            "icon_description": "Fast, reliable delivery straight to your doorstep"
+          }
+        },
+        "icon_aMRXbK": {
+          "type": "icon",
+          "settings": {
+            "icon_type": "icon",
+            "icon": "lock",
+            "font_awesome": "",
+            "image_shape": "square",
+            "image_corner_radius": 0,
+            "icon_color_enabled": false,
+            "icon_color": "#222222",
+            "icon_title": "Secure Shopping",
+            "icon_description": "Shop confidently with a safe, secure checkout"
+          }
+        },
+        "icon_W4gNHY": {
+          "type": "icon",
+          "settings": {
+            "icon_type": "icon",
+            "icon": "award",
+            "font_awesome": "",
+            "image_shape": "square",
+            "image_corner_radius": 0,
+            "icon_color_enabled": false,
+            "icon_color": "#222222",
+            "icon_title": "Quality Assured",
+            "icon_description": "Thoughtfully crafted styles made to be loved and lasting"
+          }
+        },
+        "icon_MWzQeX": {
+          "type": "icon",
+          "settings": {
+            "icon_type": "icon",
+            "icon": "headset",
+            "font_awesome": "",
+            "image_shape": "square",
+            "image_corner_radius": 0,
+            "icon_color_enabled": false,
+            "icon_color": "#222222",
+            "icon_title": "Live Support",
+            "icon_description": "Personal guidance whenever you need help choosing"
+          }
+        }
+      },
+      "block_order": [
+        "icon_C6DGfP",
+        "icon_aMRXbK",
+        "icon_W4gNHY",
+        "icon_MWzQeX"
+      ],
+      "name": "❤️ Square: Value Icons Cards",
+      "settings": {
+        "icon_color": "#FF5A1F",
+        "icon_size": 34,
+        "icon_title_size": "20",
+        "icon_title_color": "#222222",
+        "icon_description_size": "14",
+        "icon_description_color": "#222222",
+        "icons_per_row_desktop_vertical": 4,
+        "icons_per_row_desktop_horizontal": 4,
+        "icons_mobile_layout_vertical": "2",
+        "icons_mobile_layout_horizontal": "1",
+        "space_between_icons": 24,
+        "space_between_rows": 24,
+        "icon_card_layout": "horizontal",
+        "icon_alignment": "left",
+        "icon_card_style": "color",
+        "icon_card_background": "#fff7f0",
+        "icon_card_opacity": 100,
+        "icon_card_border": "#222222",
+        "icon_card_shadow": false,
+        "icon_card_shadow_color": "#222222",
+        "shadow_size": "large",
+        "icon_card_radius": 16,
+        "heading": "",
+        "heading_size": "32",
+        "heading_style": "regular",
+        "heading_alignment": "center",
+        "heading_color": "#222222",
+        "section_background_style": "color",
+        "section_background": "",
+        "section_gradient": "linear-gradient(to right, #fed951, #ff46c7)",
+        "enable_animation": false,
+        "overlay_color": "#222222",
+        "overlay_opacity": 0,
+        "section_width": 95,
+        "section_max_width": "",
+        "spacing_type": "desktop",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
     "product_list_iyyJeN": {
       "type": "product-list",
       "blocks": {
@@ -1366,120 +1481,6 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
-    },
-    "17897738200c2ba9d0": {
-      "type": "_blocks",
-      "blocks": {
-        "vevy_ai_product_description_trust_badges_Pr67ak": {
-          "type": "shopify://apps/vevy-ai-product-description/blocks/trust-badges/019ef35a-a7fd-754f-8b7a-eea456aa37d6",
-          "settings": {
-            "element": "",
-            "heading": "Why Shop With Us",
-            "empty_message": "No trust badges available for this product."
-          }
-        }
-      },
-      "block_order": [
-        "vevy_ai_product_description_trust_badges_Pr67ak"
-      ],
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
-    "tsapb_763913e5_ijzUcE": {
-      "type": "tsapb-763913e5",
-      "blocks": {
-        "collection_NVzTmr": {
-          "type": "collection",
-          "settings": {
-            "collection": "anarkali-suits",
-            "heading": ""
-          }
-        },
-        "collection_pa97bB": {
-          "type": "collection",
-          "settings": {
-            "collection": "",
-            "heading": ""
-          }
-        },
-        "collection_ztc9ye": {
-          "type": "collection",
-          "settings": {
-            "collection": "",
-            "heading": ""
-          }
-        },
-        "collection_n4VWTY": {
-          "type": "collection",
-          "settings": {
-            "collection": "",
-            "heading": ""
-          }
-        },
-        "collection_ffbXTL": {
-          "type": "collection",
-          "settings": {
-            "collection": "",
-            "heading": ""
-          }
-        }
-      },
-      "block_order": [
-        "collection_NVzTmr",
-        "collection_pa97bB",
-        "collection_ztc9ye",
-        "collection_n4VWTY",
-        "collection_ffbXTL"
-      ],
-      "name": "❤️ Square: Collection Rectangles",
-      "settings": {
-        "heading": "Collections",
-        "heading_size": "32",
-        "heading_style": "regular",
-        "heading_alignment": "center",
-        "collection_heading_size": "14",
-        "images_aspect_ratio": "portrait",
-        "layout_desktop": "grid",
-        "collections_per_row_desktop": 5,
-        "layout_mobile": "carousel",
-        "collections_per_row_mobile": "2",
-        "section_width": 95,
-        "section_max_width": "",
-        "vertical_padding": 40,
-        "vertical_margin": 0,
-        "vertical_padding_mobile": 20,
-        "vertical_margin_mobile": 0,
-        "section_background": "",
-        "heading_color": "#222222",
-        "collection_heading_color": "#222222",
-        "images_border_color": ""
-      }
     }
   },
   "order": [
@@ -1494,7 +1495,6 @@
     "product_list_Q3JJ6r",
     "product_list_iyyJeN",
     "17897717360ea9fb56",
-    "17897738200c2ba9d0",
-    "tsapb_763913e5_ijzUcE"
+    "tsapb_fa2fef94_D7TKjg"
   ]
 }
