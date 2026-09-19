@@ -274,7 +274,7 @@
             "collection_card_gap": 10,
             "title_font_size_desktop": 16,
             "title_font_size_mobile": 14,
-            "background_color": "",
+            "background_color": "#6d0f0f",
             "background_image": "shopify://shop_images/ChatGPT_Image_Sep_5_2026_03_27_03_AM.png",
             "border": "none",
             "border_width": 1,
@@ -597,7 +597,7 @@
             "background_color": "#ffffff",
             "card_color": "#e95d20",
             "card_background_image": "shopify://shop_images/ChatGPT_Image_Sep_16_2026_03_20_53_AM_3f9e5d4f-6d3d-4481-8420-a278009e4091.png",
-            "text_color": "{{ settings.color_palette.color1 }}",
+            "text_color": "{{ settings.color_palette.foreground }}",
             "muted_text_color": "#ffffff",
             "border_color": "rgba(0,0,0,0)",
             "accent_color": "{{ settings.color_palette.background }}",
@@ -1303,55 +1303,210 @@
         "padding-block-end": 48
       }
     },
-    "1788250978afb61d99": {
+    "17897717360ea9fb56": {
       "type": "_blocks",
       "blocks": {
-        "ai_gen_block_603a8ba_XXfz64": {
-          "type": "ai_gen_block_603a8ba",
+        "shop_story_reels_qANhVa": {
+          "type": "shopify://apps/shop-story/blocks/reels/9533840c-375a-4863-96fe-c58cb5da53c0",
           "settings": {
-            "desktop_width_percent": 100,
-            "desktop_padding": 28,
-            "mobile_padding": 20,
-            "item_horizontal_padding": 24,
-            "mobile_item_padding": 16,
-            "background_color": "#fafafa",
-            "icon_color": "#ff5a1f",
-            "title_color": "#1f2937",
-            "text_color": "#6b7280",
-            "divider_color": "#e5e7eb",
-            "icon_size": 36,
-            "mobile_icon_size": 28,
-            "icon_spacing": 12,
-            "mobile_icon_spacing": 10,
-            "title_size": 18,
-            "mobile_title_size": 12,
-            "title_weight": 600,
-            "title_letter_spacing": 1,
-            "title_spacing": 6,
-            "mobile_title_spacing": 4,
-            "text_size": 15,
-            "mobile_text_size": 13,
-            "divider_height": 60,
-            "item_1_enabled": true,
-            "item_1_icon": "chat",
-            "item_1_title": "Customer Support",
-            "item_1_text": "Always here to assist",
-            "item_2_enabled": true,
-            "item_2_icon": "craft",
-            "item_2_title": "Handcrafted Quality",
-            "item_2_text": "Artisan tradition",
-            "item_3_enabled": true,
-            "item_3_icon": "lock",
-            "item_3_title": "Secure Checkout",
-            "item_3_text": "Safe and protected"
-          },
-          "blocks": {}
+            "heading": "The Latest Edit",
+            "subheading": "",
+            "layout_type": "default",
+            "product_card_template": "default",
+            "border_radius": 5,
+            "popup_template": "default",
+            "height": 470,
+            "height_mobile": 430,
+            "blocks_per_row": 5,
+            "horizontalalignment": "default",
+            "section_spacing": "default",
+            "sectionbgcolour": "#ffffff",
+            "auto_play": "default",
+            "show_views": "default",
+            "show_title": "default",
+            "show_compare_price": "true",
+            "show_buy_button": "true",
+            "button_label": "Add to cart",
+            "button_action": "add_to_cart",
+            "button_color": "",
+            "product_specific": false,
+            "show_on_desktop": true,
+            "show_on_mobile": true
+          }
         }
       },
       "block_order": [
-        "ai_gen_block_603a8ba_XXfz64"
+        "shop_story_reels_qANhVa"
       ],
-      "name": "Trust Reassurance",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "tsapb_fa2fef94_D7TKjg": {
+      "type": "tsapb-fa2fef94",
+      "blocks": {
+        "icon_C6DGfP": {
+          "type": "icon",
+          "settings": {
+            "icon_type": "icon",
+            "icon": "shipping_fast",
+            "font_awesome": "",
+            "custom_icon": "shopify://shop_images/30_-bag.png",
+            "image_shape": "square",
+            "image_corner_radius": 0,
+            "icon_color_enabled": false,
+            "icon_color": "#222222",
+            "icon_title": "Fast Delivery",
+            "icon_description": "Fast, reliable delivery straight to your doorstep"
+          }
+        },
+        "icon_aMRXbK": {
+          "type": "icon",
+          "settings": {
+            "icon_type": "icon",
+            "icon": "lock",
+            "font_awesome": "",
+            "image_shape": "square",
+            "image_corner_radius": 0,
+            "icon_color_enabled": false,
+            "icon_color": "#222222",
+            "icon_title": "Secure Shopping",
+            "icon_description": "Shop confidently with a safe, secure checkout"
+          }
+        },
+        "icon_W4gNHY": {
+          "type": "icon",
+          "settings": {
+            "icon_type": "icon",
+            "icon": "award",
+            "font_awesome": "",
+            "image_shape": "square",
+            "image_corner_radius": 0,
+            "icon_color_enabled": false,
+            "icon_color": "#222222",
+            "icon_title": "Quality Assured",
+            "icon_description": "Thoughtfully crafted styles made to be loved and lasting"
+          }
+        },
+        "icon_MWzQeX": {
+          "type": "icon",
+          "settings": {
+            "icon_type": "icon",
+            "icon": "headset",
+            "font_awesome": "",
+            "image_shape": "square",
+            "image_corner_radius": 0,
+            "icon_color_enabled": false,
+            "icon_color": "#222222",
+            "icon_title": "Live Support",
+            "icon_description": "Personal guidance whenever you need help choosing"
+          }
+        }
+      },
+      "block_order": [
+        "icon_C6DGfP",
+        "icon_aMRXbK",
+        "icon_W4gNHY",
+        "icon_MWzQeX"
+      ],
+      "name": "❤️ Square: Value Icons Cards",
+      "settings": {
+        "icon_color": "#ff5a1f",
+        "icon_size": 34,
+        "icon_title_size": "20",
+        "icon_title_color": "#222222",
+        "icon_description_size": "14",
+        "icon_description_color": "#222222",
+        "icons_per_row_desktop_vertical": 4,
+        "icons_per_row_desktop_horizontal": 4,
+        "icons_mobile_layout_vertical": "2",
+        "icons_mobile_layout_horizontal": "1",
+        "space_between_icons": 24,
+        "space_between_rows": 24,
+        "icon_card_layout": "horizontal",
+        "icon_alignment": "left",
+        "icon_card_style": "color",
+        "icon_card_background": "#fff7f0",
+        "icon_card_opacity": 100,
+        "icon_card_border": "#222222",
+        "icon_card_shadow": false,
+        "icon_card_shadow_color": "#222222",
+        "shadow_size": "large",
+        "icon_card_radius": 16,
+        "heading": "",
+        "heading_size": "32",
+        "heading_style": "regular",
+        "heading_alignment": "center",
+        "heading_color": "#222222",
+        "section_background_style": "color",
+        "section_background": "",
+        "section_gradient": "linear-gradient(to right, #fed951, #ff46c7)",
+        "enable_animation": false,
+        "overlay_color": "#222222",
+        "overlay_opacity": 0,
+        "section_width": 95,
+        "section_max_width": "",
+        "spacing_type": "desktop",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
+    "178977847759380373": {
+      "type": "_blocks",
+      "blocks": {
+        "instafeed_app_block_YC66mz": {
+          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
+          "settings": {
+            "title": "",
+            "title_color": "",
+            "title_size_v2": 0,
+            "alignment": "center",
+            "instafeed_margin_top": 0,
+            "instafeed_margin_bottom": 0,
+            "instafeed_margin_sides": 0,
+            "show_instagram_link": false,
+            "link_alignment": "left",
+            "link_color": "#000000",
+            "background_color": "",
+            "feed_id": "",
+            "html_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "instafeed_app_block_YC66mz"
+      ],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -1393,6 +1548,8 @@
     "1789677761c70e790a",
     "product_list_Q3JJ6r",
     "product_list_iyyJeN",
-    "1788250978afb61d99"
+    "17897717360ea9fb56",
+    "tsapb_fa2fef94_D7TKjg",
+    "178977847759380373"
   ]
 }
