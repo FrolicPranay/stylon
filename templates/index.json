@@ -271,10 +271,11 @@
             "placement": "below_image",
             "horizontal_alignment": "center",
             "vertical_alignment": "flex-start",
-            "collection_card_gap": 18,
+            "collection_card_gap": 10,
             "title_font_size_desktop": 16,
             "title_font_size_mobile": 14,
-            "background_color": "",
+            "background_color": "#6d0f0f",
+            "background_image": "shopify://shop_images/ChatGPT_Image_Sep_5_2026_03_27_03_AM.png",
             "border": "none",
             "border_width": 1,
             "border_opacity": 12,
@@ -294,7 +295,7 @@
                 "font_size": "0.875rem",
                 "line_height": "normal",
                 "letter_spacing": "loose",
-                "case": "none",
+                "case": "uppercase",
                 "wrap": "pretty",
                 "background": false,
                 "background_color": "#ffffff",
@@ -321,7 +322,7 @@
                 "border_width": 1,
                 "border_opacity": 100,
                 "border_color": "",
-                "border_radius": 4
+                "border_radius": 0
               },
               "blocks": {}
             }
