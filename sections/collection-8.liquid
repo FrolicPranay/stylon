@@ -1,0 +1,1177 @@
+
+{%- liquid
+  assign st = section.settings
+-%}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+
+{%- style -%}
+  /* Typography */
+  {{ st.sma_vertical_font | font_face: display: 'swap' }}
+  {{ st.sma_button_font | font_face: display: 'swap' }}
+
+  #sma-{{ section.id }} {
+    background: {{ st.sma_bg_color }};
+    padding-top: {{ st.sma_padding_top }}px;
+    padding-bottom: {{ st.sma_padding_bottom }}px;
+    margin-top: {{ st.sma_margin_top }}px;
+    margin-bottom: {{ st.sma_margin_bottom }}px;
+    overflow: hidden;
+    position: relative;
+    --slide-width: {{ st.sma_slide_width_desktop }}px;
+    --slide-height: {{ st.sma_slide_height_desktop }}px;
+  }
+
+  @media (max-width: 768px) {
+    #sma-{{ section.id }} {
+      --slide-width: {{ st.sma_slide_width_mobile }}px;
+      --slide-height: {{ st.sma_slide_height_mobile }}px;
+    }
+  }
+
+  #sma-{{ section.id }}
+  .sma-container {
+    width: 100%;
+    max-width: {{ st.sma_max_width }}px;
+    margin: 0 auto;
+    position: relative;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--slide-height);
+    box-sizing: border-box;
+  }
+
+  #sma-{{ section.id }}
+  .swiper {
+    width: 100%;
+    height: var(--slide-height);
+    overflow: visible;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  #sma-{{ section.id }}
+  .swiper.sma-ready {
+    opacity: 1;
+  }
+
+  #sma-{{ section.id }} .swiper-slide {
+    width: var(--slide-width);
+    height: 100%;
+    position: relative;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    will-change: transform;
+    transform: translate3d(0,0,0);
+    /* Transition only when NOT dragging */
+    transition: transform 0.6s ease, opacity 0.6s ease;
+  }
+
+  /* Disable transitions while user is manually dragging */
+  #sma-{{ section.id }} .swiper.sma-is-dragging .swiper-slide {
+    transition: none !important;
+  }
+
+  #sma-{{ section.id }}
+  .sma-slide-inner {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: {{ st.sma_card_radius }}px;
+    overflow: hidden;
+    background: #111;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  #sma-{{ section.id }}
+  .sma-slide-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.9s cubic-bezier(0.2, 1, 0.3, 1);
+  }
+
+  #sma-{{ section.id }}.sma-slide-inner:hover .sma-slide-bg {
+    transform: scale(1.06);
+  }
+
+  /* Tint for non-active slides — handled via CSS on non-active */
+  #sma-{{ section.id }}.swiper-slide:not(.swiper-slide-active) .sma-slide-overlay {
+    opacity: 0.4;
+  }
+
+  #sma-{{ section.id }}
+  .sma-slide-overlay {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    opacity: 0;
+    z-index: 3;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+
+  /* Vertical Name Text */
+  #sma-{{ section.id }} .sma-vertical-title {
+    position: absolute;
+    left: {{ st.sma_text_left_offset }}px;
+    top: {{ st.sma_text_top_offset }}px;
+    z-index: {{ st.sma_text_z_index }};
+    mix-blend-mode: {{ st.sma_text_blend }};
+    pointer-events: none;
+    display: {% if st.sma_show_title %}flex{% else %}none{% endif %};
+  flex-direction: column;
+  margin: 0;
+  width: max-content;
+
+  {% if st.sma_text_rotation == '90' %}
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  {% elsif st.sma_text_rotation == '-90' %}
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+  {% else %}
+    transform: translateX(-50%);
+  {% endif %}
+}
+
+@media (max-width: 768px) {
+  #sma-{{ section.id }} .sma-vertical-title {
+    left: {{ st.sma_text_left_offset_mobile }}px;
+    top: {{ st.sma_text_top_offset_mobile }}px;
+  }
+}
+
+#sma-{{ section.id }}
+.sma-vertical-title span {
+  font-family: {{ st.sma_vertical_font.family }}, 
+  {{ st.sma_vertical_font.fallback_families }};
+  font-size: clamp({{ st.sma_text_size_mobile }}px, 5vw, {{ st.sma_text_size_desktop }}px);
+  font-weight: {{ st.sma_text_weight }};
+  line-height: {{ st.sma_text_line_height | divided_by: 100.0 }};
+  text-transform: uppercase;
+  text-align: center;
+  color: {{ st.sma_text_color }};
+  white-space: nowrap;
+  display: block;
+}
+
+/* Outline premium effect */
+#sma-{{ section.id }} .sma-vertical-title span.outlined-text {
+  color: transparent !important;
+  -webkit-text-stroke-width: {{ st.sma_text_outline_width }}px;
+  -webkit-text-stroke-color: {{ st.sma_text_color }};
+}
+
+/* Bottom Button */
+#sma-{{ section.id }} .sma-btn-wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: {{ st.sma_btn_bottom_offset }}px;
+  display: flex;
+  justify-content: center;
+  z-index: 5;
+}
+
+@media (max-width: 768px) {
+  #sma-{{ section.id }} .sma-btn-wrapper {
+    bottom: {{ st.sma_btn_bottom_offset_mobile }}px;
+  }
+}
+
+#sma-{{ section.id }}
+.sma-slide-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: {{ st.sma_btn_bg_color }};
+  color: {{ st.sma_btn_text_color }};
+  padding-top: {{ st.sma_btn_padding_y }}px;
+  padding-bottom: {{ st.sma_btn_padding_y }}px;
+  padding-left: {{ st.sma_btn_padding_x }}px;
+  padding-right: {{ st.sma_btn_padding_x }}px;
+  font-family: {{ st.sma_button_font.family }}, 
+  {{ st.sma_button_font.fallback_families }};
+  font-size: {{ st.sma_btn_text_size }}px;
+  font-weight: {{ st.sma_btn_text_weight }};
+  border-radius: {{ st.sma_btn_radius }}px;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-width: {{ st.sma_btn_border_width }}px;
+  border-style: solid;
+  border-color: {{ st.sma_btn_border_color }};
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  #sma-{{ section.id }} .sma-slide-btn {
+    font-size: {{ st.sma_btn_text_size_mobile }}px;
+    padding-top: {{ st.sma_btn_padding_y_mobile }}px;
+    padding-bottom: {{ st.sma_btn_padding_y_mobile }}px;
+    padding-left: {{ st.sma_btn_padding_x_mobile }}px;
+    padding-right: {{ st.sma_btn_padding_x_mobile }}px;
+  }
+}
+
+#sma-{{ section.id }}.sma-slide-inner:hover .sma-slide-btn,
+#sma-{{ section.id }} a.sma-slide-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  background: {{ st.sma_btn_bg_color_hover }};
+  color: {{ st.sma_btn_text_color_hover }};
+  {% if st.sma_btn_border_color_hover != blank and st.sma_btn_border_color_hover != 'rgba(0,0,0,0)' %}
+    border-color: {{ st.sma_btn_border_color_hover }};
+  {% endif %}
+}
+
+/* Arrows */
+#sma-{{ section.id }} .sma-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: {{ st.sma_arrow_size }}px;
+  height: {{ st.sma_arrow_size }}px;
+  background: {{ st.sma_arrow_bg }};
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  #sma-{{ section.id }} .sma-nav-btn {
+    width: {{ st.sma_arrow_size_mobile }}px;
+    height: {{ st.sma_arrow_size_mobile }}px;
+  }
+}
+
+#sma-{{ section.id }}
+.sma-nav-btn.swiper-button-disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+#sma-{{ section.id }}.sma-nav-btn:not(.swiper-button-disabled):hover {
+  background: {{ st.sma_arrow_bg_hover }};
+  transform: translateY(-50%) scale(1.08);
+  /* Magnetic pop */
+}
+
+#sma-{{ section.id }}
+.sma-nav-btn svg {
+  width: {{ st.sma_arrow_icon_size }}px;
+  height: {{ st.sma_arrow_icon_size }}px;
+  stroke: {{ st.sma_arrow_color }};
+  stroke-width: 2;
+  fill: none;
+}
+
+@media (max-width: 768px) {
+  #sma-{{ section.id }} .sma-nav-btn svg {
+    width: {{ st.sma_arrow_icon_size_mobile }}px;
+    height: {{ st.sma_arrow_icon_size_mobile }}px;
+  }
+}
+
+#sma-{{ section.id }}
+.sma-prev-{{ section.id }} {
+  left: {{ st.sma_arrow_horizontal_offset }}px;
+}
+
+#sma-{{ section.id }}
+.sma-next-{{ section.id }} {
+  right: {{ st.sma_arrow_horizontal_offset }}px;
+}
+
+@media (max-width: 768px) {
+  #sma-{{ section.id }}.sma-prev-{{ section.id }} {
+    left: {{ st.sma_arrow_horizontal_offset_mobile }}px;
+  }
+  #sma-{{ section.id }}
+  .sma-next-{{ section.id }} {
+    right: {{ st.sma_arrow_horizontal_offset_mobile }}px;
+  }
+}
+
+{%- endstyle -%}
+
+<section id="sma-{{ section.id }}" class="sma-section">
+  <div class="sma-container">
+
+    <div class="swiper sma-swiper-{{ section.id }}" data-block-count="{{ section.blocks.size }}">
+      <div class="swiper-wrapper">
+        {%- assign total_blocks = section.blocks.size -%}
+        {%- comment -%}
+          Swiper loop mode needs enough slides to avoid the "not enough slides" warning.
+          We need at least 8 total slides (or 3× total_blocks, whichever is larger)
+          to guarantee smooth infinite looping with clones on both sides.
+        {%- endcomment -%}
+        {%- assign min_slides = 12 -%}
+        {%- assign min_slides_alt = total_blocks | times: 3 -%}
+        {%- if min_slides_alt > min_slides -%}
+          {%- assign min_slides = min_slides_alt -%}
+        {%- endif -%}
+
+        {%- if total_blocks > 0 -%}
+          {%- comment -%} Calculate how many full repetitions we need {%- endcomment -%}
+          {%- assign iter_count = min_slides | divided_by: total_blocks -%}
+          {%- assign check = iter_count | times: total_blocks -%}
+          {%- if check < min_slides -%}
+            {%- assign iter_count = iter_count | plus: 1 -%}
+          {%- endif -%}
+          {%- if iter_count < 1 -%}
+            {%- assign iter_count = 1 -%}
+          {%- endif -%}
+        {%- else -%}
+          {%- assign iter_count = 1 -%}
+        {%- endif -%}
+
+        {%- for i in (1..iter_count) -%}
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign collection = collections[block.settings.collection]
+              assign slide_image = block.settings.image | default: collection.featured_image
+
+              assign slide_title = block.settings.title
+              if slide_title == blank
+                assign slide_title = collection.title | default: 'COLLECTION'
+              endif
+
+              assign slide_url = block.settings.slide_url | default: collection.url | default: '#'
+              assign btn_text = block.settings.btn_text | default: 'SHOP NOW'
+
+              assign has_url = false
+              if slide_url != blank and slide_url != '#'
+                assign has_url = true
+              endif
+
+              assign card_is_link = false
+              if st.sma_enable_card_link and has_url
+                assign card_is_link = true
+              endif
+            -%}
+
+            <div
+              class="swiper-slide"
+              {% if i == 1 %}
+              {{ block.shopify_attributes }}
+              {% endif %}>
+              {%- if card_is_link -%}
+                <a href="{{ slide_url }}" class="sma-slide-inner">
+              {%- else -%}
+                <div class="sma-slide-inner">
+              {%- endif -%}
+
+                {%- if slide_image != blank -%}
+                  <img
+                    src="{{ slide_image | image_url: width: 1200 }}"
+                    class="sma-slide-bg"
+                    loading="lazy"
+                    alt="{{ slide_title | escape | strip_newlines }}">
+                {%- else -%}
+                  {%- assign ph_index = forloop.index | modulo: 6 -%}
+                  {%- if ph_index == 0 -%}
+                    {%- assign ph_index = 6 -%}{%- endif -%}
+                  {{ 'collection-' | append: ph_index | placeholder_svg_tag: 'sma-slide-bg placeholder-svg' }}
+                {%- endif -%}
+
+                <div class="sma-slide-overlay"> </div>
+
+                <div class="sma-vertical-title">
+                  {%- assign title_lines = slide_title | replace: '<br>', '<br />' | newline_to_br | split: '<br />' -%}
+                  {%- for line in title_lines -%}
+                    {%- assign l = line | strip -%}
+                    {%- if l != blank -%}
+                      {%- if forloop.first and block.settings.outline_first -%}
+                        <span class="outlined-text">{{ l }}</span>
+                      {%- else -%}
+                        <span class="solid-text">{{ l }}</span>
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+
+                {%- if st.sma_show_button -%}
+                  <div class="sma-btn-wrapper">
+                    {%- assign btn_is_link = false -%}
+                    {%- if card_is_link == false and has_url -%}
+                      {%- assign btn_is_link = true -%}
+                    {%- endif -%}
+                    {%- if btn_is_link -%}
+                      <a href="{{ slide_url }}" class="sma-slide-btn">{{ btn_text }}</a>
+                    {%- else -%}
+                      <span class="sma-slide-btn">{{ btn_text }}</span>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              {%- if card_is_link -%}
+                </a>
+              {%- else -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <!-- Navigation attached correctly inside constrained container -->
+    <button class="sma-nav-btn sma-prev-{{ section.id }}" aria-label="Previous">
+      <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" />
+      </svg>
+    </button>
+    <button class="sma-nav-btn sma-next-{{ section.id }}" aria-label="Next">
+      <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" />
+      </svg>
+    </button>
+
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const initSwiper{{ section.id | replace: '-', '_' }} = () => {
+      if (typeof Swiper === 'undefined') {
+        setTimeout(initSwiper{{ section.id | replace: '-', '_' }}, 100);
+        return;
+      }
+
+      const swiperElem = document.querySelector('.sma-swiper-{{ section.id }}');
+      if (swiperElem && swiperElem.swiper) swiperElem.swiper.destroy(true, true);
+
+      const sw = new Swiper('.sma-swiper-{{ section.id }}', {
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        loop: true,
+        speed: {{ st.sma_slider_speed }},
+        preventInteractionOnTransition: true,
+        observer: true,
+        observeParents: true,
+        coverflowEffect: {
+          rotate: 0,
+          stretch: window.innerWidth <= 768 ? 0 : {{ st.sma_slide_stretch | default: 0 }},
+          depth: {{ st.sma_slide_depth | default: 200 }},
+          modifier: 1,
+          scale: {{ st.sma_slide_scale | default: 95 | divided_by: 100.0 }},
+          slideShadows: false
+        },
+        navigation: {
+          nextEl: '.sma-next-{{ section.id }}',
+          prevEl: '.sma-prev-{{ section.id }}'
+        },
+        on: {
+          sliderMove: function() {
+            swiperElem.classList.add('sma-is-dragging');
+          },
+          touchEnd: function() {
+            swiperElem.classList.remove('sma-is-dragging');
+          },
+          transitionEnd: function() {
+            swiperElem.classList.remove('sma-is-dragging');
+          }
+        }
+      });
+
+      /* Reveal after Swiper has positioned all slides */
+      requestAnimationFrame(() => {
+        swiperElem.classList.add('sma-ready');
+      });
+    };
+
+    initSwiper{{ section.id | replace: '-', '_' }}();
+
+    if (window.Shopify && Shopify.designMode) {
+      document.addEventListener('shopify:section:load', function (event) {
+        if (event.detail.sectionId === '{{ section.id }}') {
+          initSwiper{{ section.id | replace: '-', '_' }}();
+        }
+      });
+    }
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "SMA-Collection Section 8",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Section Layout"
+      },
+      {
+        "type": "range",
+        "id": "sma_max_width",
+        "min": 1000,
+        "max": 2000,
+        "step": 50,
+        "unit": "px",
+        "label": "Max Section Width",
+        "default": 1600
+      },
+      {
+        "type": "color",
+        "id": "sma_bg_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "range",
+        "id": "sma_padding_top",
+        "min": 0,
+        "max": 150,
+        "step": 5,
+        "unit": "px",
+        "label": "Padding Top",
+        "default": 80
+      },
+      {
+        "type": "range",
+        "id": "sma_padding_bottom",
+        "min": 0,
+        "max": 150,
+        "step": 5,
+        "unit": "px",
+        "label": "Padding Bottom",
+        "default": 80
+      },
+      {
+        "type": "range",
+        "id": "sma_margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "px",
+        "label": "Margin Top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "sma_margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "px",
+        "label": "Margin Bottom",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Card Dimensions"
+      },
+      {
+        "type": "paragraph",
+        "content": "These determine the exact size of the active center slide."
+      },
+      {
+        "type": "range",
+        "id": "sma_slide_width_desktop",
+        "min": 250,
+        "max": 800,
+        "step": 10,
+        "unit": "px",
+        "label": "Slide Width (Desktop)",
+        "default": 450
+      },
+      {
+        "type": "range",
+        "id": "sma_slide_height_desktop",
+        "min": 300,
+        "max": 900,
+        "step": 10,
+        "unit": "px",
+        "label": "Slide Height (Desktop)",
+        "default": 600
+      },
+      {
+        "type": "range",
+        "id": "sma_slide_width_mobile",
+        "min": 200,
+        "max": 500,
+        "step": 10,
+        "unit": "px",
+        "label": "Slide Width (Mobile)",
+        "default": 300
+      },
+      {
+        "type": "range",
+        "id": "sma_slide_height_mobile",
+        "min": 300,
+        "max": 700,
+        "step": 10,
+        "unit": "px",
+        "label": "Slide Height (Mobile)",
+        "default": 450
+      },
+      {
+        "type": "range",
+        "id": "sma_card_radius",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Corner Radius",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Slider Settings"
+      },
+      {
+        "type": "range",
+        "id": "sma_slider_speed",
+        "min": 300,
+        "max": 2000,
+        "step": 100,
+        "unit": "ms",
+        "label": "Transition Speed",
+        "default": 800
+      },
+      {
+        "type": "range",
+        "id": "sma_slide_stretch",
+        "min": -500,
+        "max": 200,
+        "step": 10,
+        "unit": "px",
+        "label": "Slide Overlap",
+        "info": "Negative = more overlap. Positive = more gap.",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "sma_slide_depth",
+        "min": 0,
+        "max": 600,
+        "step": 20,
+        "unit": "px",
+        "label": "3D Depth",
+        "default": 300
+      },
+      {
+        "type": "range",
+        "id": "sma_slide_scale",
+        "min": 50,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "Side Slide Scale",
+        "info": "100% = no shrink. Lower = side cards shrink more.",
+        "default": 95
+      },
+      {
+        "type": "header",
+        "content": "Vertical Typography"
+      },
+      {
+        "type": "checkbox",
+        "id": "sma_show_title",
+        "label": "Show Collection Title",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "sma_text_rotation",
+        "label": "Text Rotation",
+        "options": [
+          {
+            "value": "-90",
+            "label": "Bottom to Top (-90°)"
+          },
+          {
+            "value": "90",
+            "label": "Top to Bottom (90°)"
+          },
+          {
+            "value": "0",
+            "label": "Horizontal (0°)"
+          }
+        ],
+        "default": "-90"
+      },
+      {
+        "type": "font_picker",
+        "id": "sma_vertical_font",
+        "label": "Font Family",
+        "default": "assistant_n7"
+      },
+      {
+        "type": "range",
+        "id": "sma_text_size_desktop",
+        "min": 20,
+        "max": 120,
+        "step": 2,
+        "unit": "px",
+        "label": "Text Size (Desktop)",
+        "default": 76
+      },
+      {
+        "type": "range",
+        "id": "sma_text_size_mobile",
+        "min": 16,
+        "max": 80,
+        "step": 2,
+        "unit": "px",
+        "label": "Text Size (Mobile)",
+        "default": 54
+      },
+      {
+        "type": "select",
+        "id": "sma_text_z_index",
+        "label": "Text Layer Position",
+        "options": [
+          {
+            "value": "1",
+            "label": "Behind Image (Requires Transparent Image)"
+          },
+          {
+            "value": "4",
+            "label": "In Front of Image"
+          }
+        ],
+        "default": "1"
+      },
+      {
+        "type": "select",
+        "id": "sma_text_blend",
+        "label": "Text Blend Mode",
+        "options": [
+          {
+            "value": "normal",
+            "label": "Normal"
+          },
+          {
+            "value": "overlay",
+            "label": "Overlay"
+          },
+          {
+            "value": "difference",
+            "label": "Difference"
+          },
+          {
+            "value": "screen",
+            "label": "Screen"
+          }
+        ],
+        "default": "overlay"
+      },
+      {
+        "type": "color",
+        "id": "sma_text_color",
+        "label": "Text Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "range",
+        "id": "sma_text_weight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Text Weight",
+        "default": 900
+      },
+      {
+        "type": "range",
+        "id": "sma_text_left_offset",
+        "min": 0,
+        "max": 150,
+        "step": 2,
+        "unit": "px",
+        "label": "Distance from left edge (Desktop)",
+        "info": "Pushes the vertical text block into the slide",
+        "default": 64
+      },
+      {
+        "type": "range",
+        "id": "sma_text_left_offset_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "label": "Distance from left edge (Mobile)",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "sma_text_top_offset",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Distance from top edge (Desktop)",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "sma_text_top_offset_mobile",
+        "min": 0,
+        "max": 150,
+        "step": 2,
+        "unit": "px",
+        "label": "Distance from top edge (Mobile)",
+        "default": 30
+      },
+      {
+        "type": "range",
+        "id": "sma_text_line_height",
+        "min": 70,
+        "max": 150,
+        "step": 5,
+        "unit": "%",
+        "label": "Line Height",
+        "default": 90
+      },
+      {
+        "type": "range",
+        "id": "sma_text_outline_width",
+        "min": 1,
+        "max": 5,
+        "step": 0.5,
+        "unit": "px",
+        "label": "Outline Effect Stroke Width",
+        "default": 1.5
+      },
+      {
+        "type": "header",
+        "content": "Links"
+      },
+      {
+        "type": "checkbox",
+        "id": "sma_show_button",
+        "label": "Enable Shop Now button",
+        "default": true,
+      },
+      {
+        "type": "checkbox",
+        "id": "sma_enable_card_link",
+        "label": "Enable card link",
+        "default": true,
+      },
+      {
+        "type": "header",
+        "content": "Button Styles"
+      },
+      {
+        "type": "font_picker",
+        "id": "sma_button_font",
+        "label": "Button Font Family",
+        "default": "assistant_n7"
+      },
+      {
+        "type": "range",
+        "id": "sma_btn_text_size",
+        "min": 10,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "label": "Text Size (Desktop)",
+        "default": 13
+      },
+      {
+        "type": "range",
+        "id": "sma_btn_text_size_mobile",
+        "min": 10,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "label": "Text Size (Mobile)",
+        "default": 12
+      },
+      {
+        "type": "range",
+        "id": "sma_btn_text_weight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Text Weight",
+        "default": 700
+      },
+      {
+        "type": "color",
+        "id": "sma_btn_bg_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "sma_btn_text_color",
+        "label": "Text Color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "sma_btn_bg_color_hover",
+        "label": "Background (Hover)",
+        "default": "#eeeeee"
+      },
+      {
+        "type": "color",
+        "id": "sma_btn_text_color_hover",
+        "label": "Text Color (Hover)",
+        "default": "#000000"
+      },
+      {
+        "type": "range",
+        "id": "sma_btn_padding_y",
+        "min": 5,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Vertical Padding (Desktop)",
+        "default": 14
+      },
+      {
+        "type": "range",
+        "id": "sma_btn_padding_y_mobile",
+        "min": 5,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Vertical Padding (Mobile)",
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "sma_btn_padding_x",
+        "min": 10,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Horizontal Padding (Desktop)",
+        "default": 28
+      },
+      {
+        "type": "range",
+        "id": "sma_btn_padding_x_mobile",
+        "min": 10,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Horizontal Padding (Mobile)",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "sma_btn_radius",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Border Radius",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "sma_btn_border_width",
+        "min": 0,
+        "max": 5,
+        "step": 1,
+        "unit": "px",
+        "label": "Border Width",
+        "default": 0
+      },
+      {
+        "type": "color",
+        "id": "sma_btn_border_color",
+        "label": "Border Color",
+        "default": "transparent"
+      },
+      {
+        "type": "color",
+        "id": "sma_btn_border_color_hover",
+        "label": "Border Color (Hover)",
+        "default": "transparent"
+      },
+      {
+        "type": "range",
+        "id": "sma_btn_bottom_offset",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Distance from bottom edge (Desktop)",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "sma_btn_bottom_offset_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Distance from bottom edge (Mobile)",
+        "default": 30
+      },
+      {
+        "type": "header",
+        "content": "Navigation Arrows"
+      },
+      {
+        "type": "range",
+        "id": "sma_arrow_size",
+        "min": 30,
+        "max": 80,
+        "step": 2,
+        "unit": "px",
+        "label": "Circle Size (Desktop)",
+        "default": 54
+      },
+      {
+        "type": "range",
+        "id": "sma_arrow_size_mobile",
+        "min": 20,
+        "max": 60,
+        "step": 2,
+        "unit": "px",
+        "label": "Circle Size (Mobile)",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "sma_arrow_icon_size",
+        "min": 12,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Icon Size (Desktop)",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "sma_arrow_icon_size_mobile",
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Icon Size (Mobile)",
+        "default": 16
+      },
+      {
+        "type": "color",
+        "id": "sma_arrow_bg",
+        "label": "Background",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "sma_arrow_color",
+        "label": "Icon Color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "sma_arrow_bg_hover",
+        "label": "Background (Hover)",
+        "default": "#f5f5f5"
+      },
+      {
+        "type": "range",
+        "id": "sma_arrow_horizontal_offset",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Horizontal Spacing (Desktop)",
+        "info": "Physical distance from the content container edge.",
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "sma_arrow_horizontal_offset_mobile",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "Horizontal Spacing (Mobile)",
+        "default": 5
+      }
+    ],
+    "blocks": [
+      {
+        "type": "slide",
+        "name": "Collection Slide",
+        "settings": [
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "Select Collection"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image (Optional Override)",
+            "info": "Overrides the default collection image"
+          },
+          {
+            "type": "textarea",
+            "id": "title",
+            "label": "Title Text (Optional Override)",
+            "info": "Overrides the collection title. Use 'Enter' to create a new word line. Useful for 'NORTH FACE'."
+          },
+          {
+            "type": "checkbox",
+            "id": "outline_first",
+            "label": "Outline first word",
+            "default": false,
+            "info": "Matches the 'UNDER ARMOUR' style where the first word is an outline."
+          },
+          {
+            "type": "text",
+            "id": "btn_text",
+            "label": "Button Text",
+            "default": "SHOP NOW"
+          },
+          {
+            "type": "url",
+            "id": "slide_url",
+            "label": "Slide Link (Optional Override)"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SMA-Collection Section 8",
+        "blocks": [
+          {
+            "type": "slide"
+          },
+          {
+            "type": "slide"
+          },
+          {
+            "type": "slide"
+          },
+          {
+            "type": "slide"
+          },
+          {
+            "type": "slide"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
