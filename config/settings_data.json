@@ -145,11 +145,6 @@
           "widget_type": "review-widget"
         }
       },
-      "8967645882218865749": {
-        "type": "shopify://apps/fulbix-variant-images/blocks/app-embed/019c4890-c9be-73e5-b09c-7bbf8e298c57",
-        "disabled": false,
-        "settings": {}
-      },
       "2118589882331710876": {
         "type": "shopify://apps/essential-trust-badges/blocks/app-embed/0ff65b25-07e1-408e-950f-f54dd3d1751b",
         "disabled": false,
@@ -198,8 +193,8 @@
         "disabled": false,
         "settings": {}
       },
-      "1232542678405107163": {
-        "type": "shopify://apps/instafeed/blocks/head-block/c447db20-095d-4a10-9725-b5977662c9d5",
+      "5182184951224911228": {
+        "type": "shopify://apps/rapid-search/blocks/script/bd827795-feaa-41a8-9219-2b83f238aa7d",
         "disabled": false,
         "settings": {}
       }
